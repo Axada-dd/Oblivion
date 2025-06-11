@@ -1,4 +1,3 @@
-using Oblivion.Common;
 namespace Oblivion.BLM.SlotResolver.Data;
 
 public class Spells
@@ -35,6 +34,7 @@ public class Spells
         醒梦 = 7562,
         即刻 = 7561,
         魔罩 = 157,
+        崩溃 = 156,
         沉稳 = 7559;
 
 }
