@@ -1,6 +1,50 @@
+using System;
+using System.Collections.Generic;
+using AEAssist.CombatRoutine;
+using AEAssist.CombatRoutine.Module;
+using Oblivion.BLM.QtUI;
+using Oblivion.BLM.SlotResolver.GCD;
+using Oblivion.Common;
+
 namespace Oblivion.BLM;
 
-public class Main
+public class BLMRotationEntry: IRotationEntry,IDisposable
 {
-    
+    public string AuthorName { get; set; } = Helper.AuthorName;
+    private readonly Jobs _job = Jobs.BlackMage;
+    private readonly AcrType _acrType = AcrType.HighEnd;
+    private readonly int _minLevel = 100;
+    private readonly int _maxLevel = 100;
+    private readonly string _description = "BLM";
+    private readonly List<SlotResolverData> _slotResolverData =
+    [
+        //GCD
+        new(new 火三(), SlotMode.Gcd),
+    ];
+
+    public Rotation? Build(string settingFolder)
+    {
+        QT.Build();
+        var rot = new Rotation(_slotResolverData)
+        {
+            TargetJob = _job,
+            AcrType = _acrType,
+            MinLevel = _minLevel,
+            MaxLevel = _maxLevel,
+            Description = _description,
+        };
+        rot.SetRotationEventHandler(new BLMEvetHandle());
+        return rot;
+    }
+    public IRotationUI GetRotationUI()
+    {
+        return QT.Instance;
+    }
+    public void OnDrawSetting()
+    {
+    }
+
+    public void Dispose()
+    {
+    }
 }
