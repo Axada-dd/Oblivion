@@ -4,26 +4,35 @@
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>12</LangVersion>
         <Nullable>enable</Nullable>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <OutputPath>E:\FF14act\AEAssist 国服 1024\ACR\Oblivion</OutputPath>
+      <Optimize>true</Optimize>
+
     </PropertyGroup>
 
     <ItemGroup>
       <Folder Include="BLM\QtUI\Hotkey\" />
-      <Folder Include="BLM\SlotResolver\Ability\" />
-      <Folder Include="BLM\SlotResolver\GCD\" />
       <Folder Include="BLM\SlotResolver\Opener\" />
       <Folder Include="BLM\Triggers\" />
-      <Folder Include="ScriptTest\" />
     </ItemGroup>
 
     <ItemGroup>
       <Reference Include="AEAssist">
         <HintPath>..\..\FF14act\AEAssist 国服 1024\AEAssistCNVersion\AEAssist\AEAssist.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="Dalamud">
         <HintPath>C:\Users\denglang\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\Dalamud.dll</HintPath>
+        <Private>False</Private>
       </Reference>
       <Reference Include="ImGui.NET">
         <HintPath>C:\Users\denglang\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\ImGui.NET.dll</HintPath>
+        <Private>False</Private>
       </Reference>
     </ItemGroup>
 
