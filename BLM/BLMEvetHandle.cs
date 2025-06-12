@@ -1,53 +1,64 @@
 using System.Threading.Tasks;
+using AEAssist;
 using AEAssist.CombatRoutine;
 using AEAssist.CombatRoutine.Module;
+using AEAssist.Helper;
+using AEAssist.MemoryApi;
+using Oblivion.Common;
 
 namespace Oblivion.BLM;
 
 public class BLMEvetHandle:IRotationEventHandler
 {
-    public Task OnPreCombat()
+    public async Task OnPreCombat()
     {
-        throw new System.NotImplementedException();
+        await Task.CompletedTask;
     }
 
     public void OnResetBattle()
     {
-        throw new System.NotImplementedException();
+        BLMBattleData.Instance = new BattleData();
     }
 
-    public Task OnNoTarget()
+    public async Task OnNoTarget()
     {
-        throw new System.NotImplementedException();
+        if (AI.Instance.BattleData.CurrBattleTimeInMs < 10 * 1000) return;
     }
 
     public void OnSpellCastSuccess(Slot slot, Spell spell)
     {
-        throw new System.NotImplementedException();
     }
 
     public void AfterSpell(Slot slot, Spell spell)
     {
-        throw new System.NotImplementedException();
     }
 
     public void OnBattleUpdate(int currTimeInMs)
     {
-        throw new System.NotImplementedException();
     }
 
     public void OnEnterRotation()
     {
-        throw new System.NotImplementedException();
+        LogHelper.Print(
+            "欢迎使用嗨呀的黑魔acr，反馈请到：");
+        Core.Resolve<MemApiChatMessage>()
+            .Toast2("跟我念：傻逼riku和souma的妈死干净咯！", 1, 5000);
+
+
+        //检查全局设置
+        if (!Helper.GlobalSettings.NoClipGCD3)
+            LogHelper.PrintError("建议在acr全局设置中勾选【全局能力技不卡GCD】选项");
+
+        //更新时间轴
+        /*if (BLMSetting.Instance.AutoUpdataTimeLines)
+            TimeLineUpdater.UpdateFiles(Helper.DncTimeLineUrl);*/
     }
 
     public void OnExitRotation()
     {
-        throw new System.NotImplementedException();
     }
 
     public void OnTerritoryChanged()
     {
-        throw new System.NotImplementedException();
     }
 }
