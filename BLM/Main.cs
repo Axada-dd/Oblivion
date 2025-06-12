@@ -4,6 +4,7 @@ using AEAssist.CombatRoutine;
 using AEAssist.CombatRoutine.Module;
 using Oblivion.BLM.QtUI;
 using Oblivion.BLM.SlotResolver.GCD;
+using Oblivion.BLM.Triggers;
 using Oblivion.Common;
 
 namespace Oblivion.BLM;
@@ -24,6 +25,7 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
 
     public Rotation? Build(string settingFolder)
     {
+        BLMSetting.Build(settingFolder);
         QT.Build();
         var rot = new Rotation(_slotResolverData)
         {
@@ -34,6 +36,8 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
             Description = _description,
         };
         rot.SetRotationEventHandler(new BLMEvetHandle());
+        rot.AddTriggerAction(new TriggerActionQt(), new TriggerActionHotkey());
+        rot.AddTriggerCondition(new TriggerCondQt());
         return rot;
     }
     public IRotationUI GetRotationUI()

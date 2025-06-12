@@ -24,7 +24,7 @@ public class 火三:ISlotResolver
         return -1;
     }
 
-    private Spell GetSpell() => 154U.GetActionChange().GetSpell();
+    private Spell GetSpell() => 152U.GetActionChange().GetSpell();
     public void Build(Slot slot)
     {
         Spell spell = this.GetSpell();

@@ -45,4 +45,9 @@ public class BLMSetting
     public JobViewSave JobViewSave = new()
     {
     }; // QT设置存档
+    
+    public bool AutoPartner = true;
+    public bool AutoUpdataTimeLines = true;
+    public bool TimeLinesDebug = false;
+
 }

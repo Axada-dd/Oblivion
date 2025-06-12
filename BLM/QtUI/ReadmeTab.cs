@@ -7,7 +7,7 @@ using ImGuiNET;
 
 namespace Oblivion.BLM.QtUI;
 
-public class ReadmeTab
+public static class ReadmeTab
 {
     private static readonly InfoBox Box = new()
     {
