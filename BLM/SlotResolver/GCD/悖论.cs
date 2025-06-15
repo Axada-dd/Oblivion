@@ -21,7 +21,6 @@ public class 悖论 : ISlotResolver
     public int Check()
     {
         if (!Spells.悖论.GetSpell().IsReadyWithCanCast()) return -1;
-        if (Core.Me.Level < 90) return -5;
         if (!BLMHelper.悖论指示) return -6;
         if (BLMHelper.冰状态 && BLMHelper.冰层数 == 3 && BLMHelper.冰针 == 3) return 1;
         if (BLMHelper.冰状态 && Helper.IsMove) return 2;

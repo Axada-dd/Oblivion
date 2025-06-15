@@ -26,7 +26,6 @@ public class 核爆 : ISlotResolver
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount < 2) return -1;
         if (!Spells.核爆.GetSpell().IsReadyWithCanCast()) return -2;
-        if (Core.Me.Level < 60) return -3;
         if (!BLMHelper.火状态) return -4;
         if (!QT.Instance.GetQt("核爆")) return -5;
         if (BLMHelper.耀星层数 < 6 && !BattleData.Instance.已使用耀星 && BLMHelper.冰针 >= 1&&(!Helper.IsMove||BattleData.Instance.可瞬发)) return 1;

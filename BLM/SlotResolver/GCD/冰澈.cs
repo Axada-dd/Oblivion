@@ -21,7 +21,6 @@ public class 冰澈 : ISlotResolver
     public int Check()
     {
         if (!Spells.冰澈.GetSpell().IsReadyWithCanCast()) return -1;
-        if (Core.Me.Level < 60) return -5;
         if (!BLMHelper.冰状态) return -6;
         if (BLMHelper.冰层数 == 3 && BLMHelper.冰针 < 3 && !Helper.IsMove) return 1;
         if (BLMHelper.冰层数 == 3 && BLMHelper.冰针 < 3 && Helper.IsMove && BattleData.Instance.可瞬发) return 2;

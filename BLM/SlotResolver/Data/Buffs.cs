@@ -10,5 +10,8 @@ public class Buffs
         火苗 = 165,
         沉稳Buff = 160,
         黑盾 = 168,
-        醒梦Buff = 1204;
+        醒梦Buff = 1204,
+        雷一dot = 3871,
+        雷二dot = 3872;
+
 }
