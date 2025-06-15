@@ -15,20 +15,20 @@ public class QT
     /// </summary>
     public static void Reset()
     {
-        
+
     }
     public static void Build()
     {
-        Instance = new JobViewWindow(BLMSetting.Instance.JobViewSave, BLMSetting.Instance.Save,"嗨呀黑魔");
-        
-        
+        Instance = new JobViewWindow(BLMSetting.Instance.JobViewSave, BLMSetting.Instance.Save, "嗨呀黑魔");
+
+
         Instance.AddQt("爆发药", false);
         Instance.AddQt("绝望", true);
-        Instance.AddQt("核爆",true);
-        Instance.AddQt("黑魔纹",true);
-        Instance.AddQt("墨泉",true);
-        Instance.AddQt("三连咏唱",true);
-        Instance.AddQt("即刻",true);
+        Instance.AddQt("核爆", true);
+        Instance.AddQt("黑魔纹", true);
+        Instance.AddQt("墨泉", true);
+        Instance.AddQt("三连咏唱", true);
+        Instance.AddQt("即刻", true);
         Instance.AddQt("雷一", true);
         Instance.AddQt("雷二", true);
         Instance.AddQt("异言", true);
@@ -36,7 +36,7 @@ public class QT
         Instance.AddQt("星灵移位", true);
         Instance.AddQt("详述", true);
 
-        
+
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());
         Instance.AddHotkey("异言", new HotKeyResolver_NormalSpell(Spells.异言, SpellTargetType.Target));
         Instance.AddHotkey("秽浊", new HotKeyResolver_NormalSpell(Spells.秽浊, SpellTargetType.Target));
@@ -45,8 +45,8 @@ public class QT
         Instance.AddHotkey("三连咏唱", new HotKeyResolver_NormalSpell(Spells.三连, SpellTargetType.Target));
         Instance.AddHotkey("冲刺", new HotKeyResolver_疾跑());
         Instance.AddHotkey("沉稳咏唱", new HotKeyResolver_NormalSpell(Spells.沉稳, SpellTargetType.Target));
-        Instance.AddHotkey("混乱", new HotKeyResolver_NormalSpell(Spells.混乱, SpellTargetType.Target,true));
-        
+        Instance.AddHotkey("混乱", new HotKeyResolver_NormalSpell(Spells.混乱, SpellTargetType.Target, true));
+
         ReadmeTab.Build(Instance);
         SettingTab.Build(Instance);
     }

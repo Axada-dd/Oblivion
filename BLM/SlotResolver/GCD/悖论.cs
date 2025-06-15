@@ -13,7 +13,7 @@ public class 悖论 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = Spells.悖论.GetActionChange().GetSpell();
+        Spell spell = Spells.悖论.GetActionChange().GetSpell(SpellTargetType.Target);
         if (spell == null) return;
         slot.Add(spell);
     }

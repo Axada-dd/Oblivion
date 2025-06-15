@@ -4,7 +4,8 @@ public class Buffs
 {
     public const uint
         雷云 = 3870,
-        黑魔纹Buff = 738,
+        黑魔纹Buff = 737,
+        咏速Buff = 738,
         即刻Buff = 167,
         三连Buff = 1211,
         火苗 = 165,

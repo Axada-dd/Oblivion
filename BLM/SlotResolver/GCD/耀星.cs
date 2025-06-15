@@ -13,7 +13,7 @@ public class 耀星 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = Spells.耀星.GetActionChange().GetSpell();
+        Spell spell = Spells.耀星.GetActionChange().GetSpell(SpellTargetType.Target);
         if (spell == null) return;
         slot.Add(spell);
     }

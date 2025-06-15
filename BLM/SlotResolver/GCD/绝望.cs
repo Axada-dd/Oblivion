@@ -14,7 +14,7 @@ public class 绝望 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = Spells.绝望.GetActionChange().GetSpell();
+        Spell spell = Spells.绝望.GetActionChange().GetSpell(SpellTargetType.Target);
         if (spell == null) return;
         slot.Add(spell);
     }

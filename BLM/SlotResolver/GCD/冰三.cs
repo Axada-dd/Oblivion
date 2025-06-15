@@ -13,7 +13,7 @@ public class 冰三 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = Spells.冰三.GetActionChange().GetSpell();
+        Spell spell = Spells.冰三.GetActionChange().GetSpell(SpellTargetType.Target);
         if (spell == null) return;
         slot.Add(spell);
     }

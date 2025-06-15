@@ -23,7 +23,7 @@ public class 火三 : ISlotResolver
         return -1;
     }
 
-    private Spell GetSpell() => Spells.火三.GetActionChange().GetSpell();
+    private Spell GetSpell() => Spells.火三.GetActionChange().GetSpell(SpellTargetType.Target);
     public void Build(Slot slot)
     {
         Spell spell = this.GetSpell();

@@ -2,7 +2,9 @@ using System.Diagnostics;
 using System.Numerics;
 using AEAssist.CombatRoutine.View.JobView;
 using AEAssist.GUI;
+using AEAssist.Helper;
 using ImGuiNET;
+using Oblivion.BLM.SlotResolver.Data;
 using Oblivion.Common;
 
 namespace Oblivion.BLM.QtUI;
@@ -11,7 +13,7 @@ public static class SettingTab
 {
     public static void Build(JobViewWindow instance)
     {
-        instance.AddTab("Oblivion", winow =>
+        instance.AddTab("Oblivion", window =>
         {
             if (ImGui.CollapsingHeader("时间轴", ImGuiTreeNodeFlags.DefaultOpen))
             {
@@ -42,6 +44,16 @@ public static class SettingTab
 
             ImGuiHelper.Separator();
 
+        });
+        instance.AddTab("Debug", window =>
+        {
+            ImGui.Text($"上一G：{BattleData.Instance.前一GCD}");
+            ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
+            ImGui.Text($"可瞬发：{BattleData.Instance.可瞬发}");
+            ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
+            ImGui.Text($"已使用黑魔纹：{BattleData.Instance.已使用黑魔纹}");
+            ImGui.Text($"三连咏唱层数：{Spells.三连.GetSpell().Charges}");
+            ImGui.Text($"三连咏唱下一层转好时间：{Spells.三连.GetSpell().Charges*60}");
         });
     }
 }

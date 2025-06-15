@@ -14,7 +14,7 @@ public class 火4 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = Spells.火四.GetActionChange().GetSpell();
+        Spell spell = Spells.火四.GetActionChange().GetSpell(SpellTargetType.Target);
         if (spell == null) return;
         slot.Add(spell);
     }

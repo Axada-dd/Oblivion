@@ -14,7 +14,26 @@
       <Optimize>true</Optimize>
 
     </PropertyGroup>
+    <Target Name="CopyFilesToAdditionalOutput" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">
+        <!-- 定义源目录和目标目录 -->
+        <PropertyGroup>
+            <SourceDir>$(OutputPath)</SourceDir>
+            <AdditionalOutputDir>E:\FF14act\AEAssist 国际服\ACR\Oblivion</AdditionalOutputDir>
+        </PropertyGroup>
 
+        <!-- 创建目标目录（如果不存在） -->
+        <MakeDir Directories="$(AdditionalOutputDir)" Condition="!Exists('$(AdditionalOutputDir)')" />
+
+        <!-- 复制所有文件和文件夹 -->
+        <ItemGroup>
+            <FilesToCopy Include="$(SourceDir)**\*" />
+        </ItemGroup>
+
+        <Copy SourceFiles="@(FilesToCopy)"
+              DestinationFiles="@(FilesToCopy->'$(AdditionalOutputDir)\%(RecursiveDir)%(Filename)%(Extension)')"
+              SkipUnchangedFiles="true"
+              OverwriteReadOnlyFiles="true" />
+    </Target>
     <ItemGroup>
       <Folder Include="BLM\QtUI\Hotkey\" />
       <Folder Include="BLM\SlotResolver\Opener\" />
