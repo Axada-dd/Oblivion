@@ -5,6 +5,7 @@ using AEAssist.CombatRoutine.Module;
 using AEAssist.Extension;
 using AEAssist.Helper;
 using Oblivion.BLM.QtUI;
+using Oblivion.BLM.SlotResolver.Data;
 using Oblivion.Common;
 
 namespace Oblivion.BLM.SlotResolver.GCD;
@@ -13,7 +14,7 @@ public class 绝望 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = 16505U.GetActionChange().GetSpell();
+        Spell spell = Spells.绝望.GetActionChange().GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
@@ -21,7 +22,7 @@ public class 绝望 : ISlotResolver
     public int Check()
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (!new Spell(16505, SpellTargetType.Target).IsReadyWithCanCast()) return -2;
+        if (!new Spell(Spells.绝望, SpellTargetType.Target).IsReadyWithCanCast()) return -2;
         if (nearbyEnemyCount >= 2 && QT.Instance.GetQt("核爆")) return -3;
         if (!QT.Instance.GetQt("绝望")) return -4;
         if (Core.Me.Level < 72) return -5;

@@ -11,7 +11,7 @@ using Oblivion.Common;
 
 namespace Oblivion.BLM;
 
-public class BLMEvetHandle:IRotationEventHandler
+public class BLMEvetHandle : IRotationEventHandler
 {
     private readonly HashSet<uint> _GcdSpellIds = new HashSet<uint>
     {
@@ -44,11 +44,20 @@ public class BLMEvetHandle:IRotationEventHandler
         {
             BattleData.Instance.前一GCD = spell.Id;
         }
+        if (spell.Id == Spells.耀星)
+        {
+            BattleData.Instance.已使用耀星 = true;
+        }
+
     }
 
     public void OnBattleUpdate(int currTimeInMs)
     {
         BattleData.Instance.可瞬发 = Core.Me.HasAura(Buffs.即刻Buff) || Core.Me.HasAura(Buffs.三连Buff);
+        if (BattleData.Instance.已使用耀星)
+        {
+            if (BLMHelper.冰状态) BattleData.Instance.已使用耀星 = false;
+        }
     }
 
     public void OnEnterRotation()
