@@ -20,6 +20,9 @@ public class QT
         
         
         Instance.AddQt("爆发药", false);
+        Instance.AddQt("绝望", true);
+        Instance.AddQt("核爆",true);
+
         
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());
         

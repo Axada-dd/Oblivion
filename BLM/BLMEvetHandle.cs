@@ -36,10 +36,6 @@ public class BLMEvetHandle : IRotationEventHandler
 
     public void OnSpellCastSuccess(Slot slot, Spell spell)
     {
-    }
-
-    public void AfterSpell(Slot slot, Spell spell)
-    {
         if (_GcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一GCD = spell.Id;
@@ -48,6 +44,11 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             BattleData.Instance.已使用耀星 = true;
         }
+    }
+
+    public void AfterSpell(Slot slot, Spell spell)
+    {
+
 
     }
 

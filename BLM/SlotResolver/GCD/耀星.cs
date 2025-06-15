@@ -23,8 +23,8 @@ public class 耀星 : ISlotResolver
         if (!Spells.耀星.GetSpell().IsReadyWithCanCast()) return -1;
         if (Core.Me.Level < 100) return -5;
         if (!BLMHelper.火状态) return -6;
-        if (BLMHelper.耀星层数 == 6 && !Core.Me.IsMoving()) return 1;
-        if (BLMHelper.耀星层数 == 6 && Core.Me.IsMoving() && BattleData.Instance.可瞬发) return 2;
+        if (BLMHelper.耀星层数 == 6 && !Helper.IsMove) return 1;
+        if (BLMHelper.耀星层数 == 6 && Helper.IsMove && BattleData.Instance.可瞬发) return 2;
         return -99;
     }
 }

@@ -21,6 +21,13 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
     [
         //GCD
         new(new 火三(), SlotMode.Gcd),
+        new(new 冰三(), SlotMode.Gcd),
+        new(new 火4(), SlotMode.Gcd),
+        new(new 绝望(), SlotMode.Gcd),
+        new(new 耀星(), SlotMode.Gcd),
+        new(new 悖论(), SlotMode.Gcd),
+        new(new 冰澈(), SlotMode.Gcd),
+        
     ];
 
     public Rotation? Build(string settingFolder)

@@ -27,7 +27,7 @@ public class 火4 : ISlotResolver
         if (Core.Me.Level < 60) return -4;
         //if (BLMHelper.天语剩余时间 < 4000) return -5;
         if (!BLMHelper.火状态) return -6;
-        if (BLMHelper.火层数 >= 3 && BLMHelper.耀星层数 < 6 && Core.Me.CurrentMp > 2400L && !Core.Me.IsMoving()) return 1;
+        if (BLMHelper.火层数 >= 3 && BLMHelper.耀星层数 < 6 && Core.Me.CurrentMp > 2400L && !Helper.IsMove) return 1;
         if (BLMHelper.火层数 >= 3 && BLMHelper.耀星层数 < 6 && Core.Me.CurrentMp > 2400L && BattleData.Instance.可瞬发) return 2;
         return -99;
     }

@@ -15,7 +15,6 @@ public static class Helper
     public const string AuthorName = "嗨呀";
     private static int _GcdDuration = 0;
 
-    public const int 小舞卡gcd最长时间 = 1000;
 
     /// <summary>
     /// 获取自身buff的剩余时间
