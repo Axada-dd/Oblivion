@@ -1,7 +1,4 @@
-using System;
-using System.IO;
 using AEAssist.CombatRoutine.View.JobView;
-using AEAssist.Helper;
 using AEAssist.IO;
 
 namespace Oblivion.BLM;

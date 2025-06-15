@@ -1,10 +1,5 @@
-using System.Linq;
-using AEAssist;
-using AEAssist.CombatRoutine.Module;
 using AEAssist.CombatRoutine.Trigger;
 using AEAssist.CombatRoutine.Trigger.Node;
-using AEAssist.Extension;
-using AEAssist.Helper;
 using Dalamud.Game.ClientState.Objects.Types;
 
 namespace Oblivion.ScriptTest;

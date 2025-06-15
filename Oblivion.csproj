@@ -6,6 +6,7 @@
         <Nullable>enable</Nullable>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <ImplicitUsings>enable</ImplicitUsings>
 
     </PropertyGroup>
 
@@ -29,10 +30,7 @@
             <FilesToCopy Include="$(SourceDir)**\*" />
         </ItemGroup>
 
-        <Copy SourceFiles="@(FilesToCopy)"
-              DestinationFiles="@(FilesToCopy->'$(AdditionalOutputDir)\%(RecursiveDir)%(Filename)%(Extension)')"
-              SkipUnchangedFiles="true"
-              OverwriteReadOnlyFiles="true" />
+        <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy-&gt;'$(AdditionalOutputDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" />
     </Target>
     <ItemGroup>
       <Folder Include="BLM\QtUI\Hotkey\" />

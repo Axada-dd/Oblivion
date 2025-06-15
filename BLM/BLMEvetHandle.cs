@@ -1,13 +1,4 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using AEAssist;
-using AEAssist.CombatRoutine;
-using AEAssist.CombatRoutine.Module;
-using AEAssist.Extension;
-using AEAssist.Helper;
 using AEAssist.MemoryApi;
-using Oblivion.BLM.SlotResolver.Data;
-using Oblivion.Common;
 
 namespace Oblivion.BLM;
 

@@ -1,5 +1,3 @@
-using AEAssist.CombatRoutine.Module;
-
 namespace Oblivion.BLM;
 
 public class BattleData

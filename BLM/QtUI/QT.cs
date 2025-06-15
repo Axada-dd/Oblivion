@@ -1,8 +1,5 @@
-using AEAssist.CombatRoutine;
-using AEAssist.CombatRoutine.Module;
 using AEAssist.CombatRoutine.View.JobView;
 using AEAssist.CombatRoutine.View.JobView.HotkeyResolver;
-using Oblivion.BLM.SlotResolver.Data;
 
 namespace Oblivion.BLM.QtUI;
 

@@ -2,10 +2,7 @@ using System.Diagnostics;
 using System.Numerics;
 using AEAssist.CombatRoutine.View.JobView;
 using AEAssist.GUI;
-using AEAssist.Helper;
 using ImGuiNET;
-using Oblivion.BLM.SlotResolver.Data;
-using Oblivion.Common;
 
 namespace Oblivion.BLM.QtUI;
 

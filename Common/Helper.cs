@@ -1,10 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using AEAssist;
-using AEAssist.CombatRoutine;
-using AEAssist.CombatRoutine.Module;
-using AEAssist.Extension;
-using AEAssist.Helper;
 using AEAssist.MemoryApi;
 using Dalamud.Game.ClientState.Objects.Types;
 

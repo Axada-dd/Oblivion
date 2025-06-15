@@ -1,7 +1,5 @@
-using System;
 using AEAssist.CombatRoutine.Trigger;
 using AEAssist.GUI;
-using AEAssist.Helper;
 using Oblivion.BLM.QtUI;
 
 namespace Oblivion.BLM.Triggers;

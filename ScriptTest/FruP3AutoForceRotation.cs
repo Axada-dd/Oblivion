@@ -1,9 +1,6 @@
-using System;
 using System.Numerics;
-using AEAssist;
 using AEAssist.CombatRoutine.Trigger;
 using AEAssist.CombatRoutine.Trigger.Node;
-using AEAssist.Helper;
 using AEAssist.MemoryApi;
 
 namespace Oblivion.ScriptTest;
