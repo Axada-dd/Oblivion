@@ -12,8 +12,7 @@ public class 黑魔纹 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = Spells.黑魔纹.GetActionChange().GetSpell(SpellTargetType.Self);
-        if (spell == null) return;
+        Spell spell = new Spell(Spells.黑魔纹, Core.Me.Position);
         slot.Add(spell);
     }
 

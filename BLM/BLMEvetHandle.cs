@@ -75,7 +75,7 @@ public class BLMEvetHandle : IRotationEventHandler
 
         if (BattleData.Instance.已使用黑魔纹)
         {
-            BattleData.Instance.已使用黑魔纹 = Core.Me.HasAura(Buffs.黑魔纹Buff);
+            BattleData.Instance.已使用黑魔纹 = !Helper.Buff时间小于(Buffs.黑魔纹Buff, 500);
         }
     }
 
