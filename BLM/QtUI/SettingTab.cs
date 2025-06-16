@@ -8,10 +8,58 @@ namespace Oblivion.BLM.QtUI;
 
 public static class SettingTab
 {
+
     public static void Build(JobViewWindow instance)
     {
-        instance.AddTab("Oblivion", window =>
+        instance.AddTab("设置", window =>
         {
+            if (ImGui.CollapsingHeader("起手设置", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                bool opner1 = BLMSetting.Instance.标准57;
+                if(ImGui.Checkbox("标准5+7起手", ref opner1))
+                {
+                    if (opner1)
+                    {
+                        BLMSetting.Instance.标准57 = true;
+                        BLMSetting.Instance.核爆起手 = false;
+                    }
+                    BLMSetting.Instance.Save();
+                }
+                bool opener2 = BLMSetting.Instance.核爆起手;
+                if (ImGui.Checkbox("核爆起手", ref opener2))
+                {
+                    if (opener2)
+                    {
+                        BLMSetting.Instance.核爆起手 = true;
+                        BLMSetting.Instance.标准57 = false;
+                    }
+                    BLMSetting.Instance.Save();
+                }
+                bool 倒计时黑魔纹 = BLMSetting.Instance.提前黑魔纹;
+                if (ImGui.Checkbox("提前黑魔纹", ref 倒计时黑魔纹))
+                {
+                    if(倒计时黑魔纹)BLMSetting.Instance.提前黑魔纹 = true;
+                    else BLMSetting.Instance.提前黑魔纹 = false; 
+                    BLMSetting.Instance.Save();
+                }
+                ImGui.Text("起手预读时间:");
+                float width = ImGui.GetContentRegionAvail().X * 0.7f;
+                double spellTime = 3.8;
+                double settingTime = BLMSetting.Instance.起手预读时间;
+                ImGui.SetNextItemWidth(width);
+                if (ImGui.InputDouble("##动物彩绘CD阈值", ref spellTime, 1.0, 5.0, "%.1f"))
+                {
+                    if (spellTime >= 0 && spellTime <= 5)
+                    {
+                        BLMSetting.Instance.起手预读时间 = spellTime;
+                        BLMSetting.Instance.Save();
+                    }
+                    else
+                    {
+                        spellTime = settingTime;
+                    }
+                }
+            }
             if (ImGui.CollapsingHeader("时间轴", ImGuiTreeNodeFlags.DefaultOpen))
             {
                 ImGui.Dummy(new Vector2(5, 0));
@@ -32,9 +80,8 @@ public static class SettingTab
                 ImGui.Dummy(new Vector2(5, 0));
                 ImGui.SameLine();
                 ImGui.BeginGroup();
-                //ImGui.Checkbox("显示舞伴窗口", ref DncSettings.Instance.DancePartnerPanelShow);
-                //ImGui.Checkbox("4人本自动绑舞伴", ref DncSettings.Instance.AutoPartner);
-                //ImGui.DragInt("舞伴窗口大小", ref DncSettings.Instance.DancePartnerPanelIconSize, 1, 20, 100);
+                ImGui.Checkbox("显示以太步窗口", ref BLMSetting.Instance.以太步窗口显示);
+                ImGui.DragInt("以太步窗口大小", ref BLMSetting.Instance.以太步IconSize, 1, 20, 100);
                 ImGui.EndGroup();
                 ImGui.Dummy(new Vector2(0, 10));
             }

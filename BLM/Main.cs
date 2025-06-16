@@ -1,6 +1,8 @@
+using AEAssist.CombatRoutine.Module.Opener;
 using Oblivion.BLM.QtUI;
 using Oblivion.BLM.SlotResolver.Ability;
 using Oblivion.BLM.SlotResolver.GCD;
+using Oblivion.BLM.SlotResolver.Opener;
 using Oblivion.BLM.Triggers;
 
 namespace Oblivion.BLM;
@@ -57,11 +59,24 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
             MaxLevel = _maxLevel,
             Description = _description,
         };
+        rot.AddOpener(GetOpener);
         rot.SetRotationEventHandler(new BLMEvetHandle());
         rot.AddTriggerAction(new TriggerActionQt(), new TriggerActionHotkey());
         rot.AddTriggerCondition(new TriggerCondQt());
         return rot;
     }
+
+    private IOpener? GetOpener(uint level)
+    {
+        if (level == 100)
+        {
+            if(BLMSetting.Instance.标准57)return new Opener_57();
+            if(BLMSetting.Instance.核爆起手)return new Oener_核爆();
+        }
+
+        return null;
+    }
+
     public IRotationUI GetRotationUI()
     {
         return QT.Instance;

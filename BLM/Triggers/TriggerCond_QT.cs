@@ -9,7 +9,7 @@ namespace Oblivion.BLM.Triggers;
 //这个类也可以完全复制 改一下上面的namespace和对QT的引用就行
 public class TriggerCondQt : ITriggerCond
 {
-    public string DisplayName => "Dancer/QT检测";
+    public string DisplayName => "BLM/QT检测";
     public string Remark { get; set; }
     
     public string Key = "";

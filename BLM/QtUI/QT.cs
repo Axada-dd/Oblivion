@@ -1,5 +1,6 @@
 using AEAssist.CombatRoutine.View.JobView;
 using AEAssist.CombatRoutine.View.JobView.HotkeyResolver;
+using Oblivion.BLM.QtUI.Hotkey;
 
 namespace Oblivion.BLM.QtUI;
 
@@ -46,5 +47,7 @@ public class QT
 
         ReadmeTab.Build(Instance);
         SettingTab.Build(Instance);
+        
+        以太步hotkeywindow.Build(Instance);
     }
 }

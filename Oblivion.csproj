@@ -33,8 +33,6 @@
         <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy-&gt;'$(AdditionalOutputDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" />
     </Target>
     <ItemGroup>
-      <Folder Include="BLM\QtUI\Hotkey\" />
-      <Folder Include="BLM\SlotResolver\Opener\" />
       <Folder Include="BLM\Triggers\" />
     </ItemGroup>
 

@@ -8,7 +8,7 @@ namespace Oblivion.BLM.Triggers;
 //这个类也可以完全复制 改一下上面的namespace和对QT的引用就行
 public class TriggerActionQt : ITriggerAction
 {
-    public string DisplayName { get; } = "Dancer/QT";
+    public string DisplayName { get; } = "BLM/QT";
     public string Remark { get; set; }
     
     public string Key = "";
