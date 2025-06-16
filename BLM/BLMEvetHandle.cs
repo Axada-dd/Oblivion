@@ -76,13 +76,12 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         LogHelper.Print(
             "欢迎使用嗨呀的黑魔acr，反馈请到：");
-        Core.Resolve<MemApiChatMessage>()
-            .Toast2("跟我念：傻逼riku和souma的妈死干净咯！", 1, 5000);
+        LogHelper.Print("建议设置提前使用gcd时间为50，使用fuckanime三插，DR能力技动画减少");
 
 
         //检查全局设置
-        if (!Helper.GlobalSettings.NoClipGCD3)
-            LogHelper.PrintError("建议在acr全局设置中勾选【全局能力技不卡GCD】选项");
+        if (Helper.GlobalSettings.NoClipGCD3)
+            LogHelper.PrintError("建议不要在acr全局设置中勾选【全局能力技不卡GCD】选项");
 
         //更新时间轴
         /*if (BLMSetting.Instance.AutoUpdataTimeLines)

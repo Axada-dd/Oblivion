@@ -14,7 +14,7 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
     private readonly AcrType _acrType = AcrType.Both;
     private readonly int _minLevel = 100;
     private readonly int _maxLevel = 100;
-    private readonly string _description = "BLM";
+    private readonly string _description = "7.2黑魔，暂时只支持100级高难，非最优循环，优先保证灵活性";
     private readonly List<SlotResolverData> _slotResolverData =
     [
         //GCD
@@ -37,7 +37,7 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
 
 
         //Ability
-        
+        new(new 醒梦(),SlotMode.OffGcd),
         new(new 墨泉(),SlotMode.OffGcd),
         new(new 详述(),SlotMode.OffGcd),
         new(new 星灵移位(),SlotMode.OffGcd),
