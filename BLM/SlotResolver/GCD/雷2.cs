@@ -6,7 +6,7 @@ public class 雷2 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        var canTargetObjects = Helper.最优aoe目标(Spells.核爆, 2);
+        var canTargetObjects = Spells.核爆.最优aoe目标(2);
         Spell spell = Spells.雷二.GetActionChange().GetSpell(canTargetObjects);
         if (spell == null) return;
         slot.Add(spell);

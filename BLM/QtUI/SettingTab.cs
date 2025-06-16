@@ -3,6 +3,7 @@ using System.Numerics;
 using AEAssist.CombatRoutine.View.JobView;
 using AEAssist.GUI;
 using ImGuiNET;
+using Oblivion.BLM.SlotResolver.Opener;
 
 namespace Oblivion.BLM.QtUI;
 
@@ -42,23 +43,7 @@ public static class SettingTab
                     else BLMSetting.Instance.提前黑魔纹 = false; 
                     BLMSetting.Instance.Save();
                 }
-                ImGui.Text("起手预读时间:");
-                float width = ImGui.GetContentRegionAvail().X * 0.7f;
-                double spellTime = 3.8;
-                double settingTime = BLMSetting.Instance.起手预读时间;
-                ImGui.SetNextItemWidth(width);
-                if (ImGui.InputDouble("##动物彩绘CD阈值", ref spellTime, 1.0, 5.0, "%.1f"))
-                {
-                    if (spellTime >= 0 && spellTime <= 5)
-                    {
-                        BLMSetting.Instance.起手预读时间 = spellTime;
-                        BLMSetting.Instance.Save();
-                    }
-                    else
-                    {
-                        spellTime = settingTime;
-                    }
-                }
+
             }
             if (ImGui.CollapsingHeader("时间轴", ImGuiTreeNodeFlags.DefaultOpen))
             {
@@ -91,13 +76,14 @@ public static class SettingTab
         });
         instance.AddTab("Debug", window =>
         {
-            ImGui.Text($"上一G：{BattleData.Instance.前一GCD}");
+            ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
             ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
             ImGui.Text($"可瞬发：{BattleData.Instance.可瞬发}");
             ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
             ImGui.Text($"已使用黑魔纹：{BattleData.Instance.已使用黑魔纹}");
             ImGui.Text($"三连咏唱层数：{Spells.三连.GetSpell().Charges}");
             ImGui.Text($"三连咏唱下一层转好时间：{Spells.三连.GetSpell().Charges*60}");
+            ImGui.Text($"火循环将结束：{BattleData.Instance.火循环剩余gcd小于3}");
         });
     }
 }

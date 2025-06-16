@@ -29,7 +29,7 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         if (_GcdSpellIds.Contains(spell.Id))
         {
-            BattleData.Instance.前一GCD = spell.Id;
+            BattleData.Instance.前一gcd = spell.Id;
         }
         if (spell.Id == Spells.耀星)
         {
@@ -41,7 +41,7 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         if (_GcdSpellIds.Contains(spell.Id))
         {
-            BattleData.Instance.前一GCD = spell.Id;
+            BattleData.Instance.前一gcd = spell.Id;
             BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 800 : 1500);
         }
 
@@ -68,6 +68,8 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             BattleData.Instance.已使用黑魔纹 = !Helper.Buff时间小于(Buffs.黑魔纹Buff, 500);
         }
+
+        BattleData.Instance.火循环剩余gcd小于3 = BLMHelper.火状态 && Core.Me.CurrentMp < 3200&&(!Helper.Buff时间小于(Buffs.三连Buff,800)||!Helper.Buff时间小于(Buffs.即刻Buff,800));
     }
 
     public void OnEnterRotation()

@@ -6,9 +6,10 @@ public class BattleData
 
     public int 瞬发层数 { get; set; } = 0;
     public bool 可瞬发 { get; set; } = false;
-    public uint 前一GCD { get; set; } = 0;
+    public uint 前一gcd { get; set; } = 0;
     public bool 已使用耀星 { get; set; } = false;
     public bool 已使用瞬发 { get; set; } = false;
     public bool 存在黑魔纹 { get; set; } = false;
     public bool 已使用黑魔纹 { get; set; } = false;
+    public bool 火循环剩余gcd小于3 { get; set; } = false;
 }
