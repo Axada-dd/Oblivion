@@ -1,3 +1,5 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.Ability;
 
 public class 墨泉 : ISlotResolver
@@ -11,6 +13,7 @@ public class 墨泉 : ISlotResolver
 
     public int Check()
     {
+        if (!QT.Instance.GetQt("墨泉")) return -5;
         if (!Spells.墨泉.GetSpell().IsReadyWithCanCast()) return -1;
         if(!BLMHelper.火状态)return -2;
         if (Core.Me.CurrentMp > 800) return -3;

@@ -12,6 +12,7 @@ public class 火三 : ISlotResolver
         if (BLMHelper.冰状态 && !Core.Me.HasAura(Buffs.火苗) && BLMHelper.冰层数 >= 3 && BLMHelper.冰针 >= 3 && Core.Me.CurrentMp >= 10000) return 1;
         //if (BLMHelper.火状态 && Core.Me.HasAura(Buffs.火苗) && BLMHelper.天语剩余时间 < 3000) return 4;
         if (!BLMHelper.火状态 && !BLMHelper.冰状态 && Core.Me.CurrentMp >= 10000) return 2;
+        if (BLMHelper.火状态 && Core.Me.HasAura(Buffs.火苗) && BLMHelper.火层数 < 3) return 4;
         return -1;
     }
 

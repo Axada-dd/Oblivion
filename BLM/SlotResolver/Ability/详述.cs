@@ -1,3 +1,5 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.Ability;
 
 public class 详述 : ISlotResolver
@@ -11,6 +13,7 @@ public class 详述 : ISlotResolver
 
     public int Check()
     {
+        if (!QT.Instance.GetQt("详述")) return -5;
         if (!Spells.详述.GetSpell().IsReadyWithCanCast()) return -1;
         if (BLMHelper.通晓层数 >= 3 || (BLMHelper.耀星层数 == 2 && BLMHelper.通晓剩余时间 < 4000)) return -2;
         return 1;

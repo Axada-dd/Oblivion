@@ -33,6 +33,7 @@ public class QT
         Instance.AddQt("秽浊", true);
         Instance.AddQt("星灵移位", true);
         Instance.AddQt("详述", true);
+        Instance.AddQt("倾泻资源", false);
 
 
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());
