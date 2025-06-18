@@ -13,7 +13,7 @@ public class 醒梦:ISlotResolver
 
     public void Build(Slot slot)
     {
-        Spell spell = Spells.即刻.GetActionChange().GetSpell(SpellTargetType.Self);
+        Spell spell = Spells.醒梦.GetActionChange().GetSpell(SpellTargetType.Self);
         if (spell == null) return;
         slot.Add(spell);
     }
