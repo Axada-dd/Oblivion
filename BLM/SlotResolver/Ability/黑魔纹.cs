@@ -6,7 +6,7 @@ public class 黑魔纹 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = new Spell(Spells.黑魔纹, Core.Me.Position);
+        Spell spell = new Spell(Spells.黑魔纹, SpellTargetType.Self);
         slot.Add(spell);
     }
 

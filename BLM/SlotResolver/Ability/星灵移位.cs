@@ -18,8 +18,8 @@ public class 星灵移位 : ISlotResolver
             !BLMHelper.悖论指示) return 5;
         if (BLMHelper.冰状态 && BLMHelper.冰层数 < 3 && !BLMHelper.悖论指示 && Core.Me.CurrentMp >= 800 &&
             Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 10) return 4;
-        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 10) return 3;
-        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && (BattleData.Instance.可瞬发 || new 即刻().Check() == 1) && BattleData.Instance.已使用耀星) return 2;
+        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 10&& BLMHelper.耀星层数 != 6) return 3;
+        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && (BattleData.Instance.可瞬发 || new 即刻().Check() == 1) && BLMHelper.耀星层数 != 6) return 2;
         return -99;
     }
     public void Build(Slot slot)

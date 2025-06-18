@@ -35,6 +35,7 @@ public class QT
         Instance.AddQt("星灵移位", true);
         Instance.AddQt("详述", true);
         Instance.AddQt("起手序列", true);
+        Instance.AddQt("AOE", false);
         Instance.AddQt("倾泻资源", false);
 
 

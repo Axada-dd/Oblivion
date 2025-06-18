@@ -26,7 +26,7 @@ public class Oener_核爆 : IOpener
         if (BLMSetting.Instance.提前黑魔纹)
         {
 
-            countDownHandler.AddAction(startTime + 600, Spells.黑魔纹);
+            countDownHandler.AddAction(startTime + 600, Spells.黑魔纹, SpellTargetType.Self);
             countDownHandler.AddAction(startTime, Spells.火三, SpellTargetType.Target);
             countDownHandler.AddAction(startTime - 500, () => _isInnerOpener = true);
             countDownHandler.AddAction(startTime - 2800, Spells.雷一.GetActionChange(), SpellTargetType.Target);
@@ -51,7 +51,7 @@ public class Oener_核爆 : IOpener
         if (QT.Instance.GetQt("爆发药"))
             slot.Add(Spell.CreatePotion());
         if (!BLMSetting.Instance.提前黑魔纹)
-            slot.Add(new Spell(Spells.黑魔纹, Core.Me.Position));
+            slot.Add(new Spell(Spells.黑魔纹, SpellTargetType.Self));
     }
 
     private static void Step2(Slot slot)
