@@ -26,6 +26,8 @@ public class 异言 : ISlotResolver
         if (BLMHelper.火状态 && BattleData.Instance.已使用耀星 && BattleData.Instance.已使用瞬发 && Core.Me.CurrentMp < 800 &&
             Spells.即刻.GetSpell().Cooldown.TotalMilliseconds < 2200) return 5;
         if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 2) return 6;
+        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.即刻.GetSpell().Cooldown.TotalSeconds < 2 &&
+            Spells.即刻.GetSpell().Cooldown.TotalSeconds > 0) return 7;
         return -99;
     }
 }
