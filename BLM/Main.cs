@@ -7,7 +7,7 @@ using Oblivion.BLM.Triggers;
 
 namespace Oblivion.BLM;
 
-public class BLMRotationEntry: IRotationEntry,IDisposable
+public class BLMRotationEntry : IRotationEntry, IDisposable
 {
     public string AuthorName { get; set; } = Helper.AuthorName;
     private readonly Jobs _job = Jobs.BlackMage;
@@ -44,7 +44,7 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
         new(new 黑魔纹(),SlotMode.OffGcd),
         new(new 三连咏唱(),SlotMode.OffGcd),
         new(new 即刻(),SlotMode.OffGcd),
-        
+
     ];
 
     public Rotation? Build(string settingFolder)
@@ -70,8 +70,8 @@ public class BLMRotationEntry: IRotationEntry,IDisposable
     {
         if (level == 100)
         {
-            if(BLMSetting.Instance.标准57)return new Opener_57();
-            if(BLMSetting.Instance.核爆起手)return new Oener_核爆();
+            if (BLMSetting.Instance.标准57) return new Opener_57();
+            if (BLMSetting.Instance.核爆起手) return new Oener_核爆();
         }
 
         return null;

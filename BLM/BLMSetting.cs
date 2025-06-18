@@ -6,7 +6,7 @@ namespace Oblivion.BLM;
 public class BLMSetting
 {
     public static BLMSetting Instance;
-    
+
     #region 标准模板代码 可以直接复制后改掉类名即可
 
     private static string path;

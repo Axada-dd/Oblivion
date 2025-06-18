@@ -11,10 +11,10 @@ public class TriggerCondQt : ITriggerCond
 {
     public string DisplayName => "BLM/QT检测";
     public string Remark { get; set; }
-    
+
     public string Key = "";
     public bool Value;
-    
+
     private int _selectIndex;
     private string[] _qtArray;
 
@@ -22,7 +22,7 @@ public class TriggerCondQt : ITriggerCond
     {
         _qtArray = QT.Instance.GetQtArray();
     }
-    
+
     public bool Draw()
     {
         _selectIndex = Array.IndexOf(_qtArray, Key);
@@ -30,12 +30,12 @@ public class TriggerCondQt : ITriggerCond
         {
             _selectIndex = 0;
         }
-        ImGuiHelper.LeftCombo("选择Key",ref _selectIndex,_qtArray);
+        ImGuiHelper.LeftCombo("选择Key", ref _selectIndex, _qtArray);
         Key = _qtArray[_selectIndex];
         ImGui.SameLine();
         using (new GroupWrapper())
         {
-            ImGui.Checkbox("",ref Value);  
+            ImGui.Checkbox("", ref Value);
         }
         ImGuiHelper.TextColor(Color.Orange, "判断该qt的状态");
         return true;

@@ -61,7 +61,7 @@ public class BLMEvetHandle : IRotationEventHandler
         BattleData.Instance.可瞬发 = Core.Me.HasAura(Buffs.即刻Buff) || Core.Me.HasAura(Buffs.三连Buff);
         if (BattleData.Instance.已使用耀星)
         {
-            if (BLMHelper.冰状态||Spells.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
+            if (BLMHelper.冰状态 || Spells.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
         }
 
         if (BattleData.Instance.已使用黑魔纹)
@@ -69,7 +69,7 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.已使用黑魔纹 = !Helper.Buff时间小于(Buffs.黑魔纹Buff, 500);
         }
 
-        BattleData.Instance.火循环剩余gcd小于3 = BLMHelper.火状态 && Core.Me.CurrentMp < 3200&&(!Helper.Buff时间小于(Buffs.三连Buff,800)||!Helper.Buff时间小于(Buffs.即刻Buff,800));
+        BattleData.Instance.火循环剩余gcd小于3 = BLMHelper.火状态 && Core.Me.CurrentMp < 3200 && (!Helper.Buff时间小于(Buffs.三连Buff, 800) || !Helper.Buff时间小于(Buffs.即刻Buff, 800));
     }
 
     public void OnEnterRotation()

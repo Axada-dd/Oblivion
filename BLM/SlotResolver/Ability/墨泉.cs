@@ -15,9 +15,9 @@ public class 墨泉 : ISlotResolver
     {
         if (!QT.Instance.GetQt("墨泉")) return -5;
         if (!Spells.墨泉.GetSpell().IsReadyWithCanCast()) return -1;
-        if(!BLMHelper.火状态)return -2;
+        if (!BLMHelper.火状态) return -2;
         if (Core.Me.CurrentMp > 800) return -3;
-        if(!BattleData.Instance.已使用瞬发)return -4;
+        if (!BattleData.Instance.已使用瞬发) return -4;
         return 1;
     }
 }
