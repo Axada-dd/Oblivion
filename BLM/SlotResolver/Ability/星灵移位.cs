@@ -11,6 +11,7 @@ public class 星灵移位 : ISlotResolver
         if (Core.Me.Level < 90) return -5;
         if(!BattleData.Instance.已使用瞬发)return -4;
         if (new 异言().Check() == 5) return -5;
+        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 2) return -6;
         if (BLMHelper.冰状态 && Core.Me.HasAura(Buffs.火苗) && BLMHelper.冰层数 == 3 && BLMHelper.冰针 == 3 &&
             !BLMHelper.悖论指示) return 1;
         if (BLMHelper.冰状态 && !Core.Me.HasAura(Buffs.火苗) && BLMHelper.冰层数 == 3 && BLMHelper.冰针 == 3 &&

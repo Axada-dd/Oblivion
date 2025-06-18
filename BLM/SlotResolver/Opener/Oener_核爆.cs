@@ -5,14 +5,13 @@ namespace Oblivion.BLM.SlotResolver.Opener;
 
 public class Oener_核爆: IOpener
 {
-    public int StartCheck()
+    private static bool _isInnerOpener = false;
+    public static int StartCheck()
     {
-        /*if(!Spells.即刻.GetSpell().IsReadyWithCanCast())return -1;
-        if(!Spells.黑魔纹.GetSpell().IsReadyWithCanCast())return -2;
-        if(Spells.三连.GetSpell().Charges < 2.0)return -3;
-        if(Spells.详述.GetSpell().IsReadyWithCanCast())return -4;
-        if(Spells.墨泉.GetSpell().IsReadyWithCanCast())return -5;
-        if(Core.Me.CurrentMp<10000)return -6;*/
+        if (_isInnerOpener) return 1;
+        if (!QT.Instance.GetQt("起手序列")) return -1;
+        if(Core.Me.CurrentMp<10000)return -6;
+        if(BLMHelper.火状态||BLMHelper.冰状态) return -2;
         return 0;
     }
 
@@ -29,11 +28,13 @@ public class Oener_核爆: IOpener
             
             countDownHandler.AddAction(startTime+600, Spells.黑魔纹);
             countDownHandler.AddAction(startTime, Spells.火三,SpellTargetType.Target);
+            countDownHandler.AddAction(startTime-500, () => _isInnerOpener = true);
             countDownHandler.AddAction(startTime-2800,Spells.雷一.GetActionChange(),SpellTargetType.Target);
         }
         else
         {
             countDownHandler.AddAction(startTime, Spells.火三,SpellTargetType.Target);
+            countDownHandler.AddAction(startTime-500, () => _isInnerOpener = true);
             countDownHandler.AddAction(startTime-3000,Spells.雷一.GetActionChange(),SpellTargetType.Target);
         }
     }

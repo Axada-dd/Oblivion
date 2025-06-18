@@ -25,6 +25,7 @@ public class QT
         Instance.AddQt("核爆", true);
         Instance.AddQt("黑魔纹", true);
         Instance.AddQt("墨泉", true);
+        Instance.AddQt("醒梦", true);
         Instance.AddQt("三连咏唱", true);
         Instance.AddQt("即刻", true);
         Instance.AddQt("雷一", true);
@@ -33,6 +34,7 @@ public class QT
         Instance.AddQt("秽浊", true);
         Instance.AddQt("星灵移位", true);
         Instance.AddQt("详述", true);
+        Instance.AddQt("起手序列", true);
         Instance.AddQt("倾泻资源", false);
 
 

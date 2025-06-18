@@ -84,6 +84,8 @@ public static class SettingTab
             ImGui.Text($"三连咏唱层数：{Spells.三连.GetSpell().Charges}");
             ImGui.Text($"三连咏唱下一层转好时间：{Spells.三连.GetSpell().Charges*60}");
             ImGui.Text($"火循环将结束：{BattleData.Instance.火循环剩余gcd小于3}");
+            ImGui.Text($"57起手Check:{Opener_57.StartCheck()}");
+            ImGui.Text($"核爆起手Check:{Oener_核爆.StartCheck()}");
         });
     }
 }
