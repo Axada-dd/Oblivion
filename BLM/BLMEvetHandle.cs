@@ -97,7 +97,6 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.能使用的火四个数 += mp / 1600;
             BattleData.Instance.能使用耀星 = (BattleData.Instance.能使用的火四个数 + BLMHelper.耀星层数) == 6;
         }
-        BattleData.Instance.火循环剩余gcd小于3 = BLMHelper.火状态 && Core.Me.CurrentMp < 3200 && (!Helper.Buff时间小于(Buffs.三连Buff, 800) || !Helper.Buff时间小于(Buffs.即刻Buff, 800));
         if (BLMHelper.火状态)
         {
             BattleData.Instance.冰循环剩余gcd = 0;
