@@ -5,10 +5,9 @@ namespace Oblivion.BLM.SlotResolver.Opener;
 
 public class Opener_57 : IOpener
 {
-    private static bool _isInnerOpener = false;
     public static int StartCheck()
     {
-        if (_isInnerOpener) return 1;
+        if (BattleData.Instance.isInnerOpener) return 1;
         if (!QT.Instance.GetQt("起手序列")) return -1;
         if (Core.Me.CurrentMp < 10000) return -6;
         if (BLMHelper.火状态 || BLMHelper.冰状态) return -2;
@@ -28,13 +27,13 @@ public class Opener_57 : IOpener
 
             countDownHandler.AddAction(startTime + 600, Spells.黑魔纹, SpellTargetType.Self);
             countDownHandler.AddAction(startTime, Spells.火三, SpellTargetType.Target);
-            countDownHandler.AddAction(startTime - 500, () => _isInnerOpener = true);
+            countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.isInnerOpener = true);
             countDownHandler.AddAction(startTime - 2800, Spells.雷一.GetActionChange(), SpellTargetType.Target);
         }
         else
         {
             countDownHandler.AddAction(startTime, Spells.火三, SpellTargetType.Target);
-            countDownHandler.AddAction(startTime - 500, () => _isInnerOpener = true);
+            countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.isInnerOpener = true);
             countDownHandler.AddAction(startTime - 3000, Spells.雷一.GetActionChange(), SpellTargetType.Target);
         }
     }
@@ -101,5 +100,7 @@ public class Opener_57 : IOpener
         slot.Add(new Spell(Spells.绝望, SpellTargetType.Target));
         slot.Add(new Spell(Spells.星灵移位, SpellTargetType.Self));
         slot.Add(new Spell(Spells.三连, SpellTargetType.Self));
+        if(BattleData.Instance.isInnerOpener)
+            BattleData.Instance.isInnerOpener = false;
     }
 }

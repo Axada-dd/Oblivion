@@ -1,4 +1,5 @@
 using AEAssist.MemoryApi;
+using Oblivion.BLM.QtUI;
 
 namespace Oblivion.BLM;
 
@@ -42,7 +43,7 @@ public class BLMEvetHandle : IRotationEventHandler
         if (_GcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一gcd = spell.Id;
-            BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 800 : 1500);
+            BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 2000);
         }
 
         if (BattleData.Instance.已使用瞬发)
@@ -58,7 +59,10 @@ public class BLMEvetHandle : IRotationEventHandler
 
     public void OnBattleUpdate(int currTimeInMs)
     {
+        BattleData.Instance.复唱时间 = GCDHelper.GetGCDCooldown();
         BattleData.Instance.可瞬发 = Core.Me.HasAura(Buffs.即刻Buff) || Core.Me.HasAura(Buffs.三连Buff);
+        if (!QT.Instance.GetQt("aoe"))
+            BattleData.Instance.启动aoe = false;
         if (BattleData.Instance.已使用耀星)
         {
             if (BLMHelper.冰状态 || Spells.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
@@ -70,6 +74,38 @@ public class BLMEvetHandle : IRotationEventHandler
         }
 
         BattleData.Instance.火循环剩余gcd小于3 = BLMHelper.火状态 && Core.Me.CurrentMp < 3200 && (!Helper.Buff时间小于(Buffs.三连Buff, 800) || !Helper.Buff时间小于(Buffs.即刻Buff, 800));
+        if (BLMHelper.火状态)
+        {
+            BattleData.Instance.火循环剩余gcd = 0;
+            if (BattleData.Instance.isInnerOpener)
+            {
+                BattleData.Instance.火循环剩余gcd = BLMSetting.Instance.核爆起手 ? 18 : 19;
+            }
+            else
+            {
+                var 模拟mp = (int)Core.Me.CurrentMp;
+                if (BLMHelper.悖论指示)
+                {
+                    模拟mp -= 1600;
+                    BattleData.Instance.火循环剩余gcd++;
+                }
+                if(!BattleData.Instance.已使用耀星&&BattleData.Instance.能使用耀星)BattleData.Instance.火循环剩余gcd++;
+                if(BLMHelper.火层数<3)BattleData.Instance.火循环剩余gcd++;//火苗火3
+                if (!BattleData.Instance.已使用绝望)
+                {
+                    模拟mp -= 800;
+                    BattleData.Instance.火循环剩余gcd++;
+                }
+                int 火四 = 模拟mp / 1600;
+                if (火四 > 0)BattleData.Instance.火循环剩余gcd += 火四;
+                if(Helper.目标Buff时间小于(Buffs.雷一dot, BattleData.Instance.火循环剩余gcd*GCDHelper.GetGCDCooldown(), false) && Core.Me.HasAura(Buffs.雷云))BattleData.Instance.火循环剩余gcd++;
+            }
+        }
+
+        if (BLMHelper.冰状态)
+        {
+            BattleData.Instance.冰循环剩余gcd = 0;
+        }
     }
 
     public void OnEnterRotation()
