@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Numerics;
 using AEAssist.CombatRoutine.View.JobView;
 using AEAssist.GUI;
+using AEAssist.MemoryApi;
 using ImGuiNET;
 using Oblivion.BLM.SlotResolver.Opener;
 
@@ -77,17 +78,17 @@ public static class SettingTab
         instance.AddTab("Debug", window =>
         {
             ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
+            ImGui.Text($"复唱时间:{Core.Resolve<MemApiSpell>().GetGCDDuration()}");
             ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
             ImGui.Text($"可瞬发：{BattleData.Instance.可瞬发}");
             ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
             ImGui.Text($"已使用黑魔纹：{BattleData.Instance.已使用黑魔纹}");
-            ImGui.Text($"三连咏唱层数：{Spells.三连.GetSpell().Charges}");
-            ImGui.Text($"三连咏唱下一层转好时间：{Spells.三连.GetSpell().Charges*60}");
-            ImGui.Text($"火循环将结束：{BattleData.Instance.火循环剩余gcd小于3}");
+            ImGui.Text($"三连咏唱CD：{BattleData.Instance.三连cd}");
             ImGui.Text($"火循环剩余gcd：{BattleData.Instance.火循环剩余gcd}");
             ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
-            ImGui.Text($"57起手Check:{Opener_57.StartCheck()}");
-            ImGui.Text($"核爆起手Check:{Oener_核爆.StartCheck()}");
+            ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
+            ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
+            //ImGui.Text($"是否在起手：{Opener57.StartCheck()>=0||Opener核爆.StartCheck()>=0}");
         });
     }
 }

@@ -14,11 +14,13 @@ public class BattleData
     public bool 火循环剩余gcd小于3 { get; set; } = false;
     public int 火循环剩余gcd { get; set; } = 0;
     public int 冰循环剩余gcd { get; set; } = 0;
-    public float 复唱时间 { get; set; } = 0;
+    public int 复唱时间 { get; set; } = 0;
     public bool 双星灵墨泉短 { get; set; } = false;
     public bool 双星灵墨泉长 { get; set; } = false;
-    public bool isInnerOpener = false;
+    public bool IsInnerOpener = false;
     public bool 启动aoe { get; set; } = false;
     public bool 能使用耀星 { get; set; } = false;
     public bool 已使用绝望 { get; set; } = false;
+    public float 三连cd { get; set; } = 0;
+    public int 能使用的火四个数 { get; set; } = 0;
 }

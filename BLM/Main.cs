@@ -68,10 +68,11 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
 
     private IOpener? GetOpener(uint level)
     {
+        //if (!QT.Instance.GetQt("起手序列")) return null;
         if (level == 100)
         {
-            if (BLMSetting.Instance.标准57) return new Opener_57();
-            if (BLMSetting.Instance.核爆起手) return new Oener_核爆();
+            if (BLMSetting.Instance.标准57) return new Opener57();
+            if (BLMSetting.Instance.核爆起手) return new Opener核爆();
         }
 
         return null;

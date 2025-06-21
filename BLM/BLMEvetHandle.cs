@@ -1,3 +1,4 @@
+using AEAssist.Function;
 using AEAssist.MemoryApi;
 using Oblivion.BLM.QtUI;
 
@@ -19,6 +20,7 @@ public class BLMEvetHandle : IRotationEventHandler
     public void OnResetBattle()
     {
         BattleData.Instance = new BattleData();
+        BattleData.Instance.IsInnerOpener = false;
     }
 
     public async Task OnNoTarget()
@@ -36,6 +38,7 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             BattleData.Instance.已使用耀星 = true;
         }
+        if (spell.Id == Spells.绝望) BattleData.Instance.已使用绝望 = true;
     }
 
     public void AfterSpell(Slot slot, Spell spell)
@@ -43,7 +46,7 @@ public class BLMEvetHandle : IRotationEventHandler
         if (_GcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一gcd = spell.Id;
-            BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 2000);
+            BattleData.Instance.已使用瞬发 =  GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1200 : 1500);
         }
 
         if (BattleData.Instance.已使用瞬发)
@@ -55,11 +58,18 @@ public class BLMEvetHandle : IRotationEventHandler
         }
 
         if (spell.Id == Spells.黑魔纹) BattleData.Instance.已使用黑魔纹 = true;
+        if (spell.Id == Spells.绝望) BattleData.Instance.已使用绝望 = true;
     }
-
+    
     public void OnBattleUpdate(int currTimeInMs)
     {
-        BattleData.Instance.复唱时间 = GCDHelper.GetGCDCooldown();
+        if (Spells.三连.GetSpell().Charges > 1)
+        {
+            BattleData.Instance.三连cd = 60-(Spells.三连.GetSpell().Charges - 1) * 60;
+        }
+        else BattleData.Instance.三连cd = 60-Spells.三连.GetSpell().Charges * 60;
+
+        BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetGCDDuration();
         BattleData.Instance.可瞬发 = Core.Me.HasAura(Buffs.即刻Buff) || Core.Me.HasAura(Buffs.三连Buff);
         if (!QT.Instance.GetQt("aoe"))
             BattleData.Instance.启动aoe = false;
@@ -67,23 +77,39 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             if (BLMHelper.冰状态 || Spells.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
         }
+        if (BattleData.Instance.已使用绝望)if(BLMHelper.冰状态 || Spells.墨泉.RecentlyUsed(300))  BattleData.Instance.已使用绝望 = false;
 
         if (BattleData.Instance.已使用黑魔纹)
         {
             BattleData.Instance.已使用黑魔纹 = !Helper.Buff时间小于(Buffs.黑魔纹Buff, 500);
         }
 
+        if (BLMHelper.火状态)
+        {
+            BattleData.Instance.能使用的火四个数 = 0;
+            var mp = (int)(Core.Me.CurrentMp - 2400);
+            if (BLMHelper.冰针 > 0)
+            {
+                mp -= 800*BLMHelper.冰针;
+                BattleData.Instance.能使用的火四个数 += BLMHelper.冰针;
+            }
+
+            BattleData.Instance.能使用的火四个数 += mp / 1600;
+            BattleData.Instance.能使用耀星 = (BattleData.Instance.能使用的火四个数 + BLMHelper.耀星层数) == 6;
+        }
         BattleData.Instance.火循环剩余gcd小于3 = BLMHelper.火状态 && Core.Me.CurrentMp < 3200 && (!Helper.Buff时间小于(Buffs.三连Buff, 800) || !Helper.Buff时间小于(Buffs.即刻Buff, 800));
         if (BLMHelper.火状态)
         {
+            BattleData.Instance.冰循环剩余gcd = 0;
             BattleData.Instance.火循环剩余gcd = 0;
-            if (BattleData.Instance.isInnerOpener)
+            if (BattleData.Instance.IsInnerOpener)
             {
                 BattleData.Instance.火循环剩余gcd = BLMSetting.Instance.核爆起手 ? 18 : 19;
             }
             else
             {
                 var 模拟mp = (int)Core.Me.CurrentMp;
+                int 火四 = 0;
                 if (BLMHelper.悖论指示)
                 {
                     模拟mp -= 1600;
@@ -91,20 +117,32 @@ public class BLMEvetHandle : IRotationEventHandler
                 }
                 if(!BattleData.Instance.已使用耀星&&BattleData.Instance.能使用耀星)BattleData.Instance.火循环剩余gcd++;
                 if(BLMHelper.火层数<3)BattleData.Instance.火循环剩余gcd++;//火苗火3
-                if (!BattleData.Instance.已使用绝望)
+                if (!BattleData.Instance.已使用绝望)//绝望
                 {
                     模拟mp -= 800;
                     BattleData.Instance.火循环剩余gcd++;
                 }
-                int 火四 = 模拟mp / 1600;
-                if (火四 > 0)BattleData.Instance.火循环剩余gcd += 火四;
-                if(Helper.目标Buff时间小于(Buffs.雷一dot, BattleData.Instance.火循环剩余gcd*GCDHelper.GetGCDCooldown(), false) && Core.Me.HasAura(Buffs.雷云))BattleData.Instance.火循环剩余gcd++;
+                if (BLMHelper.冰针 > 0)
+                {
+                    模拟mp -= 800*BLMHelper.冰针;
+                    火四 += BLMHelper.冰针;
+                }
+
+                火四 += 模拟mp / 1600;
+                BattleData.Instance.火循环剩余gcd += 火四;
+                if(Helper.目标Buff时间小于(Buffs.雷一dot, BattleData.Instance.火循环剩余gcd*BattleData.Instance.复唱时间, false) && Core.Me.HasAura(Buffs.雷云))BattleData.Instance.火循环剩余gcd++;
             }
         }
 
         if (BLMHelper.冰状态)
         {
             BattleData.Instance.冰循环剩余gcd = 0;
+            BattleData.Instance.火循环剩余gcd = 0;
+            if (BLMHelper.冰层数 < 3) BattleData.Instance.冰循环剩余gcd++;
+            if (BLMHelper.冰针 < 3) BattleData.Instance.冰循环剩余gcd++;
+            if (BLMHelper.悖论指示) BattleData.Instance.冰循环剩余gcd++;
+            if (Helper.目标Buff时间小于(Buffs.雷一dot, BattleData.Instance.冰循环剩余gcd *BattleData.Instance.复唱时间, false) &&
+                Core.Me.HasAura(Buffs.雷云)) BattleData.Instance.冰循环剩余gcd++;
         }
     }
 
@@ -118,7 +156,7 @@ public class BLMEvetHandle : IRotationEventHandler
         //检查全局设置
         if (Helper.GlobalSettings.NoClipGCD3)
             LogHelper.PrintError("建议不要在acr全局设置中勾选【全局能力技不卡GCD】选项");
-
+        BattleData.Instance.IsInnerOpener = false;
         //更新时间轴
         /*if (BLMSetting.Instance.AutoUpdataTimeLines)
             TimeLineUpdater.UpdateFiles(Helper.DncTimeLineUrl);*/

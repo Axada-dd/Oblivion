@@ -3,16 +3,15 @@ using Oblivion.BLM.QtUI;
 
 namespace Oblivion.BLM.SlotResolver.Opener;
 
-public class Oener_核爆 : IOpener
+public class Opener核爆 : IOpener
 {
     
-    public static int StartCheck()
+    public int StartCheck()
     {
-        if (BattleData.Instance.isInnerOpener) return 1;
-        if (!QT.Instance.GetQt("起手序列")) return -1;
-        if (Core.Me.CurrentMp < 10000) return -6;
-        if (BLMHelper.火状态 || BLMHelper.冰状态) return -2;
-        return 0;
+        if (BattleData.Instance.IsInnerOpener) return 1;
+        
+        if (QT.Instance.GetQt("起手序列")&&Core.Me.CurrentMp == 10000&&!(BLMHelper.火状态 || BLMHelper.冰状态)) return 2;
+        return -1;
     }
 
     public int StopCheck(int index)
@@ -28,13 +27,13 @@ public class Oener_核爆 : IOpener
 
             countDownHandler.AddAction(startTime + 600, Spells.黑魔纹, SpellTargetType.Self);
             countDownHandler.AddAction(startTime, Spells.火三, SpellTargetType.Target);
-            countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.isInnerOpener = true);
+            countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.IsInnerOpener = true);
             countDownHandler.AddAction(startTime - 2800, Spells.雷一.GetActionChange(), SpellTargetType.Target);
         }
         else
         {
             countDownHandler.AddAction(startTime, Spells.火三, SpellTargetType.Target);
-            countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.isInnerOpener = true);
+            countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.IsInnerOpener = true);
             countDownHandler.AddAction(startTime - 3000, Spells.雷一.GetActionChange(), SpellTargetType.Target);
         }
     }
@@ -45,6 +44,7 @@ public class Oener_核爆 : IOpener
 
     private static void Step1(Slot slot)
     {
+        LogHelper.Print("开始Step1");
         slot.Add(new Spell(Spells.即刻, SpellTargetType.Self));
         slot.Add(new Spell(Spells.详述, SpellTargetType.Self));
         slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
@@ -96,7 +96,7 @@ public class Oener_核爆 : IOpener
         slot.Add(new Spell(Spells.核爆, SpellTargetType.Target));
         slot.Add(new Spell(Spells.耀星, SpellTargetType.Target));
         slot.Add(new Spell(Spells.星灵移位, SpellTargetType.Self));
-        if(BattleData.Instance.isInnerOpener)
-            BattleData.Instance.isInnerOpener = false;
+        if(BattleData.Instance.IsInnerOpener)
+            BattleData.Instance.IsInnerOpener = false;
     }
 }
