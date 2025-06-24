@@ -2,6 +2,8 @@ using System.Numerics;
 using AEAssist.CombatRoutine.Trigger;
 using AEAssist.CombatRoutine.Trigger.Node;
 using AEAssist.MemoryApi;
+using AEAssist.Helper;
+using AEAssist;
 
 namespace Oblivion.ScriptTest;
 
@@ -14,21 +16,33 @@ public class FruP3AutoForceRotation : ITriggerScript
             string direction = "";
 
             Vector3 lightPosition = (Vector3)lightPositionObj;
+            var lightIndex = PositionTo8Dir(lightPosition, new Vector3(100, 0, 100));
+            var myRot = lightIndex switch
+            {
+                0 => float.Pi,
+                1 => float.Pi/4,
+                2 => float.Pi/2,
+                3 => float.Pi*3/4,
+                4 => 0,
+                5 => -float.Pi/4,
+                6 => -float.Pi/2,
+                7 => -float.Pi*3/4,
+                _ => 0,
+            };
 
-            float angle = MathF.Atan2(-(lightPosition.X - 100), -(lightPosition.Z - 100)); // 北为0，逆时针为正
-            angle = NormalizeAngle(angle); // 归一化到 [-π, π]
-            Core.Resolve<MemApiMove>().SetRot(angle);
-            LogHelper.Print($"Auto face to {direction}，Rotation: {angle}");
+            Core.Resolve<MemApiMove>().SetRot(myRot);
+            LogHelper.Print($"灯在：{lightIndex} 面向：{myRot}");
             return true;
         }
 
         return false;
     }
 
-    private static float NormalizeAngle(float angle)
+    private int PositionTo8Dir(Vector3 point, Vector3 centre)
     {
-        while (angle <= -MathF.PI) angle += 2 * MathF.PI;
-        while (angle > MathF.PI) angle -= 2 * MathF.PI;
-        return angle;
+        // Dirs: N = 0, NE = 1, ..., NW = 7
+        var r = Math.Round(4 - 4 * Math.Atan2(point.X - centre.X, point.Z - centre.Z) / Math.PI) % 8;
+        return (int)r;
+
     }
 }
