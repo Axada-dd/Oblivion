@@ -73,6 +73,12 @@ public class BLMEvetHandle : IRotationEventHandler
         }
         else BattleData.Instance.三连cd = 60-Spells.三连.GetSpell().Charges * 60;
 
+        if (BattleData.Instance.能使用耀星 && Spells.三连.GetSpell().Charges > 1 && !BattleData.Instance.已使用耀星 &&
+            !QT.Instance.GetQt("三连用于走位") && (Spells.即刻.GetSpell().Cooldown.TotalSeconds > 3 || Spells.三连.GetSpell().Charges * 60 >= 110 ) && Spells.墨泉.GetSpell().Cooldown.TotalSeconds > 12)
+        {
+            BattleData.Instance.使用三连转冰 = true;
+        }
+        if (BLMHelper.冰状态 || Spells.三连.GetSpell().Charges < 1 || Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 12) BattleData.Instance.使用三连转冰 = false;
         BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetGCDDuration();
         BattleData.Instance.可瞬发 = Core.Me.HasAura(Buffs.即刻Buff) || Core.Me.HasAura(Buffs.三连Buff);
         if (!QT.Instance.GetQt("aoe"))

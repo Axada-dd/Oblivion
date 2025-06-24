@@ -18,6 +18,7 @@ public class 墨泉 : ISlotResolver
         if (!BLMHelper.火状态) return -2;
         if (Core.Me.CurrentMp > 800) return -3;
         if (!BattleData.Instance.已使用瞬发) return -4;
+        if (BLMHelper.耀星层数 == 6 )return -6;
         return 1;
     }
 }

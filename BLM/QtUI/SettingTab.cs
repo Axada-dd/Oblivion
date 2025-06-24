@@ -100,6 +100,7 @@ public static class SettingTab
                 ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
                 ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
                 ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
+                ImGui.Text($"三连转冰：{BattleData.Instance.使用三连转冰}");
                 //ImGui.Text($"是否在起手：{Opener57.StartCheck()>=0||Opener核爆.StartCheck()>=0}");
             }
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))

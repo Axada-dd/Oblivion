@@ -25,7 +25,7 @@ public class 异言 : ISlotResolver
         if (MoveHelper.IsMoving() && !BattleData.Instance.可瞬发) return 1;
         if (BLMHelper.冰状态 && !BattleData.Instance.可瞬发 && BLMHelper.冰层数 < 3 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 10 && !BLMHelper.悖论指示) return 4;
         //if (BLMHelper.火状态 && BLMHelper.耀星层数 != 6  && Core.Me.CurrentMp < 800 && Spells.即刻.GetSpell().Cooldown.TotalMilliseconds < 2200) return 5;
-        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 2) return 6;
+        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 2 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds >0 && BLMHelper.耀星层数 != 6) return 6;
         if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.即刻.GetSpell().Cooldown.TotalSeconds < 2 &&
             Spells.即刻.GetSpell().Cooldown.TotalSeconds > 0 && BLMHelper.耀星层数 != 6) return 7;
         return -99;

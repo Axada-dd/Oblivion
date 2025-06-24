@@ -23,4 +23,6 @@ public class BattleData
     public bool 已使用绝望 { get; set; } = false;
     public float 三连cd { get; set; } = 0;
     public int 能使用的火四个数 { get; set; } = 0;
+    
+    public bool 使用三连转冰 { get; set; } = false;
 }
