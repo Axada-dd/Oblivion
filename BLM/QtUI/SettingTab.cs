@@ -46,6 +46,26 @@ public static class SettingTab
                 }
 
             }
+
+            if (ImGui.CollapsingHeader("TTK设置", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                ImGui.Text("设置TTK阈值（毫秒）：");
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.BeginTooltip();
+                    ImGui.Text("当目标剩余击杀时间低于此值时，将停止使用彩绘技能");
+                    ImGui.EndTooltip();
+                }
+                int currentTTK = BLMSetting.Instance.TTK阈值;
+                if (ImGui.InputInt("##TTK阈值", ref currentTTK, 1000, 5000))
+                {
+                    BLMSetting.Instance.TTK阈值 = currentTTK;
+                    BLMSetting.Instance.Save();
+                }
+            }
+            
+
+            
             if (ImGui.CollapsingHeader("时间轴", ImGuiTreeNodeFlags.DefaultOpen))
             {
                 ImGui.Dummy(new Vector2(5, 0));
@@ -61,34 +81,55 @@ public static class SettingTab
                 ImGui.Dummy(new Vector2(0, 10));
             }
 
-            if (ImGui.CollapsingHeader("以太步窗口", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                ImGui.Dummy(new Vector2(5, 0));
-                ImGui.SameLine();
-                ImGui.BeginGroup();
-                ImGui.Checkbox("显示以太步窗口", ref BLMSetting.Instance.以太步窗口显示);
-                ImGui.DragInt("以太步窗口大小", ref BLMSetting.Instance.以太步IconSize, 1, 20, 100);
-                ImGui.EndGroup();
-                ImGui.Dummy(new Vector2(0, 10));
-            }
-
             ImGuiHelper.Separator();
 
         });
-        instance.AddTab("Debug", window =>
+        instance.AddTab("其他设置", window =>
         {
-            ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
-            ImGui.Text($"复唱时间:{Core.Resolve<MemApiSpell>().GetGCDDuration()}");
-            ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
-            ImGui.Text($"可瞬发：{BattleData.Instance.可瞬发}");
-            ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
-            ImGui.Text($"已使用黑魔纹：{BattleData.Instance.已使用黑魔纹}");
-            ImGui.Text($"三连咏唱CD：{BattleData.Instance.三连cd}");
-            ImGui.Text($"火循环剩余gcd：{BattleData.Instance.火循环剩余gcd}");
-            ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
-            ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
-            ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
-            //ImGui.Text($"是否在起手：{Opener57.StartCheck()>=0||Opener核爆.StartCheck()>=0}");
+            if (ImGui.CollapsingHeader("Debug", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                
+                ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
+                ImGui.Text($"复唱时间:{Core.Resolve<MemApiSpell>().GetGCDDuration()}");
+                ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
+                ImGui.Text($"可瞬发：{BattleData.Instance.可瞬发}");
+                ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
+                ImGui.Text($"已使用黑魔纹：{BattleData.Instance.已使用黑魔纹}");
+                ImGui.Text($"三连咏唱CD：{BattleData.Instance.三连cd}");
+                ImGui.Text($"火循环剩余gcd：{BattleData.Instance.火循环剩余gcd}");
+                ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
+                ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
+                ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
+                //ImGui.Text($"是否在起手：{Opener57.StartCheck()>=0||Opener核爆.StartCheck()>=0}");
+            }
+            if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                if (ImGui.Button("清除队列"))
+                {
+                    AI.Instance.BattleData.HighPrioritySlots_OffGCD.Clear();
+                    AI.Instance.BattleData.HighPrioritySlots_GCD.Clear();
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("清除一个"))
+                {
+                    AI.Instance.BattleData.HighPrioritySlots_OffGCD.Dequeue();
+                    AI.Instance.BattleData.HighPrioritySlots_GCD.Dequeue();
+                }
+                ImGui.Text("-------能力技-------");
+                if (AI.Instance.BattleData.HighPrioritySlots_OffGCD.Count > 0)
+                    foreach (var action in AI.Instance.BattleData.HighPrioritySlots_OffGCD.SelectMany(spell => spell.Actions))
+                    {
+                        ImGui.Text(action.Spell.Name);
+                    }
+                ImGui.Text("-------GCD-------");
+                if (AI.Instance.BattleData.HighPrioritySlots_GCD.Count > 0)
+                    foreach (var action in AI.Instance.BattleData.HighPrioritySlots_GCD.SelectMany(spell => spell.Actions))
+                    {
+                        ImGui.Text(action.Spell.Name);
+                    }
+                ImGui.TreePop();
+            }
         });
+        
     }
 }

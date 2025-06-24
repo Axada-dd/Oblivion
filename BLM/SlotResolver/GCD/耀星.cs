@@ -4,7 +4,8 @@ public class 耀星 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        Spell spell = Spells.耀星.GetActionChange().GetSpell(SpellTargetType.Target);
+        var canTargetObjects = Core.Me.GetCurrTarget().目标周围可选中敌人数量(5)>2 ? Spells.耀星.最优aoe目标(3) : Core.Me.GetCurrTarget();
+        Spell spell = Spells.耀星.GetActionChange().GetSpell(canTargetObjects);
         if (spell == null) return;
         slot.Add(spell);
     }

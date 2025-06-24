@@ -51,4 +51,5 @@ public class BLMSetting
     public bool 标准57 = false;
     public double 起手预读时间 = 3.5;
     public bool 提前黑魔纹 = false;
+    public int TTK阈值 = 12000;
 }

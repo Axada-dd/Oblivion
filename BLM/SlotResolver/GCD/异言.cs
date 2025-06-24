@@ -17,6 +17,7 @@ public class 异言 : ISlotResolver
         if (!Spells.异言.GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount >= 2&& QT.Instance.GetQt("AOE")) return -2;
+        if (TTKHelper.IsTargetTTK(Core.Me.GetCurrTarget(), BLMSetting.Instance.TTK阈值, false)) return 999;
         if (QT.Instance.GetQt("倾泻资源")) return 666;
         if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 4) return 5;
         if (BLMHelper.通晓层数 == 3 && BLMHelper.通晓剩余时间 <= 10000) return 2;

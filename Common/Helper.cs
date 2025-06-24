@@ -9,6 +9,15 @@ public static class Helper
     private static int _GcdDuration = 0;
 
 
+    public static bool 是否在副本中()
+    {
+        return Core.Resolve<MemApiCondition>().IsBoundByDuty();
+    }
+
+    public static bool 是否在战斗中()
+    {
+        return Core.Me.InCombat();
+    }
     /// <summary>
     /// 获取自身buff的剩余时间
     /// </summary>
@@ -122,6 +131,10 @@ public static class Helper
         return TargetHelper.GetMostCanTargetObjects(spellId, count);
     }
 
+    public static int 目标周围可选中敌人数量(this IBattleChara? target, int range)
+    {
+        return TargetHelper.GetNearbyEnemyCount(target, 25, range);
+    }
     /// <summary>
     /// 获取非战斗状态时开了盾姿的人
     /// </summary>

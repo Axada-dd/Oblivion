@@ -13,7 +13,7 @@ public class QT
     /// </summary>
     public static void Reset()
     {
-
+        
     }
     public static void Build()
     {
@@ -33,22 +33,25 @@ public class QT
         Instance.AddQt("异言", true);
         Instance.AddQt("秽浊", true);
         Instance.AddQt("星灵移位", true);
-        Instance.AddQt("保留三连",false,"三连保留用于走位");
+        Instance.AddQt("三连用于走位",false,"三连保留用于走位");
         Instance.AddQt("详述", true);
         Instance.AddQt("起手序列", true,"关闭会不倒计时起手");
         Instance.AddQt("AOE", false,"一键关闭所有aoe技能");
         Instance.AddQt("倾泻资源", false,"清空异言");
+        Instance.AddQt("上天转圈", false);
+        Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项");
 
 
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());
         Instance.AddHotkey("异言", new HotKeyResolver_NormalSpell(Spells.异言, SpellTargetType.Target));
         Instance.AddHotkey("秽浊", new HotKeyResolver_NormalSpell(Spells.秽浊, SpellTargetType.Target));
-        Instance.AddHotkey("即刻", new HotKeyResolver_NormalSpell(Spells.即刻, SpellTargetType.Target));
-        Instance.AddHotkey("黑魔纹", new HotKeyResolver_NormalSpell(Spells.黑魔纹, SpellTargetType.Target));
-        Instance.AddHotkey("三连咏唱", new HotKeyResolver_NormalSpell(Spells.三连, SpellTargetType.Target));
+        Instance.AddHotkey("即刻", new HotKeyResolver_NormalSpell(Spells.即刻, SpellTargetType.Self));
+        Instance.AddHotkey("黑魔纹", new HotKeyResolver_NormalSpell(Spells.黑魔纹, SpellTargetType.Self));
+        Instance.AddHotkey("三连咏唱", new HotKeyResolver_NormalSpell(Spells.三连, SpellTargetType.Self));
         Instance.AddHotkey("冲刺", new HotKeyResolver_疾跑());
-        Instance.AddHotkey("沉稳咏唱", new HotKeyResolver_NormalSpell(Spells.沉稳, SpellTargetType.Target));
+        Instance.AddHotkey("沉稳咏唱", new HotKeyResolver_NormalSpell(Spells.沉稳, SpellTargetType.Self));
         Instance.AddHotkey("混乱", new HotKeyResolver_NormalSpell(Spells.混乱, SpellTargetType.Target, true));
+        Instance.AddHotkey("魔罩", new HotKeyResolver_NormalSpell(Spells.魔罩, SpellTargetType.Self));
         
         
         ReadmeTab.Build(Instance);

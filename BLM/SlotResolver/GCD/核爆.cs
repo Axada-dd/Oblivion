@@ -7,7 +7,7 @@ public class 核爆 : ISlotResolver
 {
     public void Build(Slot slot)
     {
-        var canTargetObjects = Spells.核爆.最优aoe目标(2);
+        var canTargetObjects = Core.Me.GetCurrTarget().目标周围可选中敌人数量(5)>2 ? Spells.核爆.最优aoe目标(3) : Core.Me.GetCurrTarget();
         Spell spell = Spells.核爆.GetActionChange().GetSpell(canTargetObjects);
         if (spell == null) return;
         slot.Add(spell);
@@ -20,8 +20,10 @@ public class 核爆 : ISlotResolver
         if (!QT.Instance.GetQt("核爆")&&!QT.Instance.GetQt("AOE")) return -5;
         if (!Spells.核爆.GetSpell().IsReadyWithCanCast()) return -2;
         if (!BLMHelper.火状态) return -4;
-        if (BLMHelper.耀星层数 < 6 && !BattleData.Instance.已使用耀星 && BLMHelper.冰针 >= 1 && (!Helper.IsMove || BattleData.Instance.可瞬发)) return 1;
-        if (BLMHelper.耀星层数 < 6 && !BattleData.Instance.已使用耀星 && BattleData.Instance.前一gcd == Spells.核爆) return 2;
+        if (Helper.IsMove || !BattleData.Instance.可瞬发) return -5;
+        if (BLMHelper.耀星层数 < 6 && BLMHelper.冰针 >= 1 ) return 1;
+        if (BLMHelper.耀星层数 < 6 && (BattleData.Instance.前一gcd == Spells.核爆 || BLMHelper.耀星层数 >2 )) return 2;
+        if (nearbyEnemyCount >3 )return 3;
         return -99;
     }
 }

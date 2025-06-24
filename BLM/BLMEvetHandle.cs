@@ -26,6 +26,9 @@ public class BLMEvetHandle : IRotationEventHandler
     public async Task OnNoTarget()
     {
         if (AI.Instance.BattleData.CurrBattleTimeInMs < 10 * 1000) return;
+        if (!QT.Instance.GetQt("Boss上天")) return;
+        if (BLMHelper.火状态) await Spells.星灵移位.GetSpell(SpellTargetType.Self).Cast();
+        if (BLMHelper.冰状态 && BLMHelper.冰层数 <3 && BLMHelper.冰针<3 && Core.Me.CurrentMp < 10000) await Spells.灵极魂.GetSpell(SpellTargetType.Self).Cast();
     }
 
     public void OnSpellCastSuccess(Slot slot, Spell spell)
@@ -63,6 +66,7 @@ public class BLMEvetHandle : IRotationEventHandler
     
     public void OnBattleUpdate(int currTimeInMs)
     {
+        
         if (Spells.三连.GetSpell().Charges > 1)
         {
             BattleData.Instance.三连cd = 60-(Spells.三连.GetSpell().Charges - 1) * 60;

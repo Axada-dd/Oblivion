@@ -40,13 +40,33 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         new(new 醒梦(),SlotMode.OffGcd),
         new(new 墨泉(),SlotMode.OffGcd),
         new(new 详述(),SlotMode.OffGcd),
-        new(new 星灵移位(),SlotMode.OffGcd),
-        new(new 黑魔纹(),SlotMode.OffGcd),
-        new(new 三连咏唱(),SlotMode.OffGcd),
         new(new 即刻(),SlotMode.OffGcd),
+        new(new 星灵移位(),SlotMode.OffGcd),
+        new(new 三连咏唱(),SlotMode.OffGcd),
+        new(new 黑魔纹(),SlotMode.OffGcd),
 
     ];
 
+    public string 下一个GCD()
+    {
+        // 尝试找到第一个槽模式为全局冷却且可用的技能解析器
+        var firstGCDSkill =
+            _slotResolverData.FirstOrDefault(srd => srd.SlotMode == SlotMode.Gcd && srd.SlotResolver.Check() >= 0);
+        // 如果找到了，则返回该技能解析器的类型名称；否则，返回"无技能"
+        return firstGCDSkill != null ? firstGCDSkill.SlotResolver.GetType().Name: "无技能";
+    }
+    /// <summary>
+    /// 检查并返回第一个可用的非全局冷却（Off-GCD）技能的名称。
+    /// </summary>
+    /// <returns>返回第一个可用的Off-GCD技能的名称，如果没有可用的Off-GCD技能，则返回"无技能"。</returns>
+    public string 下一个OGCD()
+    {
+        // 尝试找到第一个槽模式为非全局冷却且可用的技能解析器
+        var firstoffGCDSkill =
+            _slotResolverData.FirstOrDefault(srd => srd.SlotMode == SlotMode.OffGcd && srd.SlotResolver.Check() >= 0);
+        // 如果找到了，则返回该技能解析器的类型名称；否则，返回"无技能"
+        return firstoffGCDSkill != null ? firstoffGCDSkill.SlotResolver.GetType().Name : "无技能";
+    }
     public Rotation? Build(string settingFolder)
     {
         BLMSetting.Build(settingFolder);
