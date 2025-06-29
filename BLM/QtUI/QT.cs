@@ -1,3 +1,4 @@
+using System.Numerics;
 using AEAssist.CombatRoutine.View.JobView;
 using AEAssist.CombatRoutine.View.JobView.HotkeyResolver;
 using Oblivion.BLM.QtUI.Hotkey;
@@ -7,6 +8,8 @@ namespace Oblivion.BLM.QtUI;
 public class QT
 {
     public static JobViewWindow Instance { get; set; }
+    public static HotkeyWindow? 以太步窗口 { get; set; }
+    
 
     /// <summary>
     /// 除了爆发药以外都复原
@@ -17,7 +20,7 @@ public class QT
     }
     public static void Build()
     {
-        Instance = new JobViewWindow(BLMSetting.Instance.JobViewSave, BLMSetting.Instance.Save, "嗨呀黑魔");
+        Instance = new JobViewWindow(BLMSetting.Instance.JobViewSave, BLMSetting.Instance.Save, "黑魔の登神长阶");
 
 
         Instance.AddQt("爆发药", false);
@@ -54,9 +57,36 @@ public class QT
         Instance.AddHotkey("魔罩", new HotKeyResolver_NormalSpell(Spells.魔罩, SpellTargetType.Self));
         
         
+        var myJobViewSave = new JobViewSave();
+        myJobViewSave.ShowHotkey = BLMSetting.Instance.以太步窗口显示;
+        myJobViewSave.QtHotkeySize = new Vector2(BLMSetting.Instance.以太步IconSize);
+        以太步窗口 = new HotkeyWindow(myJobViewSave, "WardensPaeanPanel");
+        
+        QT.Instance.SetUpdateAction(OnUIUpdate);
+        
         ReadmeTab.Build(Instance);
         SettingTab.Build(Instance);
-        
-        以太步hotkeywindow.Build(Instance);
+    }
+    public static void OnUIUpdate()
+    {
+        UpdateWardensPaeanPanel();
+        var myJobViewSave = new JobViewSave();
+        myJobViewSave.ShowHotkey = BLMSetting.Instance.以太步窗口显示;
+        myJobViewSave.QtHotkeySize = new Vector2(BLMSetting.Instance.以太步IconSize);
+        myJobViewSave.LockWindow = BLMSetting.Instance.锁定以太步窗口;
+        以太步窗口?.DrawHotkeyWindow(new QtStyle(BLMSetting.Instance.JobViewSave));
+        以太步窗口 = new HotkeyWindow(myJobViewSave, "以太步");
+        以太步窗口.HotkeyLineCount = 1;
+
+    }
+    public static void UpdateWardensPaeanPanel()
+    {
+        PartyHelper.UpdateAllies();
+        if (PartyHelper.Party.Count <= 1) return;
+        for (var i = 0; i < PartyHelper.Party.Count; i++)
+        {
+            var index = i;
+            以太步窗口?.AddHotkey("以太步: " + PartyHelper.Party[i].Name, new 以太步HotkeyResolver(index));
+        }
     }
 }

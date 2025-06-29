@@ -1,92 +1,99 @@
 using System.Numerics;
 using AEAssist.CombatRoutine.View.JobView;
+using AEAssist.MemoryApi;
+using Dalamud.Interface.Textures.TextureWraps;
+using ImGuiNET;
 
 namespace Oblivion.BLM.QtUI.Hotkey;
 
-public static class 以太步hotkeywindow
+public class 以太步HotkeyResolver : IHotkeyResolver
 {
-    public static HotkeyWindow BLMPartnerPanel;
-    public static JobViewSave myJobViewSave;
+    private uint SpellId;
+    private int Index;
 
-    public static void Build(JobViewWindow instance)
+    public 以太步HotkeyResolver(int index)
     {
-        instance.SetUpdateAction((() =>
-        {
-            PartyHelper.UpdateAllies();
-            if(PartyHelper.Party.Count<1)return;
-            myJobViewSave = new JobViewSave
-            {
-                QtHotkeySize = new Vector2(BLMSetting.Instance.以太步IconSize),
-                ShowHotkey = BLMSetting.Instance.以太步窗口显示
-            };
-            BLMPartnerPanel = new HotkeyWindow(myJobViewSave,"BLMPartnerPanel")
-            {
-                HotkeyLineCount = 1
-            };
-            for (var i = 1; i < PartyHelper.Party.Count; i++)
-            {
-                var index = i;
-                BLMPartnerPanel?.AddHotkey("以太步: " + PartyHelper.Party[i].Name, new 以太步hotkey(index));
-            }
-        }));
+        this.SpellId = Spells.以太步;
+        this.Index = index;
     }
-}
-public class 以太步hotkey(int index):IHotkeyResolver
-{
-    private const uint 以太步 = Spells.以太步;
-
+    
     public void Draw(Vector2 size)
     {
-        HotkeyHelper.DrawSpellImage(size, 以太步);
+        uint id = SpellId;
+        Vector2 size1 = size * 0.8f;
+        ImGui.SetCursorPos(size * 0.1f);
+        IDalamudTextureWrap textureWrap;
+        if (!Core.Resolve<MemApiIcon>().GetActionTexture(id, out textureWrap))
+            return;
+        ImGui.Image(textureWrap.ImGuiHandle, size1);
+        
+        if (SpellId.GetSpell().Cooldown.TotalMilliseconds > 0)
+        {
+            // Use ImGui.GetItemRectMin() and ImGui.GetItemRectMax() for exact icon bounds
+            Vector2 overlayMin = ImGui.GetItemRectMin();
+            Vector2 overlayMax = ImGui.GetItemRectMax();
+
+            // Draw a grey overlay over the icon
+            ImGui.GetWindowDrawList().AddRectFilled(
+                overlayMin, 
+                overlayMax, 
+                ImGui.ColorConvertFloat4ToU32(new Vector4(0, 0, 0, 0.5f))); // 50% transparent grey
+        }
+        
+        var cooldownRemaining = SpellId.GetSpell().Cooldown.TotalMilliseconds / 1000;
+        if (cooldownRemaining > 0)
+        {
+            // Convert cooldown to seconds and format as string
+            string cooldownText = Math.Ceiling(cooldownRemaining).ToString();
+
+            // 计算文本位置，向左下角偏移
+            Vector2 textPos = ImGui.GetItemRectMin();
+            textPos.X -= 1; // 向左移动一点
+            textPos.Y += size1.Y - ImGui.CalcTextSize(cooldownText).Y + 5; // 向下移动一点
+
+            // 绘制冷却时间文本
+            ImGui.GetWindowDrawList().AddText(textPos, ImGui.ColorConvertFloat4ToU32(new Vector4(1, 1, 1, 1)), cooldownText);
+        }
     }
 
     public void DrawExternal(Vector2 size, bool isActive)
     {
-        if (_check() >= 0)
-        {
-            if (isActive)
-            {
-                HotkeyHelper.DrawActiveState(size);
-            }
-            else
-            {
-                HotkeyHelper.DrawGeneralState(size);
-            }
-        }
-        else
-        {
-            HotkeyHelper.DrawDisabledState(size);
-        }
-        HotkeyHelper.DrawCooldownText(以太步.GetSpell(), size);
+        SpellHelper.DrawSpellInfo(Core.Resolve<MemApiSpell>().CheckActionChange(this.SpellId).GetSpell(), size, isActive);
     }
+
     public int Check()
     {
-        return _check();
-    }
-    
-    private int _check()
-    {
-        if (以太步.GetSpell().Cooldown.TotalMilliseconds > 0 ||
-            !PartyHelper.Party[index].IsTargetable ||
-            PartyHelper.Party[index].IsDead() ||
-            Core.Me.Distance(PartyHelper.Party[index]) > SettingMgr.GetSetting<GeneralSettings>().AttackRange + 27)
-            return -2;
+        if (!Spells.以太步.IsUnlockWithCDCheck())
+            return -1;
         return 0;
     }
 
     public void Run()
     {
+        ClosedPosition(index: this.Index);
+        return;
+    }
+    
+    private void ClosedPosition(int index)
+    {
         var partyMembers = PartyHelper.Party;
-        if (partyMembers.Count < index + 1)return;
-
-        if (GCDHelper.GetGCDCooldown() <= 0)
+        if (partyMembers.Count < index + 1)
+            return;
+        if (!Spells.以太步.IsUnlockWithCDCheck())
+            return;
+        
+        if (!BattleData.Instance.HotkeyUseHighPrioritySlot)
         {
-            AI.Instance.BattleData.NextSlot ??= new Slot();
-            AI.Instance.BattleData.NextSlot.Add(new Spell(以太步, partyMembers[index]));
+            if (AI.Instance.BattleData.NextSlot == null)
+                AI.Instance.BattleData.NextSlot = new Slot(); 
+            AI.Instance.BattleData.NextSlot.Add(new Spell(Spells.以太步,
+                    partyMembers[index]));
         }
         else
         {
-            AI.Instance.BattleData.HighPrioritySlots_OffGCD.Enqueue(new Slot(new Spell(以太步, partyMembers[index]),2500));
+            Slot slot = new Slot();
+            slot.Add(new Spell(Spells.以太步, partyMembers[index]));
+            AI.Instance.BattleData.HighPrioritySlots_OffGCD.Enqueue(slot);
         }
     }
 }

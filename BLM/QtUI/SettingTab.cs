@@ -47,6 +47,23 @@ public static class SettingTab
 
             }
 
+            if (ImGui.CollapsingHeader("以太步窗口设置", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                ImGui.Text("以太步窗口开关：");
+                bool 以太步窗口开关 = BLMSetting.Instance.以太步窗口显示;
+                if (ImGui.Checkbox("##以太步窗口开关", ref 以太步窗口开关))
+                {
+                    BLMSetting.Instance.以太步窗口显示 = 以太步窗口开关;
+                    BLMSetting.Instance.Save();
+                }
+                ImGui.Text("以太步图标大小：");
+                int 以太步图标大小 = BLMSetting.Instance.以太步IconSize;
+                if (ImGui.InputInt("##以太步图标大小", ref 以太步图标大小, 1, 50))
+                {
+                    BLMSetting.Instance.以太步IconSize = 以太步图标大小;
+                    BLMSetting.Instance.Save();
+                }
+            }
             if (ImGui.CollapsingHeader("TTK设置", ImGuiTreeNodeFlags.DefaultOpen))
             {
                 ImGui.Text("设置TTK阈值（毫秒）：");

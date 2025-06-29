@@ -42,6 +42,7 @@ public class BLMSetting
     public JobViewSave JobViewSave = new()
     {
     }; // QT设置存档
+    public bool 锁定以太步窗口 = false;
     public int 以太步IconSize = 24;
     public bool 以太步窗口显示 = true;
     public bool AutoUpdataTimeLines = true;

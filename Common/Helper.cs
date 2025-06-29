@@ -5,7 +5,7 @@ namespace Oblivion.Common;
 
 public static class Helper
 {
-    public const string AuthorName = "嗨呀";
+    public const string AuthorName = "OVO";
     private static int _GcdDuration = 0;
 
 

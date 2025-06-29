@@ -25,4 +25,6 @@ public class BattleData
     public int 能使用的火四个数 { get; set; } = 0;
     
     public bool 使用三连转冰 { get; set; } = false;
+    public bool HotkeyUseHighPrioritySlot = false; // 热键使用高优先级队列
+
 }

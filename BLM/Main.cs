@@ -1,5 +1,8 @@
+using System.Numerics;
 using AEAssist.CombatRoutine.Module.Opener;
+using AEAssist.CombatRoutine.View.JobView;
 using Oblivion.BLM.QtUI;
+using Oblivion.BLM.QtUI.Hotkey;
 using Oblivion.BLM.SlotResolver.Ability;
 using Oblivion.BLM.SlotResolver.GCD;
 using Oblivion.BLM.SlotResolver.Opener;
@@ -97,6 +100,7 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
 
         return null;
     }
+
 
     public IRotationUI GetRotationUI()
     {
