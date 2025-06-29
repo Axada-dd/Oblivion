@@ -42,7 +42,7 @@ public class QT
         Instance.AddQt("AOE", false,"一键关闭所有aoe技能");
         Instance.AddQt("倾泻资源", false,"清空异言");
         Instance.AddQt("上天转圈", false);
-        Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项");
+        Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项,随开随关");
 
 
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());
@@ -69,7 +69,7 @@ public class QT
     }
     public static void OnUIUpdate()
     {
-        UpdateWardensPaeanPanel();
+        Update以太步窗口();
         var myJobViewSave = new JobViewSave();
         myJobViewSave.ShowHotkey = BLMSetting.Instance.以太步窗口显示;
         myJobViewSave.QtHotkeySize = new Vector2(BLMSetting.Instance.以太步IconSize);
@@ -79,11 +79,11 @@ public class QT
         以太步窗口.HotkeyLineCount = 1;
 
     }
-    public static void UpdateWardensPaeanPanel()
+    public static void Update以太步窗口()
     {
         PartyHelper.UpdateAllies();
         if (PartyHelper.Party.Count <= 1) return;
-        for (var i = 0; i < PartyHelper.Party.Count; i++)
+        for (var i = 1; i < PartyHelper.Party.Count; i++)
         {
             var index = i;
             以太步窗口?.AddHotkey("以太步: " + PartyHelper.Party[i].Name, new 以太步HotkeyResolver(index));

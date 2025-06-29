@@ -6,7 +6,7 @@ namespace Oblivion.BLM;
 
 public class BLMEvetHandle : IRotationEventHandler
 {
-    private readonly HashSet<uint> _GcdSpellIds = new HashSet<uint>
+    private readonly HashSet<uint> _gcdSpellIds = new HashSet<uint>
     {
         Spells.冰一,Spells.冰三,Spells.冰冻.GetActionChange(),Spells.冰澈,Spells.玄冰,
         Spells.火一,Spells.火三,Spells.火二.GetActionChange(),Spells.火四,Spells.核爆,Spells.绝望,Spells.耀星,
@@ -33,7 +33,7 @@ public class BLMEvetHandle : IRotationEventHandler
 
     public void OnSpellCastSuccess(Slot slot, Spell spell)
     {
-        if (_GcdSpellIds.Contains(spell.Id))
+        if (_gcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一gcd = spell.Id;
         }
@@ -46,7 +46,7 @@ public class BLMEvetHandle : IRotationEventHandler
 
     public void AfterSpell(Slot slot, Spell spell)
     {
-        if (_GcdSpellIds.Contains(spell.Id))
+        if (_gcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一gcd = spell.Id;
             BattleData.Instance.已使用瞬发 =  GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1200 : 1500);
@@ -173,6 +173,7 @@ public class BLMEvetHandle : IRotationEventHandler
 
     public void OnExitRotation()
     {
+        BLMSetting.Instance.Save();
     }
 
     public void OnTerritoryChanged()
