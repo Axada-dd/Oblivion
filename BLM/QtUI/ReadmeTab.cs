@@ -15,9 +15,9 @@ public static class ReadmeTab
         BorderColor = ImGuiColors.ParsedGold,
         ContentsAction = () =>
         {
-            if (ImGui.Button("查看更新日志"))
+            if (ImGui.CollapsingHeader("查看更新日志", ImGuiTreeNodeFlags.DefaultOpen))
             {
-                Util.OpenLink("https://github.com/Axada-dd/Oblivion"); 
+                ImGui.BulletText("111");
             }
             
             ImGuiHelper.Separator();
