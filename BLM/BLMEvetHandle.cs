@@ -158,7 +158,7 @@ public class BLMEvetHandle : IRotationEventHandler
     public void OnEnterRotation()
     {
         LogHelper.Print(
-            "欢迎使用嗨呀的黑魔acr，反馈请到：");
+            "欢迎使用OVO的黑魔acr，反馈请到：");
         LogHelper.Print("建议设置提前使用gcd时间为50，使用fuckanime三插，DR能力技动画减少");
 
 
