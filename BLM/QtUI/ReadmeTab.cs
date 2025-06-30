@@ -19,7 +19,11 @@ public static class ReadmeTab
             {
                 ImGui.BulletText("111");
             }
-            
+
+            if (ImGui.CollapsingHeader("Todolist", ImGuiTreeNodeFlags.DefaultOpen))
+            {
+                ImGui.BulletText("1.增加以太步窗口");
+            }
             ImGuiHelper.Separator();
             ImGui.BulletText("7.2黑魔，非最优循环，优先保证走位，其次会尽量使用星灵移位进冰打双星灵，全程标改。\n如果开上三插和DR减动画，可以无损插入能力技");
         }
