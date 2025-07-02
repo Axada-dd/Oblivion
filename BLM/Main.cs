@@ -14,7 +14,7 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
 {
     public string AuthorName { get; set; } = Helper.AuthorName;
     private readonly Jobs _job = Jobs.BlackMage;
-    private readonly AcrType _acrType = AcrType.Both;
+    private readonly AcrType _acrType = AcrType.HighEnd;
     private readonly int _minLevel = 100;
     private readonly int _maxLevel = 100;
     private readonly string _description = "7.2黑魔，暂时只支持100级高难，非最优循环，优先保证灵活性";
@@ -96,6 +96,7 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         {
             if (BLMSetting.Instance.标准57) return new Opener57();
             if (BLMSetting.Instance.核爆起手) return new Opener核爆();
+            if (BLMSetting.Instance.开挂循环) return new Opener57开挂循环();
         }
 
         return null;

@@ -24,6 +24,7 @@ public static class SettingTab
                     {
                         BLMSetting.Instance.标准57 = true;
                         BLMSetting.Instance.核爆起手 = false;
+                        BLMSetting.Instance.开挂循环 = false;
                     }
                     BLMSetting.Instance.Save();
                 }
@@ -34,6 +35,18 @@ public static class SettingTab
                     {
                         BLMSetting.Instance.核爆起手 = true;
                         BLMSetting.Instance.标准57 = false;
+                        BLMSetting.Instance.开挂循环 = false;
+                    }
+                    BLMSetting.Instance.Save();
+                }
+                bool opener3 = BLMSetting.Instance.开挂循环;
+                if (ImGui.Checkbox("开挂循环", ref opener3))
+                {
+                    if (opener3)
+                    {
+                        BLMSetting.Instance.开挂循环 = true;
+                        BLMSetting.Instance.标准57 = false;
+                        BLMSetting.Instance.核爆起手 = false;
                     }
                     BLMSetting.Instance.Save();
                 }
