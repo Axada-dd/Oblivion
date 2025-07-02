@@ -6,6 +6,7 @@ public class BattleData
 
     public int 瞬发层数 { get; set; } = 0;
     public bool 可瞬发 { get; set; } = false;
+    public uint 前一能力技 { get; set; } = 0;
     public uint 前一gcd { get; set; } = 0;
     public bool 已使用耀星 { get; set; } = false;
     public bool 已使用瞬发 { get; set; } = false;

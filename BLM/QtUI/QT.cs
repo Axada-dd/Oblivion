@@ -37,6 +37,8 @@ public class QT
         Instance.AddQt("秽浊", true);
         Instance.AddQt("星灵移位", true);
         Instance.AddQt("三连用于走位",false,"三连保留用于走位");
+        Instance.AddQt("即刻不用于走位", false, "不保留即刻用于走位");
+        Instance.AddQt("关闭即刻三连的移动判断", false, "三连即刻不会在走位的时候自动释放");
         Instance.AddQt("详述", true);
         Instance.AddQt("起手序列", true,"关闭会不倒计时起手");
         Instance.AddQt("AOE", false,"一键关闭所有aoe技能");

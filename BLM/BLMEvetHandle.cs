@@ -10,7 +10,12 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         Spells.冰一,Spells.冰三,Spells.冰冻.GetActionChange(),Spells.冰澈,Spells.玄冰,
         Spells.火一,Spells.火三,Spells.火二.GetActionChange(),Spells.火四,Spells.核爆,Spells.绝望,Spells.耀星,
-        Spells.异言,Spells.悖论,Spells.秽浊,Spells.雷一.GetActionChange(),Spells.雷二.GetActionChange(),Spells.崩溃
+        Spells.异言,Spells.悖论,Spells.秽浊,Spells.雷一.GetActionChange(),Spells.雷二.GetActionChange(),Spells.崩溃,Spells.灵极魂
+    };
+
+    private readonly HashSet<uint> _ogcdSpellIds = new HashSet<uint>
+    {
+        Spells.黑魔纹,Spells.三连,Spells.墨泉,Spells.即刻,Spells.星灵移位,Spells.醒梦,Spells.详述
     };
     public async Task OnPreCombat()
     {
@@ -52,6 +57,10 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.已使用瞬发 =  GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1200 : 1500);
         }
 
+        if (_ogcdSpellIds.Contains(spell.Id))
+        {
+            BattleData.Instance.前一能力技 = spell.Id;
+        }
         if (BattleData.Instance.已使用瞬发)
         {
             if (spell.Id == Spells.耀星)

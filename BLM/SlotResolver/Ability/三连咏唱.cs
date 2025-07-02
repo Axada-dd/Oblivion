@@ -20,7 +20,7 @@ public class 三连咏唱 : ISlotResolver
         if (BattleData.Instance.可瞬发) return -4;
         if (GCDHelper.Is2ndAbilityTime()) return -5;
         if (Helper.IsMove && BLMHelper.通晓层数 < 2  && !(new 悖论().Check() > 0 ||
-                new 绝望().Check() > 0 || new 雷1().Check() > 0 || new 雷2().Check() > 0 || new 异言().Check() > 0)) return 2;
+                new 绝望().Check() > 0 || new 雷1().Check() > 0 || new 雷2().Check() > 0 || new 异言().Check() > 0) && !QT.Instance.GetQt("关闭即刻三连的移动判断")) return 2;
         if (BattleData.Instance.火循环剩余gcd<2 && (new 雷1().Check() < 0 || new 雷2().Check() < 0) &&
             Spells.即刻.GetSpell().Cooldown.TotalSeconds > 3 && BLMHelper.火状态 && !QT.Instance.GetQt("三连用于走位")) return 3;
         //if (BLMHelper.火状态 && Spells.三连.GetSpell().Charges * 60 >= 110 && !QT.Instance.GetQt("三连用于走位")) return 1;
