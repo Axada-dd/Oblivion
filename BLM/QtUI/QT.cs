@@ -24,39 +24,41 @@ public class QT
 
 
         Instance.AddQt("爆发药", false);
-        Instance.AddQt("绝望", true);
-        Instance.AddQt("核爆", true);
+        //Instance.AddQt("绝望", true);
+        //Instance.AddQt("核爆", true);
         Instance.AddQt("黑魔纹", true);
         Instance.AddQt("墨泉", true);
         Instance.AddQt("醒梦", true);
         Instance.AddQt("三连咏唱", true);
         Instance.AddQt("即刻", true);
-        Instance.AddQt("雷一", true);
-        Instance.AddQt("雷二", true);
+        Instance.AddQt("Dot", true);
+
         Instance.AddQt("异言", true);
         Instance.AddQt("秽浊", true);
-        Instance.AddQt("星灵移位", true);
+        //Instance.AddQt("星灵移位", true);
+        Instance.AddQt("智能AOE目标", false);
         Instance.AddQt("三连用于走位",false,"三连保留用于走位");
         Instance.AddQt("即刻不用于走位", false, "不保留即刻用于走位");
         Instance.AddQt("关闭即刻三连的移动判断", false, "三连即刻不会在走位的时候自动释放");
         Instance.AddQt("详述", true);
         Instance.AddQt("起手序列", true,"关闭会不倒计时起手");
         Instance.AddQt("AOE", false,"一键关闭所有aoe技能");
-        Instance.AddQt("倾泻资源", false,"清空异言");
-        Instance.AddQt("上天转圈", false);
+        Instance.AddQt("倾泻资源", false,"清空通晓");
         Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项,随开随关");
+        Instance.AddQt("能力技卡G放", true,"开启后，能力技卡会G放,开三插和减动画后并不会真的卡G");
+        Instance.AddQt("使用特供循环", false,"仅在开启三插和DR减动画时使用");
 
 
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());
-        Instance.AddHotkey("异言", new HotKeyResolver_NormalSpell(Spells.异言, SpellTargetType.Target));
-        Instance.AddHotkey("秽浊", new HotKeyResolver_NormalSpell(Spells.秽浊, SpellTargetType.Target));
-        Instance.AddHotkey("即刻", new HotKeyResolver_NormalSpell(Spells.即刻, SpellTargetType.Self));
-        Instance.AddHotkey("黑魔纹", new HotKeyResolver_NormalSpell(Spells.黑魔纹, SpellTargetType.Self));
-        Instance.AddHotkey("三连咏唱", new HotKeyResolver_NormalSpell(Spells.三连, SpellTargetType.Self));
+        Instance.AddHotkey("异言", new HotKeyResolver_NormalSpell(Skill.异言, SpellTargetType.Target));
+        Instance.AddHotkey("秽浊", new HotKeyResolver_NormalSpell(Skill.秽浊, SpellTargetType.Target));
+        Instance.AddHotkey("即刻", new HotKeyResolver_NormalSpell(Skill.即刻, SpellTargetType.Self));
+        Instance.AddHotkey("黑魔纹", new HotKeyResolver_NormalSpell(Skill.黑魔纹, SpellTargetType.Self));
+        Instance.AddHotkey("三连咏唱", new HotKeyResolver_NormalSpell(Skill.三连, SpellTargetType.Self));
         Instance.AddHotkey("冲刺", new HotKeyResolver_疾跑());
-        Instance.AddHotkey("沉稳咏唱", new HotKeyResolver_NormalSpell(Spells.沉稳, SpellTargetType.Self));
-        Instance.AddHotkey("混乱", new HotKeyResolver_NormalSpell(Spells.混乱, SpellTargetType.Target, true));
-        Instance.AddHotkey("魔罩", new HotKeyResolver_NormalSpell(Spells.魔罩, SpellTargetType.Self));
+        Instance.AddHotkey("沉稳咏唱", new HotKeyResolver_NormalSpell(Skill.沉稳, SpellTargetType.Self));
+        Instance.AddHotkey("混乱", new HotKeyResolver_NormalSpell(Skill.混乱, SpellTargetType.Target, true));
+        Instance.AddHotkey("魔罩", new HotKeyResolver_NormalSpell(Skill.魔罩, SpellTargetType.Self));
         
         
         var myJobViewSave = new JobViewSave();

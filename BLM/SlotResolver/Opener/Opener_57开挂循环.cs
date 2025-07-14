@@ -25,16 +25,16 @@ public class Opener57开挂循环 : IOpener
         if (BLMSetting.Instance.提前黑魔纹)
         {
 
-            countDownHandler.AddAction(startTime + 600, Spells.黑魔纹, SpellTargetType.Self);
-            countDownHandler.AddAction(startTime, Spells.火三, SpellTargetType.Target);
+            countDownHandler.AddAction(startTime + 600, Skill.黑魔纹, SpellTargetType.Self);
+            countDownHandler.AddAction(startTime, Skill.火三, SpellTargetType.Target);
             countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.IsInnerOpener = true);
-            countDownHandler.AddAction(startTime - 2800, Spells.雷一.GetActionChange(), SpellTargetType.Target);
+            countDownHandler.AddAction(startTime - 2800, Skill.雷一.GetActionChange(), SpellTargetType.Target);
         }
         else
         {
-            countDownHandler.AddAction(startTime, Spells.火三, SpellTargetType.Target);
+            countDownHandler.AddAction(startTime, Skill.火三, SpellTargetType.Target);
             countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.IsInnerOpener = true);
-            countDownHandler.AddAction(startTime - 3000, Spells.雷一.GetActionChange(), SpellTargetType.Target);
+            countDownHandler.AddAction(startTime - 3000, Skill.雷一.GetActionChange(), SpellTargetType.Target);
         }
     }
     public List<Action<Slot>> Sequence { get; } =
@@ -45,70 +45,70 @@ public class Opener57开挂循环 : IOpener
     private static void Step1(Slot slot)
     {
 
-        slot.Add(new Spell(Spells.即刻, SpellTargetType.Self));
-        slot.Add(new Spell(Spells.详述, SpellTargetType.Self));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.即刻, SpellTargetType.Self));
+        slot.Add(new Spell(Skill.详述, SpellTargetType.Self));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
         if (QT.Instance.GetQt("爆发药"))
             slot.Add(Spell.CreatePotion());
         if (!BLMSetting.Instance.提前黑魔纹)
-            slot.Add(new Spell(Spells.黑魔纹, Core.Me.Position));
+            slot.Add(new Spell(Skill.黑魔纹, SpellTargetType.Self));
     }
 
     private static void Step2(Slot slot)
     {
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
         if (QT.Instance.GetQt("爆发药"))
             slot.Add(Spell.CreatePotion());
         if (!BLMSetting.Instance.提前黑魔纹)
-            slot.Add(new Spell(Spells.黑魔纹, SpellTargetType.Self));
+            slot.Add(new Spell(Skill.黑魔纹, SpellTargetType.Self));
     }
 
     private static void Step3(Slot slot)
     {
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
     }
 
     private static void Step4(Slot slot)
     {
-        slot.Add(new Spell(Spells.异言, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.墨泉, SpellTargetType.Self));
+        slot.Add(new Spell(Skill.异言, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.墨泉, SpellTargetType.Self));
     }
 
     private static void Step5(Slot slot)
     {
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.耀星, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.耀星, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
     }
 
     private static void Step6(Slot slot)
     {
-        slot.Add(new Spell(Spells.雷一.GetActionChange(), SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.三连, SpellTargetType.Self));
-        slot.Add(new Spell(Spells.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.耀星, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.雷一.GetActionChange(), SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
+        slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.耀星, SpellTargetType.Target));
     }
 
     private static void Step7(Slot slot)
     {
-        slot.Add(new Spell(Spells.绝望, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.星灵移位, SpellTargetType.Self));
+        slot.Add(new Spell(Skill.绝望, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
     }
 
     private static void Step8(Slot slot)
     {
-        slot.Add(new Spell(Spells.冰三, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.悖论, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.冰澈, SpellTargetType.Target));
-        slot.Add(new Spell(Spells.星灵移位, SpellTargetType.Self));
-        slot.Add(new Spell(Spells.绝望, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.冰三, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.悖论, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.冰澈, SpellTargetType.Target));
+        slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
+        slot.Add(new Spell(Skill.绝望, SpellTargetType.Target));
         if(BattleData.Instance.IsInnerOpener)
             BattleData.Instance.IsInnerOpener = false;
     }

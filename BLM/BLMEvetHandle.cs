@@ -8,14 +8,14 @@ public class BLMEvetHandle : IRotationEventHandler
 {
     private readonly HashSet<uint> _gcdSpellIds = new HashSet<uint>
     {
-        Spells.冰一,Spells.冰三,Spells.冰冻.GetActionChange(),Spells.冰澈,Spells.玄冰,
-        Spells.火一,Spells.火三,Spells.火二.GetActionChange(),Spells.火四,Spells.核爆,Spells.绝望,Spells.耀星,
-        Spells.异言,Spells.悖论,Spells.秽浊,Spells.雷一.GetActionChange(),Spells.雷二.GetActionChange(),Spells.崩溃,Spells.灵极魂
+        Skill.冰一,Skill.冰三,Skill.冰冻.GetActionChange(),Skill.冰澈,Skill.玄冰,
+        Skill.火一,Skill.火三,Skill.火二.GetActionChange(),Skill.火四,Skill.核爆,Skill.绝望,Skill.耀星,
+        Skill.异言,Skill.悖论,Skill.秽浊,Skill.雷一.GetActionChange(),Skill.雷二.GetActionChange(),Skill.崩溃,Skill.灵极魂
     };
 
     private readonly HashSet<uint> _ogcdSpellIds = new HashSet<uint>
     {
-        Spells.黑魔纹,Spells.三连,Spells.墨泉,Spells.即刻,Spells.星灵移位,Spells.醒梦,Spells.详述
+        Skill.黑魔纹,Skill.三连,Skill.墨泉,Skill.即刻,Skill.星灵移位,Skill.醒梦,Skill.详述
     };
     public async Task OnPreCombat()
     {
@@ -32,8 +32,8 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         if (AI.Instance.BattleData.CurrBattleTimeInMs < 10 * 1000) return;
         if (!QT.Instance.GetQt("Boss上天")) return;
-        if (BLMHelper.火状态) await Spells.星灵移位.GetSpell(SpellTargetType.Self).Cast();
-        if (BLMHelper.冰状态 && BLMHelper.冰层数 <3 && BLMHelper.冰针<3 && Core.Me.CurrentMp < 10000) await Spells.灵极魂.GetSpell(SpellTargetType.Self).Cast();
+        if (BLMHelper.火状态) await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
+        if (BLMHelper.冰状态 && BLMHelper.冰层数 <3 && BLMHelper.冰针<3 && Core.Me.CurrentMp < 10000) await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
     }
 
     public void OnSpellCastSuccess(Slot slot, Spell spell)
@@ -42,11 +42,11 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             BattleData.Instance.前一gcd = spell.Id;
         }
-        if (spell.Id == Spells.耀星)
+        if (spell.Id == Skill.耀星)
         {
             BattleData.Instance.已使用耀星 = true;
         }
-        if (spell.Id == Spells.绝望) BattleData.Instance.已使用绝望 = true;
+        if (spell.Id == Skill.绝望) BattleData.Instance.已使用绝望 = true;
     }
 
     public void AfterSpell(Slot slot, Spell spell)
@@ -63,40 +63,39 @@ public class BLMEvetHandle : IRotationEventHandler
         }
         if (BattleData.Instance.已使用瞬发)
         {
-            if (spell.Id == Spells.耀星)
+            if (spell.Id == Skill.耀星)
             {
                 BattleData.Instance.已使用耀星 = true;
             }
         }
 
-        if (spell.Id == Spells.黑魔纹) BattleData.Instance.已使用黑魔纹 = true;
-        if (spell.Id == Spells.绝望) BattleData.Instance.已使用绝望 = true;
+        if (spell.Id == Skill.黑魔纹) BattleData.Instance.已使用黑魔纹 = true;
+        if (spell.Id == Skill.绝望) BattleData.Instance.已使用绝望 = true;
     }
     
     public void OnBattleUpdate(int currTimeInMs)
     {
-        
-        if (Spells.三连.GetSpell().Charges > 1)
-        {
-            BattleData.Instance.三连cd = 60-(Spells.三连.GetSpell().Charges - 1) * 60;
-        }
-        else BattleData.Instance.三连cd = 60-Spells.三连.GetSpell().Charges * 60;
 
-        if (BattleData.Instance.能使用耀星 && Spells.三连.GetSpell().Charges > 1 && !BattleData.Instance.已使用耀星 &&
-            !QT.Instance.GetQt("三连用于走位") && (Spells.即刻.GetSpell().Cooldown.TotalSeconds > 3 || Spells.三连.GetSpell().Charges * 60 >= 110 ) && Spells.墨泉.GetSpell().Cooldown.TotalSeconds > 12)
+        if (Skill.三连.GetSpell().Charges > 1)
+        {
+            BattleData.Instance.三连cd = 60-(Skill.三连.GetSpell().Charges - 1) * 60;
+        }
+        else BattleData.Instance.三连cd = 60-Skill.三连.GetSpell().Charges * 60;
+
+        if (BattleData.Instance.能使用耀星 && Skill.三连.GetSpell().Charges > 1 && !BattleData.Instance.已使用耀星 &&
+            !QT.Instance.GetQt("三连用于走位") && (Skill.即刻.GetSpell().Cooldown.TotalSeconds > 3 || Skill.三连.GetSpell().Charges * 60 >= 110 ) && Skill.墨泉.GetSpell().Cooldown.TotalSeconds > 12)
         {
             BattleData.Instance.使用三连转冰 = true;
         }
-        if (BLMHelper.冰状态 || Spells.三连.GetSpell().Charges < 1 || Spells.墨泉.GetSpell().Cooldown.TotalSeconds < 12) BattleData.Instance.使用三连转冰 = false;
+        if (BLMHelper.冰状态 || Skill.三连.GetSpell().Charges < 1 || Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 12) BattleData.Instance.使用三连转冰 = false;
         BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetGCDDuration();
-        BattleData.Instance.可瞬发 = Core.Me.HasAura(Buffs.即刻Buff) || Core.Me.HasAura(Buffs.三连Buff);
         if (!QT.Instance.GetQt("aoe"))
             BattleData.Instance.启动aoe = false;
         if (BattleData.Instance.已使用耀星)
         {
-            if (BLMHelper.冰状态 || Spells.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
+            if (BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
         }
-        if (BattleData.Instance.已使用绝望)if(BLMHelper.冰状态 || Spells.墨泉.RecentlyUsed(300))  BattleData.Instance.已使用绝望 = false;
+        if (BattleData.Instance.已使用绝望)if(BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300))  BattleData.Instance.已使用绝望 = false;
 
         if (BattleData.Instance.已使用黑魔纹)
         {

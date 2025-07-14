@@ -6,6 +6,7 @@ using Oblivion.BLM.QtUI.Hotkey;
 using Oblivion.BLM.SlotResolver.Ability;
 using Oblivion.BLM.SlotResolver.GCD;
 using Oblivion.BLM.SlotResolver.Opener;
+using Oblivion.BLM.SlotResolver.Special;
 using Oblivion.BLM.Triggers;
 
 namespace Oblivion.BLM;
@@ -14,10 +15,10 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
 {
     public string AuthorName { get; set; } = Helper.AuthorName;
     private readonly Jobs _job = Jobs.BlackMage;
-    private readonly AcrType _acrType = AcrType.HighEnd;
+    private readonly AcrType _acrType = AcrType.Both;
     private readonly int _minLevel = 100;
     private readonly int _maxLevel = 100;
-    private readonly string _description = "7.2黑魔，暂时只支持100级高难，非最优循环，优先保证灵活性";
+    private readonly string _description = "7.2黑魔，暂时只支持100级高难，非最优循环";
     private readonly List<SlotResolverData> _slotResolverData =
     [
         //GCD
@@ -33,8 +34,9 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         new(new 耀星(), SlotMode.Gcd),
         new(new 冰澈(), SlotMode.Gcd),
         new(new 核爆(), SlotMode.Gcd),
-        // new(new 玄冰(), SlotMode.Gcd),
-        // new(new 冰冻(), SlotMode.Gcd),
+        new(new 核爆补耀星(), SlotMode.Gcd),
+        new(new 玄冰(), SlotMode.Gcd),
+        new(new 冰冻(), SlotMode.Gcd),
         // new(new 火一(), SlotMode.Gcd),
         // new(new 火二(), SlotMode.Gcd),
 
@@ -82,6 +84,7 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
             MaxLevel = _maxLevel,
             Description = _description,
         };
+        rot.AddSlotSequences(特殊序列.Build());
         rot.AddOpener(GetOpener);
         rot.SetRotationEventHandler(new BLMEvetHandle());
         rot.AddTriggerAction(new TriggerActionQt(), new TriggerActionHotkey());

@@ -1,6 +1,6 @@
 namespace Oblivion.BLM.SlotResolver.Data;
 
-public class Spells
+public class Skill
 {
     public const uint
         火一 = 141,//Level>2

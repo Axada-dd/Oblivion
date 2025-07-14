@@ -17,6 +17,7 @@ public static class SettingTab
         {
             if (ImGui.CollapsingHeader("起手设置", ImGuiTreeNodeFlags.DefaultOpen))
             {
+                
                 bool opner1 = BLMSetting.Instance.标准57;
                 if(ImGui.Checkbox("标准5+7起手", ref opner1))
                 {
@@ -122,7 +123,7 @@ public static class SettingTab
                 ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
                 ImGui.Text($"复唱时间:{Core.Resolve<MemApiSpell>().GetGCDDuration()}");
                 ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
-                ImGui.Text($"可瞬发：{BattleData.Instance.可瞬发}");
+                ImGui.Text($"可瞬发：{Helper.可瞬发()}");
                 ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
                 ImGui.Text($"已使用黑魔纹：{BattleData.Instance.已使用黑魔纹}");
                 ImGui.Text($"三连咏唱CD：{BattleData.Instance.三连cd}");
@@ -131,7 +132,6 @@ public static class SettingTab
                 ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
                 ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
                 ImGui.Text($"三连转冰：{BattleData.Instance.使用三连转冰}");
-                //ImGui.Text($"是否在起手：{Opener57.StartCheck()>=0||Opener核爆.StartCheck()>=0}");
             }
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
             {

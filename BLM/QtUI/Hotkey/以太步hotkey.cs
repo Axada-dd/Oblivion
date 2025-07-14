@@ -13,7 +13,7 @@ public class 以太步HotkeyResolver : IHotkeyResolver
 
     public 以太步HotkeyResolver(int index)
     {
-        this.SpellId = Spells.以太步;
+        this.SpellId = Skill.以太步;
         this.Index = index;
     }
     
@@ -63,7 +63,7 @@ public class 以太步HotkeyResolver : IHotkeyResolver
 
     public int Check()
     {
-        if (!Spells.以太步.IsUnlockWithCDCheck())
+        if (!Skill.以太步.IsUnlockWithCDCheck())
             return -1;
         return 0;
     }
@@ -79,20 +79,20 @@ public class 以太步HotkeyResolver : IHotkeyResolver
         var partyMembers = PartyHelper.Party;
         if (partyMembers.Count < index + 1)
             return;
-        if (!Spells.以太步.IsUnlockWithCDCheck())
+        if (!Skill.以太步.IsUnlockWithCDCheck())
             return;
         
         if (!BattleData.Instance.HotkeyUseHighPrioritySlot)
         {
             if (AI.Instance.BattleData.NextSlot == null)
                 AI.Instance.BattleData.NextSlot = new Slot(); 
-            AI.Instance.BattleData.NextSlot.Add(new Spell(Spells.以太步,
+            AI.Instance.BattleData.NextSlot.Add(new Spell(Skill.以太步,
                     partyMembers[index]));
         }
         else
         {
             Slot slot = new Slot();
-            slot.Add(new Spell(Spells.以太步, partyMembers[index]));
+            slot.Add(new Spell(Skill.以太步, partyMembers[index]));
             AI.Instance.BattleData.HighPrioritySlots_OffGCD.Enqueue(slot);
         }
     }

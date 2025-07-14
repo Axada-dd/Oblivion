@@ -14,6 +14,13 @@ public static class Helper
         return Core.Resolve<MemApiCondition>().IsBoundByDuty();
     }
 
+    public static bool 可读条()
+    {
+        return !IsMove || 可瞬发();
+    }
+
+    public static double 复唱时间() => Core.Resolve<MemApiSpell>().GetGCDDuration();
+    public static bool 可瞬发() => Core.Me.HasAura(Buffs.即刻Buff) || Core.Me.HasAura(Buffs.三连Buff);
     public static bool 是否在战斗中()
     {
         return Core.Me.InCombat();
