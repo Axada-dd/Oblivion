@@ -1,3 +1,5 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 冰三 : ISlotResolver
@@ -13,7 +15,7 @@ public class 冰三 : ISlotResolver
     {
         if (!Skill.冰三.GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (nearbyEnemyCount > 2) return -1;
+        if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
         if (BLMHelper.冰状态)
         {
             if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -2;
@@ -26,7 +28,7 @@ public class 冰三 : ISlotResolver
         {
             if (Core.Me.CurrentMp >= 800) return -5;
             if (BLMHelper.耀星层数 == 6) return -6;
-            if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -7;
+            //if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -7;
             if (BattleData.Instance.前一gcd == Skill.冰澈 || BattleData.Instance.前一gcd == Skill.玄冰) return -8;
             if (Skill.墨泉.RecentlyUsed()) return -9;
             if (Helper.可瞬发()) return -10;

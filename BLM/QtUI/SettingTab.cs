@@ -5,6 +5,7 @@ using AEAssist.GUI;
 using AEAssist.MemoryApi;
 using ImGuiNET;
 using Oblivion.BLM.SlotResolver.Opener;
+using Oblivion.BLM.SlotResolver.Special;
 
 namespace Oblivion.BLM.QtUI;
 
@@ -131,7 +132,8 @@ public static class SettingTab
                 ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
                 ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
                 ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
-                ImGui.Text($"三连转冰：{BattleData.Instance.使用三连转冰}");
+                ImGui.Text($"三连转冰：{BattleData.Instance.三连转冰}");
+                ImGui.Text($"特供循环判断:{new 开满转火().StartCheck()}");
             }
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
             {

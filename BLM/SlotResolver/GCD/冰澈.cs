@@ -15,14 +15,14 @@ public class 冰澈 : ISlotResolver
     public int Check()
     {
         if (QT.Instance.GetQt("使用特供循环") && new 开满转火().StartCheck() > 0 && new 开满转火().StopCheck(2) < 0) return -999;
-        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (nearbyEnemyCount > 2) return -1;
         if (!Skill.冰澈.GetSpell().IsReadyWithCanCast()) return -1;
+        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
+        if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 != 3) return -2;
             if (!Helper.可读条()) return -3;
-            
+            if (Skill.冰澈.RecentlyUsed(2500)) return -4;
             return 1;
         }
         return -99;

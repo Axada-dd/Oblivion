@@ -15,7 +15,11 @@ public class 黑魔纹 : ISlotResolver
         if (!QT.Instance.GetQt("黑魔纹")) return -5;
         if (!Skill.黑魔纹.GetSpell().IsReadyWithCanCast()) return -1;
         if (BattleData.Instance.已使用黑魔纹) return -3;
-        if (!BattleData.Instance.已使用瞬发&& !QT.Instance.GetQt("能力技卡G放")) return -2;
+        if (!BattleData.Instance.已使用瞬发 )
+        {
+            BattleData.Instance.需要瞬发 = true;
+            return -2;
+        }
         return 1;
     }
 }

@@ -8,6 +8,7 @@ public class 核爆补耀星 : ISlotResolver
     {
         if (!BLMHelper.火状态) return -1;
         if (Core.Me.CurrentMp < 800) return -2;
+        if (BattleData.Instance.已使用耀星) return -3;
         if (BLMHelper.耀星层数 + BattleData.Instance.能使用的火四个数 < 6)
         {
             return 1;

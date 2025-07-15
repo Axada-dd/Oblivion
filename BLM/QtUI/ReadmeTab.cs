@@ -17,7 +17,7 @@ public static class ReadmeTab
         {
             if (ImGui.CollapsingHeader("查看更新日志", ImGuiTreeNodeFlags.DefaultOpen))
             {
-                ImGui.BulletText("111");
+                ImGui.BulletText("7.14 优化逻辑，添加玄冰、冰冻、核爆补耀星的逻辑，添加特供循环，尝试修复AOE问题");
             }
 
             if (ImGui.CollapsingHeader("Todolist", ImGuiTreeNodeFlags.DefaultOpen))

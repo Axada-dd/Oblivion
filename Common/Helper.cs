@@ -89,6 +89,8 @@ public static class Helper
                      (spell.RecastTime.TotalMilliseconds / spell.MaxCharges) * (spell.MaxCharges - 1));
     }
 
+    public static bool 有buff(uint buffId) => Core.Me.HasAura(buffId);
+
     /// <summary>
     /// 自身有buff且时间小于
     /// </summary>

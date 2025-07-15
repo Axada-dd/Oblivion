@@ -28,7 +28,7 @@ public class QT
         //Instance.AddQt("核爆", true);
         Instance.AddQt("黑魔纹", true);
         Instance.AddQt("墨泉", true);
-        Instance.AddQt("醒梦", true);
+        //Instance.AddQt("醒梦", true);
         Instance.AddQt("三连咏唱", true);
         Instance.AddQt("即刻", true);
         Instance.AddQt("Dot", true);
@@ -42,7 +42,7 @@ public class QT
         Instance.AddQt("关闭即刻三连的移动判断", false, "三连即刻不会在走位的时候自动释放");
         Instance.AddQt("详述", true);
         Instance.AddQt("起手序列", true,"关闭会不倒计时起手");
-        Instance.AddQt("AOE", false,"一键关闭所有aoe技能");
+        Instance.AddQt("AOE", true,"一键关闭所有aoe技能");
         Instance.AddQt("倾泻资源", false,"清空通晓");
         Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项,随开随关");
         Instance.AddQt("能力技卡G放", true,"开启后，能力技卡会G放,开三插和减动画后并不会真的卡G");

@@ -17,7 +17,7 @@ public class 核爆 : ISlotResolver
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount < 2) return -1;
-        if (!QT.Instance.GetQt("核爆") && !QT.Instance.GetQt("AOE")) return -5;
+        if (!QT.Instance.GetQt("AOE")) return -5;
         if (!Skill.核爆.GetSpell().IsReadyWithCanCast()) return -2;
         if (!BLMHelper.火状态) return -3;
         if (Helper.IsMove && !Helper.可瞬发()) return -4;

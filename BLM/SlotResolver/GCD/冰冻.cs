@@ -6,7 +6,7 @@ public class 冰冻: ISlotResolver
 {
     public int Check()
     {
-        if (Skill.冰冻.GetSpell().IsReadyWithCanCast()) return -1;
+        if (!Skill.冰冻.GetActionChange().GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount < 2) return -2;
         if (!QT.Instance.GetQt("AOE")) return -3;
@@ -22,6 +22,7 @@ public class 冰冻: ISlotResolver
             if (Core.Me.CurrentMp >= 800) return -6;
             if (BLMHelper.耀星层数 == 6) return -7;
             if (Helper.可瞬发()) return -8;
+            if (Skill.墨泉.RecentlyUsed()) return -9; 
             return 2;
         }
         return -99;

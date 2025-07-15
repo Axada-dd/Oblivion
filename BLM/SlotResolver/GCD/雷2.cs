@@ -19,6 +19,7 @@ public class 雷2 : ISlotResolver
         if (nearbyEnemyCount < 2) return -3;
         if (!Skill.雷二.GetSpell().IsReadyWithCanCast()) return -1;
         if (!QT.Instance.GetQt("Dot")) return -2;
+        if (BattleData.Instance.正在特殊循环中) return -4;
         if (Core.Me.HasAura(Buffs.雷云) && BLMHelper.补dot) return 1;
         return -99;
     }

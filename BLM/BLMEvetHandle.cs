@@ -63,6 +63,7 @@ public class BLMEvetHandle : IRotationEventHandler
         }
         if (BattleData.Instance.已使用瞬发)
         {
+            if (BattleData.Instance.需要瞬发) BattleData.Instance.需要瞬发 = false;
             if (spell.Id == Skill.耀星)
             {
                 BattleData.Instance.已使用耀星 = true;
@@ -82,15 +83,10 @@ public class BLMEvetHandle : IRotationEventHandler
         }
         else BattleData.Instance.三连cd = 60-Skill.三连.GetSpell().Charges * 60;
 
-        if (BattleData.Instance.能使用耀星 && Skill.三连.GetSpell().Charges > 1 && !BattleData.Instance.已使用耀星 &&
-            !QT.Instance.GetQt("三连用于走位") && (Skill.即刻.GetSpell().Cooldown.TotalSeconds > 3 || Skill.三连.GetSpell().Charges * 60 >= 110 ) && Skill.墨泉.GetSpell().Cooldown.TotalSeconds > 12)
-        {
-            BattleData.Instance.使用三连转冰 = true;
-        }
-        if (BLMHelper.冰状态 || Skill.三连.GetSpell().Charges < 1 || Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 12) BattleData.Instance.使用三连转冰 = false;
+        BattleData.Instance.三连转冰 = BLMHelper.三连转冰();
+
         BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetGCDDuration();
-        if (!QT.Instance.GetQt("aoe"))
-            BattleData.Instance.启动aoe = false;
+
         if (BattleData.Instance.已使用耀星)
         {
             if (BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
@@ -105,7 +101,8 @@ public class BLMEvetHandle : IRotationEventHandler
         if (BLMHelper.火状态)
         {
             BattleData.Instance.能使用的火四个数 = 0;
-            var mp = (int)(Core.Me.CurrentMp - 2400);
+            var mp = (int)(Core.Me.CurrentMp - 800);
+            if (BLMHelper.悖论指示) mp -= 1600;
             if (BLMHelper.冰针 > 0)
             {
                 mp -= 800*BLMHelper.冰针;

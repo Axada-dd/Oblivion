@@ -1,4 +1,5 @@
 using Oblivion.BLM.QtUI;
+using Oblivion.BLM.SlotResolver.Special;
 
 namespace Oblivion.BLM.SlotResolver.GCD;
 
@@ -6,13 +7,14 @@ public class 玄冰: ISlotResolver
 {
     public int Check()
     {
-        if(!QT.Instance.GetQt("AOE")||QT.Instance.GetQt("使用特供循环"))return -1;
+        if (!QT.Instance.GetQt("AOE")) return -1;
         if(!BLMHelper.冰状态)return -2;
-        if(!Skill.玄冰.GetSpell().IsReadyWithCanCast())return -3;
+        if(!Skill.玄冰.GetActionChange().GetSpell().IsReadyWithCanCast())return -3;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount < 2) return -4;
         if (BLMHelper.冰层数 != 3) return -5;
         if (!Helper.可读条()) return -6;
+        if (Skill.冰澈.RecentlyUsed(1500)) return -4;
         return 1;
     }
 

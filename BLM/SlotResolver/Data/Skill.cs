@@ -11,7 +11,7 @@ public class Skill
         灵极魂 = 16506,//Level>35
         星灵移位 = 149,//Level>4
         冰一 = 142,//Level>1
-        冰冻 = 25793,//Level>12
+        冰冻 = 25795,//Level>12
         冰三 = 154,//Level>35
         玄冰 = 159,//Level>40
         冰澈 = 3576,//level>58

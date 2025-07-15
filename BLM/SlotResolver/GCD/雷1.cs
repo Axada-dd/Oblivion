@@ -17,6 +17,7 @@ public class 雷1 : ISlotResolver
         if (!Skill.雷一.GetSpell().IsReadyWithCanCast()) return -1;
         if (enemyCount >= 2 && QT.Instance.GetQt("AOE")) return -2;
         if (!QT.Instance.GetQt("Dot")) return -3;
+        if (BattleData.Instance.正在特殊循环中) return -4;
         if (BLMHelper.补dot && Core.Me.HasAura(Buffs.雷云)) return 1;
         return -99;
     }
