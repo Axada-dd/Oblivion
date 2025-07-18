@@ -22,19 +22,9 @@ public class BattleData
     public bool 正在双星灵墨泉 { get; set; } = false;
     public bool 强制补冰 { get; set; } = false;
     public bool 强制补火 { get; set; } = false;
-    private bool _即刻;
-    public bool 需要即刻
-    {
-        get => Volatile.Read(ref _即刻);
-        set => Volatile.Write(ref _即刻, value);
-    }
-    private bool _needInstantCast;
+    public bool 需要即刻{ get; set; } = false;
 
-    public bool 需要瞬发gcd
-    {
-        get => Volatile.Read(ref _needInstantCast);
-        set => Volatile.Write(ref _needInstantCast, value);
-    }
+    public bool 需要瞬发gcd { get; set; } = false;
     public bool 三连转冰 { get; set; } = false;
     public bool 能星灵转冰 { get; set; } = false;
     

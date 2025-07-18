@@ -25,7 +25,12 @@ public static class BLMHelper
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (补dot && Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
-        if (悖论指示) return Skill.悖论;
+        if (悖论指示)
+        {
+            if (火状态 && Core.Me.CurrentMp >= 2400) return Skill.悖论;
+            if (冰状态) return Skill.悖论;
+        }
+        if (火状态 && Core.Me.CurrentMp < 2400) return Skill.绝望;
         if (通晓层数 >= 1) return nearbyEnemyCount >= 2 ? Skill.秽浊 : Skill.异言;
         if (提前补dot && Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
         return 0;
@@ -118,7 +123,9 @@ public static class BLMHelper
             {
                 i++;
             }
-
+            //绝望
+            模拟mp -= 800;
+            i++;
             if (火层数 < 3) i++;
             if (冰针 > 0)
             {
@@ -178,6 +185,15 @@ public static class BLMHelper
             }
             if (QT.Instance.GetQt("三连咏唱") && Skill.三连.GetSpell().Charges >= 1) return true;
         }
+        return false;
+    }
+
+    public static bool 强制补冰()
+    {
+        if (火状态) return false;
+        if (冰层数 == 3) return false;
+        if (Skill.冰三.RecentlyUsed(2500)) return false;
+        if (Skill.即刻.GetSpell().Cooldown.TotalSeconds > 3 && Skill.三连.GetSpell().Charges < 1) return true;
         return false;
     }
 }

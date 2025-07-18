@@ -46,7 +46,6 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             BattleData.Instance.已使用耀星 = true;
         }
-        if (spell.Id == Skill.绝望) BattleData.Instance.已使用绝望 = true;
     }
 
     public void AfterSpell(Slot slot, Spell spell)
@@ -63,7 +62,7 @@ public class BLMEvetHandle : IRotationEventHandler
         }
         if (BattleData.Instance.已使用瞬发)
         {
-            if (BattleData.Instance.需要瞬发gcd) BattleData.Instance.需要瞬发gcd = false;
+            BattleData.Instance.需要瞬发gcd = false;
             if (spell.Id == Skill.耀星)
             {
                 BattleData.Instance.已使用耀星 = true;
@@ -76,13 +75,39 @@ public class BLMEvetHandle : IRotationEventHandler
     public void OnBattleUpdate(int currTimeInMs)
     {
 
+        if (!Core.Me.IsCasting)
+        {
+            if (GCDHelper.GetGCDCooldown() < 100)
+            {
+                if (MoveHelper.IsMoving())
+                {
+                    if (BLMHelper.可用瞬发数() > 0 && !Helper.可瞬发())
+                    {
+                        BattleData.Instance.需要瞬发gcd = true;
+                    }                
+                }
+            }
+
+            if (GCDHelper.GetGCDCooldown() < 800)
+            {
+                
+                if (BLMHelper.可用瞬发数() == 0 && MoveHelper.IsMoving() && !QT.Instance.GetQt("关闭即刻三连的移动判断"))
+                {
+                    BattleData.Instance.需要即刻 = true;
+                }
+            }
+        }
+        
+        if (Helper.可瞬发()) BattleData.Instance.需要即刻 = false;
         if (Skill.三连.GetSpell().Charges > 1)
         {
             BattleData.Instance.三连cd = 60-(Skill.三连.GetSpell().Charges - 1) * 60;
         }
         else BattleData.Instance.三连cd = 60-Skill.三连.GetSpell().Charges * 60;
         if (Core.Me.IsCasting)
+        {
             BattleData.Instance.已使用瞬发 = false;
+        }   
         BattleData.Instance.三连转冰 = BLMHelper.三连转冰();
 
         BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetElapsedGCD();
@@ -96,13 +121,11 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             BattleData.Instance.已使用黑魔纹 = !Helper.Buff时间小于(Buffs.黑魔纹Buff, 500);
         }
-
         BattleData.Instance.能使用耀星 = BLMHelper.能使用耀星();
         BattleData.Instance.能使用的火四个数 = BLMHelper.能使用的火四个数();
         BattleData.Instance.火循环剩余gcd = BLMHelper.火循环gcd();
         BattleData.Instance.冰循环剩余gcd = BLMHelper.冰循环gcd();
         BattleData.Instance.能星灵转冰 = BLMHelper.能星灵转冰();
-
     }
 
     public void OnEnterRotation()

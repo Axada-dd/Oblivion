@@ -12,19 +12,20 @@ public class 玄冰: ISlotResolver
         if(!Skill.玄冰.GetActionChange().GetSpell().IsReadyWithCanCast())return -3;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount < 2) return -4;
+        if (Core.Me.CurrentMp >= 10000) return -5;
+        if (Skill.冰澈.RecentlyUsed(3000) || Skill.玄冰.RecentlyUsed(3000)) return -6;
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 != 3) return -2;
             if (!Helper.可读条()) return -3;
             if (BLMHelper.冰针 == 3)
             {
-                if (Skill.冰澈.RecentlyUsed(5000)) return -4;
+                if (Skill.冰澈.RecentlyUsed(3000) || Skill.玄冰.RecentlyUsed(3000)) return -4;
                 if (Core.Me.CurrentMp < 10000)
                 {
                     return 2;
                 }
             }
-            return 1;
         }
         return 1;
     }

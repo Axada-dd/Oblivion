@@ -18,6 +18,8 @@ public class 冰澈 : ISlotResolver
         if (!Skill.冰澈.GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
+        if (Skill.冰澈.RecentlyUsed(3000) || Skill.玄冰.RecentlyUsed(3000)) return -2;
+        if (Core.Me.CurrentMp >= 9800) return -3;
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 != 3) return -2;

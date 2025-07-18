@@ -36,9 +36,9 @@ public class 三连咏唱 : ISlotResolver
         if (Helper.可瞬发()) return -4;
         if (BLMHelper.火状态 && BattleData.Instance.火循环剩余gcd < 2 &&
             Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8) return -3;
-        if (Helper.IsMove &&!QT.Instance.GetQt("关闭即刻三连的移动判断") && BLMHelper.可用瞬发() != 0) return 2;
-        if (BattleData.Instance.火循环剩余gcd<2 && !BLMHelper.补dot &&
-            Skill.即刻.GetSpell().Cooldown.TotalSeconds > 3 && BLMHelper.火状态 && !QT.Instance.GetQt("三连用于走位")) return 3;
+        //if (Helper.IsMove &&!QT.Instance.GetQt("关闭即刻三连的移动判断") && BLMHelper.可用瞬发() != 0) return 2;
+        if (BattleData.Instance.火循环剩余gcd<2 && Skill.即刻.GetSpell().Cooldown.TotalSeconds > 2 
+                                           && BLMHelper.火状态 && !QT.Instance.GetQt("三连用于走位")) return 3;
         if (BattleData.Instance.三连转冰 && !BLMHelper.悖论指示 && Core.Me.CurrentMp < 800)return 4;
         if (BLMHelper.冰状态 && BLMHelper.冰层数 < 3)
         {

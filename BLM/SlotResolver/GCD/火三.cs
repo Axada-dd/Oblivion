@@ -22,7 +22,7 @@ public class 火三 : ISlotResolver
             if (!Skill.冰澈.RecentlyUsed() || !Skill.玄冰.RecentlyUsed() || Core.Me.CurrentMp < 10000) return -7;
             return 1;
         }
-        if (!BLMHelper.火状态 && !BLMHelper.冰状态 && Core.Me.CurrentMp >= 5000) return 2;
+        if (!BLMHelper.火状态 && !BLMHelper.冰状态 && Core.Me.CurrentMp >= 8000) return 2;
         return -1;
     }
 
