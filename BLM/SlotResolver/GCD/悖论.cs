@@ -1,3 +1,5 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 悖论 : ISlotResolver
@@ -13,10 +15,11 @@ public class 悖论 : ISlotResolver
     {
         if (!Skill.悖论.GetSpell().IsReadyWithCanCast()) return -1;
         if (!BLMHelper.悖论指示) return -6;
+        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
+        if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 == 3 && BLMHelper.冰针 == 3) return 1;
-            if (Helper.IsMove && !Helper.可瞬发()) return 2;
             //if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8) return 3;
         }
 
@@ -26,7 +29,6 @@ public class 悖论 : ISlotResolver
             if (BLMHelper.火层数 < 3 && !Core.Me.HasAura(Buffs.火苗)) return 4;
             if (BLMHelper.火层数 == 3)
             {
-                if (Helper.IsMove && !Helper.可瞬发()) return 5;
                 if (BattleData.Instance.已使用耀星 || (BattleData.Instance.三连转冰 && BLMHelper.耀星层数 == 6)) return 6;
             }
         }

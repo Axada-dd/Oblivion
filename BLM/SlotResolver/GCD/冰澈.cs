@@ -22,7 +22,14 @@ public class 冰澈 : ISlotResolver
         {
             if (BLMHelper.冰层数 != 3) return -2;
             if (!Helper.可读条()) return -3;
-            if (Skill.冰澈.RecentlyUsed(2500)) return -4;
+            if (BLMHelper.冰针 == 3)
+            {
+                if (Skill.冰澈.RecentlyUsed(5000)) return -4;
+                if (Core.Me.CurrentMp < 10000)
+                {
+                    return 2;
+                }
+            }
             return 1;
         }
         return -99;

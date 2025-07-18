@@ -14,7 +14,7 @@ public class 醒梦 : ISlotResolver
 
     public void Build(Slot slot)
     {
-        Spell spell = Skill.醒梦.GetActionChange().GetSpell(SpellTargetType.Self);
+        Spell spell = Skill.醒梦.GetSpell(SpellTargetType.Self);
         if (spell == null) return;
         slot.Add(spell);
     }

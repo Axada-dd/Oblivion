@@ -17,7 +17,8 @@ public class 黑魔纹 : ISlotResolver
         if (BattleData.Instance.已使用黑魔纹) return -3;
         if (!BattleData.Instance.已使用瞬发 )
         {
-            BattleData.Instance.需要瞬发 = true;
+            if (BattleData.Instance.需要瞬发gcd) return -2;
+            BattleData.Instance.需要瞬发gcd = true;
             return -2;
         }
         return 1;

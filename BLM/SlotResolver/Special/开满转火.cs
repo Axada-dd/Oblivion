@@ -62,6 +62,7 @@ public class 开满转火: ISlotSequence
         {
             slot.Add(new Spell(Skill.绝望, SpellTargetType.Target).DontUseGcd());
         }
+        BattleData.Instance.正在特殊循环中 = false;
     }
     public 开满转火()
     {

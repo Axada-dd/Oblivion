@@ -19,16 +19,14 @@ public class 秽浊 : ISlotResolver
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount < 2 && QT.Instance.GetQt("AOE")) return -2;
         if (QT.Instance.GetQt("倾泻资源")) return 666;
-        if (MoveHelper.IsMoving() && !Helper.可瞬发()) return 1;
         if (BLMHelper.通晓层数 == 3 && BLMHelper.通晓剩余时间 <= 10000) return 2;
         if (BLMHelper.通晓层数 == 3 && Skill.详述.GetSpell().Cooldown.TotalSeconds < 5) return 3;
-        var 复唱时间 = Helper.复唱时间();
         if (BLMHelper.火状态)
         {
             if (Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 != 6)
             {
                 if (Skill.墨泉.GetSpell().Cooldown.TotalMilliseconds < 300) return -3;
-                if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 3) return 4;
+                if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 2) return 4;
             }
         }
         //if ((BLMHelper.通晓层数 == 3 || (BLMHelper.通晓剩余时间 < 5000 && BLMHelper.通晓层数 == 2)) && Skill.详述.GetSpell().Cooldown.TotalMilliseconds < 10000) return 3;

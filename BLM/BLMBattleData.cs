@@ -13,22 +13,30 @@ public class BattleData
     public int 火循环剩余gcd { get; set; } = 0;
     public int 冰循环剩余gcd { get; set; } = 0;
     public int 复唱时间 { get; set; } = 0;
-    public bool 双星灵墨泉短 { get; set; } = false;
-    public bool 双星灵墨泉长 { get; set; } = false;
     public bool IsInnerOpener = false;
     public bool 能使用耀星 { get; set; } = false;
     public bool 已使用绝望 { get; set; } = false;
     public float 三连cd { get; set; } = 0;
     public int 能使用的火四个数 { get; set; } = 0;
     public bool 正在特殊循环中 { get; set; } = false;
+    public bool 正在双星灵墨泉 { get; set; } = false;
+    public bool 强制补冰 { get; set; } = false;
+    public bool 强制补火 { get; set; } = false;
+    private bool _即刻;
+    public bool 需要即刻
+    {
+        get => Volatile.Read(ref _即刻);
+        set => Volatile.Write(ref _即刻, value);
+    }
     private bool _needInstantCast;
 
-    public bool 需要瞬发
+    public bool 需要瞬发gcd
     {
         get => Volatile.Read(ref _needInstantCast);
         set => Volatile.Write(ref _needInstantCast, value);
     }
     public bool 三连转冰 { get; set; } = false;
+    public bool 能星灵转冰 { get; set; } = false;
     
     public bool HotkeyUseHighPrioritySlot = false; // 热键使用高优先级队列
 

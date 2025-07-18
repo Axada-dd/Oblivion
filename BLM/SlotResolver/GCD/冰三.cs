@@ -16,26 +16,32 @@ public class 冰三 : ISlotResolver
         if (!Skill.冰三.GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
+        if (Skill.墨泉.RecentlyUsed()) return -2;
         if (BLMHelper.冰状态)
         {
-            if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -2;
-            if (BLMHelper.冰层数 == 3) return -3;
-            if (!Helper.可瞬发()) return -4;
-            return 1;
+            if (Helper.可瞬发())
+            {
+                if (BLMHelper.冰层数 == 3) return -3;
+                return 1;
+            }
+
+            if (BattleData.Instance.强制补冰)
+            {
+                return 2;
+            }
         }
 
         if (BLMHelper.火状态)
         {
-            if (Core.Me.CurrentMp >= 800) return -5;
-            if (BLMHelper.耀星层数 == 6) return -6;
-            //if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -7;
-            if (BattleData.Instance.前一gcd == Skill.冰澈 || BattleData.Instance.前一gcd == Skill.玄冰) return -8;
-            if (Skill.墨泉.RecentlyUsed()) return -9;
-            if (Helper.可瞬发()) return -10;
-            return 1;
+            if (Core.Me.CurrentMp >= 800) return -3;
+            if (BattleData.Instance.能使用耀星) return -4;
+            if (BLMHelper.耀星层数 == 6) return -5;
+            if (Helper.可瞬发() || BLMHelper.能星灵转冰() || BattleData.Instance.三连转冰) return -6;
+            if (Skill.墨泉.RecentlyUsed()) return -7;
+            return 3;
         }
-        if (Core.Me.CurrentMp < 5000) return 4;
 
+        if (Core.Me.CurrentMp < 5000 && !BLMHelper.火状态 && !BLMHelper.冰状态) return 77;
         return -99;
     }
 }

@@ -18,9 +18,10 @@ public class 即刻 : ISlotResolver
         if (Helper.可瞬发()) return -3;
         if (BLMHelper.冰状态 && BLMHelper.冰层数 < 3 )
         {
+            if(BattleData.Instance.需要瞬发gcd) return -4;
             if (GCDHelper.GetGCDCooldown() < 600)
             {
-                BattleData.Instance.需要瞬发 = true;
+                BattleData.Instance.需要瞬发gcd = true;
                 return -4;
             }
             return 2;

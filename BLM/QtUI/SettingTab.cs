@@ -122,7 +122,8 @@ public static class SettingTab
             {
                 
                 ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
-                ImGui.Text($"复唱时间:{Core.Resolve<MemApiSpell>().GetGCDDuration()}");
+                ImGui.Text($"复唱时间:{BattleData.Instance.复唱时间}");
+                ImGui.Text($"剩余GCD时间：{GCDHelper.GetGCDCooldown()}");
                 ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
                 ImGui.Text($"可瞬发：{Helper.可瞬发()}");
                 ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
@@ -133,7 +134,9 @@ public static class SettingTab
                 ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
                 ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
                 ImGui.Text($"三连转冰：{BattleData.Instance.三连转冰}");
+                ImGui.Text($"需要瞬发：{BattleData.Instance.需要瞬发gcd}");
                 ImGui.Text($"特供循环判断:{new 开满转火().StartCheck()}");
+                ImGui.Text($"双星灵墨泉：{new 双星灵墨泉().StartCheck()}");
             }
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
             {

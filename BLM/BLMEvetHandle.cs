@@ -33,7 +33,7 @@ public class BLMEvetHandle : IRotationEventHandler
         if (AI.Instance.BattleData.CurrBattleTimeInMs < 10 * 1000) return;
         if (!QT.Instance.GetQt("Boss上天")) return;
         if (BLMHelper.火状态) await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
-        if (BLMHelper.冰状态 && BLMHelper.冰层数 <3 && BLMHelper.冰针<3 && Core.Me.CurrentMp < 10000) await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
+        if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000)) await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
     }
 
     public void OnSpellCastSuccess(Slot slot, Spell spell)
@@ -54,7 +54,7 @@ public class BLMEvetHandle : IRotationEventHandler
         if (_gcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一gcd = spell.Id;
-            BattleData.Instance.已使用瞬发 =  GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1200 : 1500);
+            BattleData.Instance.已使用瞬发 =  GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 1700);
         }
 
         if (_ogcdSpellIds.Contains(spell.Id))
@@ -63,7 +63,7 @@ public class BLMEvetHandle : IRotationEventHandler
         }
         if (BattleData.Instance.已使用瞬发)
         {
-            if (BattleData.Instance.需要瞬发) BattleData.Instance.需要瞬发 = false;
+            if (BattleData.Instance.需要瞬发gcd) BattleData.Instance.需要瞬发gcd = false;
             if (spell.Id == Skill.耀星)
             {
                 BattleData.Instance.已使用耀星 = true;
@@ -71,7 +71,6 @@ public class BLMEvetHandle : IRotationEventHandler
         }
 
         if (spell.Id == Skill.黑魔纹) BattleData.Instance.已使用黑魔纹 = true;
-        if (spell.Id == Skill.绝望) BattleData.Instance.已使用绝望 = true;
     }
     
     public void OnBattleUpdate(int currTimeInMs)
@@ -82,82 +81,28 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.三连cd = 60-(Skill.三连.GetSpell().Charges - 1) * 60;
         }
         else BattleData.Instance.三连cd = 60-Skill.三连.GetSpell().Charges * 60;
-
+        if (Core.Me.IsCasting)
+            BattleData.Instance.已使用瞬发 = false;
         BattleData.Instance.三连转冰 = BLMHelper.三连转冰();
 
-        BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetGCDDuration();
+        BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetElapsedGCD();
 
         if (BattleData.Instance.已使用耀星)
         {
             if (BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
         }
-        if (BattleData.Instance.已使用绝望)if(BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300))  BattleData.Instance.已使用绝望 = false;
 
         if (BattleData.Instance.已使用黑魔纹)
         {
             BattleData.Instance.已使用黑魔纹 = !Helper.Buff时间小于(Buffs.黑魔纹Buff, 500);
         }
 
-        if (BLMHelper.火状态)
-        {
-            BattleData.Instance.能使用的火四个数 = 0;
-            var mp = (int)(Core.Me.CurrentMp - 800);
-            if (BLMHelper.悖论指示) mp -= 1600;
-            if (BLMHelper.冰针 > 0)
-            {
-                mp -= 800*BLMHelper.冰针;
-                BattleData.Instance.能使用的火四个数 += BLMHelper.冰针;
-            }
+        BattleData.Instance.能使用耀星 = BLMHelper.能使用耀星();
+        BattleData.Instance.能使用的火四个数 = BLMHelper.能使用的火四个数();
+        BattleData.Instance.火循环剩余gcd = BLMHelper.火循环gcd();
+        BattleData.Instance.冰循环剩余gcd = BLMHelper.冰循环gcd();
+        BattleData.Instance.能星灵转冰 = BLMHelper.能星灵转冰();
 
-            BattleData.Instance.能使用的火四个数 += mp / 1600;
-            BattleData.Instance.能使用耀星 = (BattleData.Instance.能使用的火四个数 + BLMHelper.耀星层数) == 6;
-        }
-        if (BLMHelper.火状态)
-        {
-            BattleData.Instance.冰循环剩余gcd = 0;
-            BattleData.Instance.火循环剩余gcd = 0;
-            if (BattleData.Instance.IsInnerOpener)
-            {
-                BattleData.Instance.火循环剩余gcd = BLMSetting.Instance.核爆起手 ? 18 : 19;
-            }
-            else
-            {
-                var 模拟mp = (int)Core.Me.CurrentMp;
-                int 火四 = 0;
-                if (BLMHelper.悖论指示)
-                {
-                    模拟mp -= 1600;
-                    BattleData.Instance.火循环剩余gcd++;
-                }
-                if(!BattleData.Instance.已使用耀星&&BattleData.Instance.能使用耀星)BattleData.Instance.火循环剩余gcd++;
-                if(BLMHelper.火层数<3)BattleData.Instance.火循环剩余gcd++;//火苗火3
-                if (!BattleData.Instance.已使用绝望)//绝望
-                {
-                    模拟mp -= 800;
-                    BattleData.Instance.火循环剩余gcd++;
-                }
-                if (BLMHelper.冰针 > 0)
-                {
-                    模拟mp -= 800*BLMHelper.冰针;
-                    火四 += BLMHelper.冰针;
-                }
-
-                火四 += 模拟mp / 1600;
-                BattleData.Instance.火循环剩余gcd += 火四;
-                if(Helper.目标Buff时间小于(Buffs.雷一dot, BattleData.Instance.火循环剩余gcd*BattleData.Instance.复唱时间, false) && Core.Me.HasAura(Buffs.雷云))BattleData.Instance.火循环剩余gcd++;
-            }
-        }
-
-        if (BLMHelper.冰状态)
-        {
-            BattleData.Instance.冰循环剩余gcd = 0;
-            BattleData.Instance.火循环剩余gcd = 0;
-            if (BLMHelper.冰层数 < 3) BattleData.Instance.冰循环剩余gcd++;
-            if (BLMHelper.冰针 < 3) BattleData.Instance.冰循环剩余gcd++;
-            if (BLMHelper.悖论指示) BattleData.Instance.冰循环剩余gcd++;
-            if (Helper.目标Buff时间小于(Buffs.雷一dot, BattleData.Instance.冰循环剩余gcd *BattleData.Instance.复唱时间, false) &&
-                Core.Me.HasAura(Buffs.雷云)) BattleData.Instance.冰循环剩余gcd++;
-        }
     }
 
     public void OnEnterRotation()

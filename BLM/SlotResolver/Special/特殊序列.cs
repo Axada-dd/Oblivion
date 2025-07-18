@@ -6,7 +6,8 @@ public static class 特殊序列
     {
         return
         [
-            new 开满转火()
+            new 开满转火(),
+            new 双星灵墨泉()
         ];
     }
         

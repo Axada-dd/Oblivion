@@ -12,7 +12,6 @@ public class 火三 : ISlotResolver
         if (BLMHelper.火状态)
         {
             if (BLMHelper.火层数 < 3 && Core.Me.HasAura(Buffs.火苗)) return 1;
-            
         }
 
         if (BLMHelper.冰状态)

@@ -46,6 +46,7 @@ public class QT
         Instance.AddQt("倾泻资源", false,"清空通晓");
         Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项,随开随关");
         Instance.AddQt("能力技卡G放", true,"开启后，能力技卡会G放,开三插和减动画后并不会真的卡G");
+        //Instance.AddQt("双星灵墨泉", false);
         Instance.AddQt("使用特供循环", false,"仅在开启三插和DR减动画时使用");
 
 

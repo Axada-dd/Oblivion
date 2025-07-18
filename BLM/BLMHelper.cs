@@ -17,20 +17,28 @@ public static class BLMHelper
     public static bool 悖论指示 => Core.Resolve<JobApi_BlackMage>().IsParadoxActive;
     public static int 通晓层数 => Core.Resolve<JobApi_BlackMage>().PolyglotStacks;
     public static long 通晓剩余时间 => Core.Resolve<JobApi_BlackMage>().EnochianTimer;
-    
+
     public static bool 补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 3500, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 3500, false);
     public static bool 提前补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 6000, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 6000, false);
 
     public static uint 可用瞬发()
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (补dot && Helper.有buff(Buffs.雷云) ) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
+        if (补dot && Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
         if (悖论指示) return Skill.悖论;
-        if (通晓层数 >= 1)return nearbyEnemyCount >= 2 ? Skill.秽浊 : Skill.异言;
-        if (提前补dot && Helper.有buff(Buffs.雷云))return nearbyEnemyCount >= 2&& QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
+        if (通晓层数 >= 1) return nearbyEnemyCount >= 2 ? Skill.秽浊 : Skill.异言;
+        if (提前补dot && Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
         return 0;
     }
 
+    public static int 可用瞬发数()
+    {
+        int i = 0;
+        if (悖论指示) i++;
+        if (通晓层数 >= 1) i += 通晓层数;
+        if (提前补dot && Helper.有buff(Buffs.雷云)) i++;
+        return i;
+    }
     public static bool 能使用耀星()
     {
         if (BLMHelper.火状态)
@@ -39,7 +47,7 @@ public static class BLMHelper
             var mp = (int)(Core.Me.CurrentMp - 2400);
             if (BLMHelper.冰针 > 0)
             {
-                mp -= 800*BLMHelper.冰针;
+                mp -= 800 * BLMHelper.冰针;
                 能使用的火四个数 += BLMHelper.冰针;
             }
 
@@ -47,7 +55,98 @@ public static class BLMHelper
             return (能使用的火四个数 + BLMHelper.耀星层数) == 6;
         }
 
+        if (火状态 && QT.Instance.GetQt("AOE"))
+        {
+            var mp = (int)Core.Me.CurrentMp;
+            var 耀星层数 = 0;
+            if (冰针 > 0 && mp > 800)
+            {
+                耀星层数 += 3;
+                mp = (int)(mp * 0.33334f);
+            }
+
+            if (BLMHelper.耀星层数 > 0)
+            {
+                耀星层数 += BLMHelper.耀星层数;
+            }
+            if (mp > 800) 耀星层数+=3;
+            return 耀星层数 == 6;
+        }
         return false;
+    }
+    public static int 能使用的火四个数()
+    {
+        if (BLMHelper.火状态)
+        {
+            var 模拟mp = (int)Core.Me.CurrentMp;
+            int 火四 = 0;
+            if (BLMHelper.悖论指示)
+            {
+                模拟mp -= 1600;
+            }
+            if (!BattleData.Instance.已使用绝望)//绝望
+            {
+                模拟mp -= 800;
+            }
+            if (BLMHelper.冰针 > 0)
+            {
+                模拟mp -= 800 * BLMHelper.冰针;
+                火四 += BLMHelper.冰针;
+            }
+
+            火四 += 模拟mp / 1600;
+            return 火四;
+        }
+
+        return 0;
+    }
+
+    public static int 火循环gcd()
+    {
+        int i = 0;
+        if (火状态)
+        {
+
+            var 模拟mp = (int)Core.Me.CurrentMp;
+            if (悖论指示)
+            {
+                模拟mp -= 1600;
+                i++;
+            }
+
+            if (能使用耀星())
+            {
+                i++;
+            }
+
+            if (火层数 < 3) i++;
+            if (冰针 > 0)
+            {
+                模拟mp -= 800 * BLMHelper.冰针;
+                i += 冰针;
+            }
+            i += 模拟mp / 1600;
+            if (Helper.目标Buff时间小于(Buffs.雷一dot, BattleData.Instance.火循环剩余gcd * BattleData.Instance.复唱时间, false) &&
+                Core.Me.HasAura(Buffs.雷云)) i++;
+            return i;
+        }
+        return 0;
+    }
+
+    public static int 冰循环gcd()
+    {
+        int i = 0;
+        if (BLMHelper.冰状态)
+        {
+            if (BLMHelper.冰层数 < 3) i++;
+            if (BLMHelper.冰针 < 3) i++;
+            if (BLMHelper.悖论指示) i++;
+            if (Helper.目标Buff时间小于(Buffs.雷一dot, i * BattleData.Instance.复唱时间, false) &&
+                Core.Me.HasAura(Buffs.雷云)) i++;
+            return i;
+        }
+
+        return 0;
     }
     public static bool 三连转冰()
     {
@@ -60,6 +159,24 @@ public static class BLMHelper
                 if (Skill.即刻.GetSpell().Cooldown.TotalSeconds < 3) return false;
                 return true;
             }
+        }
+        return false;
+    }
+    public static bool 能星灵转冰()
+    {
+        if (火状态)
+        {
+            if (QT.Instance.GetQt("即刻") && Skill.即刻.GetSpell().Cooldown.TotalMilliseconds < BattleData.Instance.复唱时间 * BattleData.Instance.火循环剩余gcd) return true;
+            if (QT.Instance.GetQt("三连咏唱") && Skill.三连.GetSpell().Charges >= 1) return true;
+        }
+        if (冰状态)
+        {
+            if (悖论指示)
+            {
+
+                if (QT.Instance.GetQt("即刻") && Skill.即刻.GetSpell().Cooldown.TotalMilliseconds < BattleData.Instance.复唱时间) return true;
+            }
+            if (QT.Instance.GetQt("三连咏唱") && Skill.三连.GetSpell().Charges >= 1) return true;
         }
         return false;
     }

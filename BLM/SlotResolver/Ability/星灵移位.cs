@@ -1,5 +1,6 @@
 using Oblivion.BLM.QtUI;
 using Oblivion.BLM.SlotResolver.GCD;
+using Oblivion.BLM.SlotResolver.Special;
 
 namespace Oblivion.BLM.SlotResolver.Ability;
 
@@ -17,19 +18,23 @@ public class 星灵移位 : ISlotResolver
                 if (BLMHelper.耀星层数 == 6) return -4;
                 if (Skill.墨泉.RecentlyUsed(1500)) return -7;
                 if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 3) return -6;
-                if (Helper.可瞬发() || Skill.即刻.GetSpell().Cooldown.TotalSeconds < 1.2) return 6;
+                if (Helper.可瞬发() || BLMHelper.能星灵转冰()) return 6;
             }
         }
 
         if (BLMHelper.冰状态)
         {
-            if (BLMHelper.悖论指示 ) return -3;
+            int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
+
+            if (BLMHelper.悖论指示 && !(nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) ) return -3;
             if (BLMHelper.冰层数 != 3) return -4;
             if (BLMHelper.冰针 != 3) return -6;
-            if (Core.Me.CurrentMp < 10000 && !(Skill.冰澈.RecentlyUsed() || Skill.玄冰.RecentlyUsed())) return -7;
-            if (GCDHelper.GetGCDCooldown() < 600 && !QT.Instance.GetQt("使用特供循环"))
+            if (Core.Me.CurrentMp < 10000 && !(Skill.冰澈.RecentlyUsed(5000) || Skill.玄冰.RecentlyUsed(5000))) return -7;
+            if (QT.Instance.GetQt("使用特供循环") && (new 开满转火().StartCheck() > 0 || BattleData.Instance.正在特殊循环中)) return -8;
+            if (BattleData.Instance.需要瞬发gcd) return -9;
+            if (GCDHelper.GetGCDCooldown() < 600 )
             {
-                BattleData.Instance.需要瞬发 = true;
+                BattleData.Instance.需要瞬发gcd = true;
                 return -5;
             }
             return 1;
@@ -39,7 +44,7 @@ public class 星灵移位 : ISlotResolver
     }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.星灵移位.GetActionChange().GetSpell(SpellTargetType.Self);
+        Spell spell = Skill.星灵移位.GetSpell(SpellTargetType.Self);
         if (spell == null) return;
         slot.Add(spell);
     }
