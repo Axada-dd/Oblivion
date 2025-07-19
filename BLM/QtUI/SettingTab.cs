@@ -139,8 +139,8 @@ public static class SettingTab
                 ImGui.Text($"需要即刻: {BattleData.Instance.需要即刻}");
                 ImGui.Text($"特供循环判断:{new 开满转火().StartCheck()}");
                 ImGui.Text($"双星灵墨泉：{new 双星灵墨泉().StartCheck()}");
-                //ImGui.Text($"下一GCD:{求解器.下一个GCD()}");
-                //ImGui.Text($"下一能力技：{求解器.下一个OGCD()}");
+                ImGui.Text($"下一GCD:{求解器.下一个GCD()}");
+                ImGui.Text($"下一能力技：{求解器.下一个OGCD()}");
             }
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
             {

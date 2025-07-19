@@ -6,9 +6,20 @@ namespace Oblivion.BLM.SlotResolver.Ability;
 
 public class 星灵移位 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.星灵移位;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
+    }
+    public void Build(Slot slot)
+    {
+        var spell = GetSpell();
+        if (spell == null) return;
+        slot.Add(spell);
+    }
     public int Check()
     {
-        if (!Skill.星灵移位.GetSpell().IsReadyWithCanCast()) return -1;
+        if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         if (!BLMHelper.冰状态 && !BLMHelper.火状态) return -2;
         if (Core.Me.Level < 90) return -5;
         if (BLMHelper.火状态)
@@ -42,11 +53,5 @@ public class 星灵移位 : ISlotResolver
         }
 
         return -99;
-    }
-    public void Build(Slot slot)
-    {
-        Spell spell = Skill.星灵移位.GetSpell(SpellTargetType.Self);
-        if (spell == null) return;
-        slot.Add(spell);
     }
 }

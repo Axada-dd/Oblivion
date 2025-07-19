@@ -4,6 +4,18 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 核爆补耀星 : ISlotResolver
 {
+    private uint _skillId = 0;
+    private Spell? GetSpell()
+    {
+        _skillId = UseSkill();
+        return _skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
+    public void Build(Slot slot)
+    {
+        var spell = GetSpell();
+        if (spell == null) return;
+        slot.Add(spell);
+    }
     public int Check()
     {
         if (!BLMHelper.火状态) return -1;
@@ -13,7 +25,7 @@ public class 核爆补耀星 : ISlotResolver
         {
             return 1;
         }
-
+        //可以再精修，先计算火4个数，火4数>3且还有800+蓝可以先火4再核爆
         return -99;
     }
 
@@ -23,11 +35,5 @@ public class 核爆补耀星 : ISlotResolver
         if (BLMHelper.耀星层数 + 3 >= 6) return Skill.核爆;
         return Skill.绝望;
     }
-    public void Build(Slot slot)
-    {
-        var canTargetObjects = Core.Me.GetCurrTarget().目标周围可选中敌人数量(5)>2 ? Skill.核爆.最优aoe目标(2) : Core.Me.GetCurrTarget();
-        Spell spell = UseSkill().GetActionChange().GetSpell(QT.Instance.GetQt("智能AOE目标") ? canTargetObjects : Core.Me.GetCurrTarget());
-        if (spell == null) return;
-        slot.Add(spell);
-    }
+
 }

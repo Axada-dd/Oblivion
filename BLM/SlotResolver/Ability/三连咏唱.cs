@@ -5,9 +5,14 @@ namespace Oblivion.BLM.SlotResolver.Ability;
 
 public class 三连咏唱 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.三连;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.三连.GetSpell(SpellTargetType.Self);
+        var spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
@@ -15,7 +20,7 @@ public class 三连咏唱 : ISlotResolver
     public int Check()
     {
         if (!QT.Instance.GetQt("三连咏唱")) return -2;
-        if (!Skill.三连.GetSpell().IsReadyWithCanCast()) return -1;
+        if (_skillId.GetSpell().Charges < 1) return -1;
         if (QT.Instance.GetQt("使用特供循环"))
         {
             if (!BLMHelper.火状态) return -3;

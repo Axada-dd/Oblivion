@@ -21,6 +21,8 @@ public static class BLMHelper
     public static bool 补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 3500, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 3500, false);
     public static bool 提前补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 6000, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 6000, false);
 
+    public static bool 能力技卡G => Skill.醒梦.GetSpell().AbilityCoolDownInNextXgcDsWindow(2);
+
     public static uint 可用瞬发()
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);

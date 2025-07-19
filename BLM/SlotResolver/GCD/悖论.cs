@@ -4,16 +4,20 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 悖论 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.悖论;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.悖论.GetActionChange().GetSpell(SpellTargetType.Target);
+        var spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
 
     public int Check()
     {
-        if (!Skill.悖论.GetSpell().IsReadyWithCanCast()) return -1;
         if (!BLMHelper.悖论指示) return -6;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;

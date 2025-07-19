@@ -4,17 +4,20 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 绝望 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.绝望;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.绝望.GetActionChange().GetSpell(SpellTargetType.Target);
+        var spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
-
     public int Check()
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (!new Spell(Skill.绝望, SpellTargetType.Target).IsReadyWithCanCast()) return -2;
         if (nearbyEnemyCount >= 2 && QT.Instance.GetQt("核爆")&& QT.Instance.GetQt("AOE")) return -3;
         //if (!QT.Instance.GetQt("绝望")) return -4;
         if (!BLMHelper.火状态) return -6;

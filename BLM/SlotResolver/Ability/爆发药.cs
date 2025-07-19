@@ -4,6 +4,7 @@ namespace Oblivion.BLM.SlotResolver.Ability;
 
 public class 爆发药 : ISlotResolver
 {
+    
     public int Check()
     {
         if (!QT.Instance.GetQt("爆发药")) return -2;

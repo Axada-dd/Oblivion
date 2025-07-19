@@ -5,9 +5,14 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 冰澈 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.冰澈;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.冰澈.GetActionChange().GetSpell(SpellTargetType.Target);
+        Spell? spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
@@ -15,7 +20,6 @@ public class 冰澈 : ISlotResolver
     public int Check()
     {
         if (QT.Instance.GetQt("使用特供循环") && new 开满转火().StartCheck() > 0 && new 开满转火().StopCheck(2) < 0) return -999;
-        if (!Skill.冰澈.GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
         if (Skill.冰澈.RecentlyUsed(3000) || Skill.玄冰.RecentlyUsed(3000)) return -2;
@@ -26,7 +30,7 @@ public class 冰澈 : ISlotResolver
             if (!Helper.可读条()) return -3;
             if (BLMHelper.冰针 == 3)
             {
-                if (Skill.冰澈.RecentlyUsed(5000)) return -4;
+                if (Skill.冰澈.RecentlyUsed(5000) || Skill.玄冰.RecentlyUsed(5000)) return -4;
                 if (Core.Me.CurrentMp < 10000)
                 {
                     return 2;

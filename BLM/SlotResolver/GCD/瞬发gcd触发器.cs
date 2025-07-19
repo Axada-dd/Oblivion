@@ -3,6 +3,10 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 public class 瞬发gcd触发器 : ISlotResolver
 {
     private uint _skillId = 0;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
     public int Check()
     {
         if (Helper.可瞬发()) return -2;
@@ -11,11 +15,7 @@ public class 瞬发gcd触发器 : ISlotResolver
         if (_skillId == 0) return -4;
         return 1;
     }
-    private Spell GetSpell()
-    {
-        if (_skillId == 0) return null;
-        return _skillId.GetActionChange().GetSpell();
-    }
+
 
     public void Build(Slot slot)
     {

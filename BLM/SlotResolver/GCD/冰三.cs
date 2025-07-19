@@ -4,16 +4,20 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 冰三 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.冰三;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.冰三.GetActionChange().GetSpell(SpellTargetType.Target);
+        Spell? spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
 
     public int Check()
     {
-        if (!Skill.冰三.GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
         if (Skill.墨泉.RecentlyUsed()) return -2;
@@ -24,17 +28,6 @@ public class 冰三 : ISlotResolver
                 if (BLMHelper.冰层数 == 3) return -3;
                 return 1;
             }
-            else
-            {
-                if (BattleData.Instance.需要即刻) return -4;
-                if (Skill.即刻.IsReady() || Skill.三连.GetSpell().Charges >= 1)
-                {
-                    BattleData.Instance.需要即刻 = true;
-                    BattleData.Instance.需要瞬发gcd = true;
-                    return -5;
-                }
-            }
-
             if (BLMHelper.强制补冰())
             {
                 return 2;

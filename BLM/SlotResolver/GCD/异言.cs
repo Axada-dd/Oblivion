@@ -4,9 +4,14 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 异言 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.异言;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.异言.GetActionChange().GetSpell(SpellTargetType.Target);
+        var spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
@@ -14,7 +19,6 @@ public class 异言 : ISlotResolver
     public int Check()
     {
         if (!QT.Instance.GetQt("异言")) return -2;
-        if (!Skill.异言.GetSpell().IsReadyWithCanCast()) return -1;
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE")) return -2;
         if (QT.Instance.GetQt("倾泻资源")) return 666;

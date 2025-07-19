@@ -4,9 +4,14 @@ namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 火4 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.火四;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.火四.GetActionChange().GetSpell(SpellTargetType.Target);
+        var spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
@@ -14,7 +19,6 @@ public class 火4 : ISlotResolver
     public int Check()
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (!new Spell(Skill.火四, SpellTargetType.Target).IsReadyWithCanCast()) return -2;
         if (nearbyEnemyCount >= 2  && QT.Instance.GetQt("AOE")) return -3;
         if (!BLMHelper.火状态) return -6;
         if (BLMHelper.耀星层数 + BattleData.Instance.能使用的火四个数 < 6) return -7;

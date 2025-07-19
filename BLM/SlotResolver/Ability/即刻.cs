@@ -4,9 +4,14 @@ namespace Oblivion.BLM.SlotResolver.Ability;
 
 public class 即刻 : ISlotResolver
 {
+    private readonly uint _skillId = Skill.即刻;
+    private Spell? GetSpell()
+    {
+        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
+    }
     public void Build(Slot slot)
     {
-        Spell spell = Skill.即刻.GetActionChange().GetSpell(SpellTargetType.Self);
+        var spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
     }
@@ -14,7 +19,7 @@ public class 即刻 : ISlotResolver
     public int Check()
     {
         if (!QT.Instance.GetQt("即刻")) return -2;
-        if (!Skill.即刻.GetSpell().IsReadyWithCanCast()) return -1;
+        if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         if (Helper.可瞬发()) return -3;
         if (BLMHelper.冰状态 && BLMHelper.冰层数 < 3 )
         {
