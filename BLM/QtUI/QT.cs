@@ -38,14 +38,14 @@ public class QT
         //Instance.AddQt("星灵移位", true);
         Instance.AddQt("智能AOE目标", false);
         Instance.AddQt("三连用于走位",false,"三连保留用于走位");
-        Instance.AddQt("即刻不用于走位", false, "不保留即刻用于走位");
         Instance.AddQt("关闭即刻三连的移动判断", false, "三连即刻不会在走位的时候自动释放");
         Instance.AddQt("详述", true);
         Instance.AddQt("起手序列", true,"关闭会不倒计时起手");
-        Instance.AddQt("AOE", true,"一键关闭所有aoe技能");
+        Instance.AddQt("双目标aoe", true,"启动双目标AOE");
+        Instance.AddQt("AOE", true,"三目标及以上aoe");
+        Instance.AddQt("秽浊填充aoe", false, "使用秽浊填充aoe冰阶段");
         Instance.AddQt("倾泻资源", false,"清空通晓");
         Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项,随开随关");
-        Instance.AddQt("能力技卡G放", true,"开启后，能力技卡会G放,开三插和减动画后并不会真的卡G");
         //Instance.AddQt("双星灵墨泉", false);
         Instance.AddQt("使用特供循环", false,"仅在开启三插和DR减动画时使用");
 

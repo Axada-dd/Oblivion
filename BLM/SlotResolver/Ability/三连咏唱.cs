@@ -28,12 +28,6 @@ public class 三连咏唱 : ISlotResolver
             if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8) return -7;
             if (BattleData.Instance.能使用的火四个数 == 1 && !Helper.可瞬发() && BattleData.Instance.能使用耀星)
             {
-                if (BattleData.Instance.需要瞬发gcd) return -55;
-                if (BLMHelper.悖论指示)
-                {
-                    BattleData.Instance.需要瞬发gcd = true;
-                    return -55;
-                }
                 return 66;
             }
         }
@@ -47,14 +41,7 @@ public class 三连咏唱 : ISlotResolver
         if (BattleData.Instance.三连转冰 && !BLMHelper.悖论指示 && Core.Me.CurrentMp < 800)return 4;
         if (BLMHelper.冰状态 && BLMHelper.冰层数 < 3)
         {
-            if (Skill.即刻.GetSpell().Cooldown.TotalSeconds < 0.5) return -5;
-            if (BattleData.Instance.需要瞬发gcd) return -4;
-            if (GCDHelper.GetGCDCooldown() < 600)
-            {
-                BattleData.Instance.需要瞬发gcd = true;
-                return -4;
-            }
-
+            if (Skill.即刻.GetSpell().AbilityCoolDownInNextXgcDsWindow(1)) return -5;
             return 6;
         }
         return -99;

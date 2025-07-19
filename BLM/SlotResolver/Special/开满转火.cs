@@ -11,10 +11,7 @@ public class 开满转火: ISlotSequence
     public List<Action<Slot>> Sequence { get; }
     public int StartCheck()
     {
-        target = Core.Me.GetCurrTarget();
-        var 人数 = target.目标周围可选中敌人数量(5);
-        aoe = 人数 > 2 && QT.Instance.GetQt("AOE");
-        if (人数 >= 3 && QT.Instance.GetQt("AOE")) return -8;
+        if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -7;
         if (!QT.Instance.GetQt("使用特供循环")) return -1;
         if (Core.Me.CurrentMp < 800) return -7;
         if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -2;

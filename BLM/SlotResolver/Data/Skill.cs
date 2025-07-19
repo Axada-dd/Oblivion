@@ -36,5 +36,4 @@ public class Skill
         魔罩 = 157,//level>30
         崩溃 = 156,//level>15
         沉稳 = 7559;//level>44
-
 }

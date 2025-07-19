@@ -29,7 +29,7 @@ public class 异言 : ISlotResolver
             if (Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 != 6)
             {
                 if (Skill.墨泉.GetSpell().Cooldown.TotalMilliseconds < 300) return -3;
-                if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 3 && Skill.墨泉.GetSpell().Cooldown.TotalSeconds > 0) return 4;
+                if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(2)) return 4;
             }
         }
 

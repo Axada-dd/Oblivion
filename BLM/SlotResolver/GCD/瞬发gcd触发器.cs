@@ -1,3 +1,5 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.GCD;
 
 public class 瞬发gcd触发器 : ISlotResolver
@@ -5,7 +7,10 @@ public class 瞬发gcd触发器 : ISlotResolver
     private uint _skillId = 0;
     private Spell? GetSpell()
     {
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+        if (_skillId == 0) return null;
+        if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
+        if (_skillId.IsAoe()) return QT.Instance.GetQt("智能AOE目标")  ? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
+        return  _skillId.GetSpell();
     }
     public int Check()
     {

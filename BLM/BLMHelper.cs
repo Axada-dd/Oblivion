@@ -2,9 +2,9 @@ using AEAssist.JobApi;
 using Oblivion.BLM.QtUI;
 
 namespace Oblivion.BLM;
-
 public static class BLMHelper
 {
+    private static readonly List<uint> AoeSkill = [Skill.核爆, Skill.雷二, Skill.玄冰, Skill.冰冻, Skill.秽浊,Skill.耀星];
     public static bool 火状态 => Core.Resolve<JobApi_BlackMage>().InAstralFire;
     public static int 火层数 => Core.Resolve<JobApi_BlackMage>().AstralFireStacks;
     public static int 耀星层数 => Core.Resolve<JobApi_BlackMage>().AstralSoulStacks;
@@ -21,8 +21,32 @@ public static class BLMHelper
     public static bool 补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 3500, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 3500, false);
     public static bool 提前补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 6000, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 6000, false);
 
-    public static bool 能力技卡G => Skill.醒梦.GetSpell().AbilityCoolDownInNextXgcDsWindow(2);
+    public static bool 能力技卡g => !GCDHelper.CanUseOffGcd();
+    public static bool IsAoe(this uint skill)
+    {
+        return AoeSkill.Contains(skill);
+    }
+    public static bool 在发呆()
+    {
+        if (Core.Me.IsDead) return false;
+        if (!Core.Me.InCombat()) return false;
+        if (Core.Me.IsCasting) return false;
+        if (GCDHelper.GetGCDDuration() > 0) return false;
+        return true;
+    }
 
+    public static bool 三目标aoe()
+    {
+        var count = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
+        return count >= 3;
+    }
+    public static bool 双目标aoe()
+    {
+        var count = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
+        if (count < 2) return false;
+        if (三目标aoe()) return false;
+        return true;
+    }
     public static uint 可用瞬发()
     {
         int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
@@ -32,9 +56,14 @@ public static class BLMHelper
             if (火状态 && Core.Me.CurrentMp >= 2400) return Skill.悖论;
             if (冰状态) return Skill.悖论;
         }
-        if (火状态 && Core.Me.CurrentMp < 2400) return Skill.绝望;
+        if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800) return Skill.绝望;
         if (通晓层数 >= 1) return nearbyEnemyCount >= 2 ? Skill.秽浊 : Skill.异言;
         if (提前补dot && Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
+        if (Skill.即刻.GetSpell().Cooldown.TotalMilliseconds > 0 && Skill.三连.GetSpell().Charges < 1)
+        {
+            if (Helper.有buff(Buffs.火苗)) return Skill.火三;
+            if (Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
+        }
         return 0;
     }
 

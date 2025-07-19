@@ -31,7 +31,7 @@ public class 秽浊 : ISlotResolver
             if (Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 != 6)
             {
                 if (Skill.墨泉.GetSpell().Cooldown.TotalMilliseconds < 300) return -3;
-                if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 2) return 4;
+                if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(2)) return 4;
             }
         }
         //if ((BLMHelper.通晓层数 == 3 || (BLMHelper.通晓剩余时间 < 5000 && BLMHelper.通晓层数 == 2)) && Skill.详述.GetSpell().Cooldown.TotalMilliseconds < 10000) return 3;

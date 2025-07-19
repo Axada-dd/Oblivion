@@ -124,6 +124,8 @@ public static class SettingTab
                 ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
                 ImGui.Text($"复唱时间:{BattleData.Instance.复唱时间}");
                 ImGui.Text($"剩余GCD时间：{GCDHelper.GetGCDCooldown()}");
+                ImGui.Text($"能力技卡G：{BLMHelper.能力技卡g}");
+                ImGui.Text($"发呆中：{BLMHelper.在发呆()}");
                 ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
                 ImGui.Text($"可瞬发：{Helper.可瞬发()}");
                 ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");

@@ -40,7 +40,7 @@ public class 冰三 : ISlotResolver
             if (BattleData.Instance.能使用耀星) return -4;
             if (BLMHelper.耀星层数 == 6) return -5;
             if (Helper.可瞬发() || BLMHelper.能星灵转冰() || BattleData.Instance.三连转冰) return -6;
-            if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 3) return -7;
+            if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(2)) return -7;
             if (Skill.墨泉.RecentlyUsed()) return -8;
             return 3;
         }

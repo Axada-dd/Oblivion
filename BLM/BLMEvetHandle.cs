@@ -99,6 +99,7 @@ public class BLMEvetHandle : IRotationEventHandler
         }
         
         if (Helper.可瞬发()) BattleData.Instance.需要即刻 = false;
+        if (BLMHelper.在发呆()) BattleData.Instance.需要瞬发gcd = true;
         if (Skill.三连.GetSpell().Charges > 1)
         {
             BattleData.Instance.三连cd = 60-(Skill.三连.GetSpell().Charges - 1) * 60;

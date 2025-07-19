@@ -7,8 +7,10 @@ public class 核爆补耀星 : ISlotResolver
     private uint _skillId = 0;
     private Spell? GetSpell()
     {
-        _skillId = UseSkill();
-        return _skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+        if (_skillId == 0) return null;
+        if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
+        if (_skillId.IsAoe()) return QT.Instance.GetQt("智能AOE目标")  ? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
+        return  _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {

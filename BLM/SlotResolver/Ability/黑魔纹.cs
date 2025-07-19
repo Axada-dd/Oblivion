@@ -13,7 +13,7 @@ public class 黑魔纹 : ISlotResolver
     {
         var spell = GetSpell();
         if (spell == null) return;
-        slot.Add(spell);
+        slot.Add2NdWindowAbility(spell);
     }
 
     public int Check()
@@ -21,12 +21,6 @@ public class 黑魔纹 : ISlotResolver
         if (!QT.Instance.GetQt("黑魔纹")) return -5;
         if (_skillId.GetSpell().Charges < 1) return -1;
         if (BattleData.Instance.已使用黑魔纹) return -3;
-        if (!BattleData.Instance.已使用瞬发 )
-        {
-            if (BattleData.Instance.需要瞬发gcd) return -2;
-            BattleData.Instance.需要瞬发gcd = true;
-            return -2;
-        }
         return 1;
     }
 }
