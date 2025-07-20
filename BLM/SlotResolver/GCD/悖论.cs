@@ -1,4 +1,5 @@
 using Oblivion.BLM.QtUI;
+using Oblivion.BLM.SlotResolver.Special;
 
 namespace Oblivion.BLM.SlotResolver.GCD;
 
@@ -28,6 +29,8 @@ public class 悖论 : ISlotResolver
                 if (BattleData.Instance.Aoe循环填充) return -22;
                 return 21;
             }
+
+            if (new 开满转火().StartCheck() == -5) return 40;
             if (BLMHelper.冰层数 == 3 && BLMHelper.冰针 == 3) return 1;
             //if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8) return 3;
         }

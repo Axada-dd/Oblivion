@@ -14,10 +14,10 @@ public class 开满转火: ISlotSequence
         if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -7;
         if (!QT.Instance.GetQt(QTkey.使用特供循环)) return -1;
         if (Core.Me.CurrentMp < 800) return -7;
-        if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -2;
+        if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds > 0 && Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -2;
         if (!BLMHelper.冰状态) return -3;
         if (BLMHelper.冰层数 != 3) return -4;
-        if (BLMHelper.悖论指示 ) return -5;
+        if (Helper.有buff(Buffs.三连Buff) || Helper.有buff(Buffs.即刻Buff)) return -7;
         if (BLMHelper.冰针 == 3 || Skill.冰澈.RecentlyUsed() || Skill.冰冻.RecentlyUsed()) return -6;
         return 1;
     }
@@ -40,12 +40,11 @@ public class 开满转火: ISlotSequence
             slot.Add(new Spell(aoe ? Skill.雷二 : Skill.雷一, SpellTargetType.Target).DontUseGcd());
         }
 
-        if (target != null)
-        {
-            if (BLMHelper.悖论指示)
-                slot.Add(new Spell(Skill.悖论, SpellTargetType.Target).DontUseGcd());
-            slot.Add(new Spell(Skill.冰澈, SpellTargetType.Target).DontUseGcd());
-        }
+
+        if (BLMHelper.悖论指示)
+            slot.Add(new Spell(Skill.悖论, SpellTargetType.Target).DontUseGcd());
+        slot.Add(new Spell(Skill.冰澈, SpellTargetType.Target).DontUseGcd());
+
     }
 
     private static void Step1(Slot slot)
@@ -55,10 +54,9 @@ public class 开满转火: ISlotSequence
 
     private static void Step2(Slot slot)
     {
-        if (target != null)
-        {
-            slot.Add(new Spell(Skill.绝望, SpellTargetType.Target).DontUseGcd());
-        }
+
+        slot.Add(new Spell(Skill.绝望, SpellTargetType.Target).DontUseGcd());
+
         BattleData.Instance.正在特殊循环中 = false;
     }
     public 开满转火()

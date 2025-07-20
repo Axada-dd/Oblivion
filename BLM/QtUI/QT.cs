@@ -16,7 +16,7 @@ public class QT
     /// </summary>
     public static void Reset()
     {
-        Instance.SetQt(QTkey.黑魔纹, true);
+        //Instance.SetQt(QTkey.黑魔纹, true);
         Instance.SetQt(QTkey.墨泉, true);
         Instance.SetQt(QTkey.三连咏唱, true);
         Instance.SetQt(QTkey.即刻, true);

@@ -19,10 +19,11 @@ public static class ReadmeTab
             {
                 ImGui.BulletText("7.14 优化逻辑，添加玄冰、冰冻、核爆补耀星的逻辑，添加特供循环，尝试修复AOE问题");
                 ImGui.BulletText("7.18 修复了一些问题");
+                ImGui.BulletText("7.20 M8S测试通过");
             }
 
             ImGuiHelper.Separator();
-            ImGui.BulletText("7.2黑魔，非最优循环，优先保证走位，其次会尽量使用星灵移位进冰打双星灵，全程标改。\n如果开上三插和DR减动画，可以无损插入能力技");
+            ImGui.BulletText("7.2黑魔，即刻三连不会好了就用，即使三连溢出了，优先保证能打双星灵标改\n如果开上三插和DR减动画，可以无损插入能力技");
         }
     };
     public static void Build(JobViewWindow instance)

@@ -28,15 +28,24 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         BattleData.Instance = new BattleData();
         BattleData.Instance.IsInnerOpener = false;
+        BattleData.Instance.需要即刻 = false;
+        BattleData.Instance.需要瞬发gcd = false;
+        BattleData.Instance.正在特殊循环中 = false;
         QT.Reset();
     }
 
     public async Task OnNoTarget()
     {
         if (AI.Instance.BattleData.CurrBattleTimeInMs < 10 * 1000) return;
-        if (!QT.Instance.GetQt("Boss上天")) return;
-        if (BLMHelper.火状态) await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
-        if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000)) await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
+        BattleData.Instance.需要即刻 = false;
+        BattleData.Instance.需要瞬发gcd = false;
+        BattleData.Instance.正在特殊循环中 = false;
+        if (QT.Instance.GetQt("Boss上天"))
+        {
+            if (BLMHelper.火状态) await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
+            if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000))
+                await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
+        }
     }
 
     public void OnSpellCastSuccess(Slot slot, Spell spell)
@@ -44,6 +53,7 @@ public class BLMEvetHandle : IRotationEventHandler
         if (_gcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一gcd = spell.Id;
+            AI.Instance.BattleData.CurrGcdAbilityCount = 1;
         }
         if (spell.Id == Skill.耀星)
         {
@@ -56,10 +66,11 @@ public class BLMEvetHandle : IRotationEventHandler
         if (_gcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一gcd = spell.Id;
-            BattleData.Instance.已使用瞬发 =  GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 1700);
+            AI.Instance.BattleData.CurrGcdAbilityCount = 1;
+            BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 1700);
         }
 
-        if (BLMHelper.冰状态 && (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()))
+        if (BLMHelper.冰状态 && (BLMHelper.双目标aoe() || BLMHelper.三目标aoe()))
         {
             if (spell.Id == Skill.雷二 || spell.Id == Skill.雷一 || spell.Id == Skill.秽浊)
             {
@@ -73,18 +84,23 @@ public class BLMEvetHandle : IRotationEventHandler
         if (BattleData.Instance.已使用瞬发)
         {
             BattleData.Instance.需要瞬发gcd = false;
+            AI.Instance.BattleData.CurrGcdAbilityCount = 2;
             if (spell.Id == Skill.耀星)
             {
                 BattleData.Instance.已使用耀星 = false;
             }
         }
     }
-    
+
     public void OnBattleUpdate(int currTimeInMs)
     {
         BLMFunction.Run();
         if (Helper.可瞬发()) BattleData.Instance.需要即刻 = false;
-        if (BLMHelper.在发呆()) BattleData.Instance.需要瞬发gcd = true;
+        if (BLMHelper.在发呆())
+        {
+            if (BLMHelper.可用瞬发() != 0)
+                BattleData.Instance.需要瞬发gcd = true;
+        }
         if (Core.Me.IsCasting)
         {
             BattleData.Instance.需要即刻 = false;
@@ -101,6 +117,7 @@ public class BLMEvetHandle : IRotationEventHandler
             if (BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
         }
 
+        if (!QT.Instance.GetQt(QTkey.使用特供循环)) BattleData.Instance.正在特殊循环中 = false;
 
         BattleData.Instance.已存在黑魔纹 = Helper.有buff(737);
         BattleData.Instance.能使用耀星 = BLMHelper.能使用耀星();
