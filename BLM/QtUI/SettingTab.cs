@@ -129,20 +129,20 @@ public static class SettingTab
                 ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
                 ImGui.Text($"可瞬发：{Helper.可瞬发()}");
                 ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
-                ImGui.Text($"已使用黑魔纹：{BattleData.Instance.已使用黑魔纹}");
-                ImGui.Text($"三连咏唱CD：{BattleData.Instance.三连cd}");
+                ImGui.Text($"已存在黑魔纹：{BattleData.Instance.已存在黑魔纹}");
+                ImGui.Text($"三连咏唱CD：{BLMHelper.三连cd()}");
                 ImGui.Text($"火循环剩余gcd：{BattleData.Instance.火循环剩余gcd}");
                 ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
                 ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
                 ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
                 ImGui.Text($"三连转冰：{BattleData.Instance.三连转冰}");
                 ImGui.Text($"需要瞬发：{BattleData.Instance.需要瞬发gcd}");
-                ImGui.Text($"可用瞬发：{BLMHelper.可用瞬发()}");
                 ImGui.Text($"需要即刻: {BattleData.Instance.需要即刻}");
                 ImGui.Text($"特供循环判断:{new 开满转火().StartCheck()}");
                 ImGui.Text($"双星灵墨泉：{new 双星灵墨泉().StartCheck()}");
                 ImGui.Text($"下一GCD:{求解器.下一个GCD()}");
                 ImGui.Text($"下一能力技：{求解器.下一个OGCD()}");
+                ImGui.Text($"三冰针进冰：{BattleData.Instance.三冰针进冰}");
             }
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
             {

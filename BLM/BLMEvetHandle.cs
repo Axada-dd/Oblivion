@@ -17,6 +17,8 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         Skill.黑魔纹,Skill.三连,Skill.墨泉,Skill.即刻,Skill.星灵移位,Skill.醒梦,Skill.详述
     };
+
+
     public async Task OnPreCombat()
     {
         await Task.CompletedTask;
@@ -56,6 +58,13 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.已使用瞬发 =  GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 1700);
         }
 
+        if (BLMHelper.冰状态 && (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()))
+        {
+            if (spell.Id == Skill.雷二 || spell.Id == Skill.雷一 || spell.Id == Skill.秽浊)
+            {
+                BattleData.Instance.Aoe循环填充 = true;
+            }
+        }
         if (_ogcdSpellIds.Contains(spell.Id))
         {
             BattleData.Instance.前一能力技 = spell.Id;
@@ -65,63 +74,29 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.需要瞬发gcd = false;
             if (spell.Id == Skill.耀星)
             {
-                BattleData.Instance.已使用耀星 = true;
+                BattleData.Instance.已使用耀星 = false;
             }
         }
-
-        if (spell.Id == Skill.黑魔纹) BattleData.Instance.已使用黑魔纹 = true;
     }
     
     public void OnBattleUpdate(int currTimeInMs)
     {
-
-        if (!Core.Me.IsCasting)
-        {
-            if (GCDHelper.GetGCDCooldown() < 100)
-            {
-                if (MoveHelper.IsMoving())
-                {
-                    if (BLMHelper.可用瞬发数() > 0 && !Helper.可瞬发())
-                    {
-                        BattleData.Instance.需要瞬发gcd = true;
-                    }                
-                }
-            }
-
-            if (GCDHelper.GetGCDCooldown() < 800)
-            {
-                
-                if (BLMHelper.可用瞬发数() == 0 && MoveHelper.IsMoving() && !QT.Instance.GetQt("关闭即刻三连的移动判断"))
-                {
-                    BattleData.Instance.需要即刻 = true;
-                }
-            }
-        }
-        
+        BLMFunction.Run();
         if (Helper.可瞬发()) BattleData.Instance.需要即刻 = false;
         if (BLMHelper.在发呆()) BattleData.Instance.需要瞬发gcd = true;
-        if (Skill.三连.GetSpell().Charges > 1)
-        {
-            BattleData.Instance.三连cd = 60-(Skill.三连.GetSpell().Charges - 1) * 60;
-        }
-        else BattleData.Instance.三连cd = 60-Skill.三连.GetSpell().Charges * 60;
-        if (Core.Me.IsCasting)
-        {
-            BattleData.Instance.已使用瞬发 = false;
-        }   
+        if (Core.Me.IsCasting) BattleData.Instance.已使用瞬发 = false;
+
         BattleData.Instance.三连转冰 = BLMHelper.三连转冰();
 
-        BattleData.Instance.复唱时间 = Core.Resolve<MemApiSpell>().GetElapsedGCD();
+        BattleData.Instance.复唱时间 = GCDHelper.GetGCDCooldown();
 
         if (BattleData.Instance.已使用耀星)
         {
             if (BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
         }
 
-        if (BattleData.Instance.已使用黑魔纹)
-        {
-            BattleData.Instance.已使用黑魔纹 = !Helper.Buff时间小于(Buffs.黑魔纹Buff, 500);
-        }
+
+        BattleData.Instance.已存在黑魔纹 = Helper.有buff(737);
         BattleData.Instance.能使用耀星 = BLMHelper.能使用耀星();
         BattleData.Instance.能使用的火四个数 = BLMHelper.能使用的火四个数();
         BattleData.Instance.火循环剩余gcd = BLMHelper.火循环gcd();
@@ -148,6 +123,7 @@ public class BLMEvetHandle : IRotationEventHandler
     public void OnExitRotation()
     {
         BLMSetting.Instance.Save();
+        BLMSetting.Instance.SaveQtStates(QT.Instance);
     }
 
     public void OnTerritoryChanged()

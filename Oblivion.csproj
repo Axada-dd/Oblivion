@@ -32,9 +32,6 @@
 
         <Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy-&gt;'$(AdditionalOutputDir)\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" />
     </Target>
-    <ItemGroup>
-      <Folder Include="BLM\Triggers\" />
-    </ItemGroup>
 
     <ItemGroup>
       <Reference Include="AEAssist">

@@ -18,7 +18,7 @@ public class 详述 : ISlotResolver
 
     public int Check()
     {
-        if (!QT.Instance.GetQt("详述")) return -5;
+        if (!QT.Instance.GetQt(QTkey.详述)) return -5;
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         if (BLMHelper.通晓层数 == 3) return -2;
         if (BLMHelper.通晓层数 == 2)

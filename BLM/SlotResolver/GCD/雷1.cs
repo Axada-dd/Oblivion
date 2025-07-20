@@ -18,9 +18,8 @@ public class 雷1 : ISlotResolver
 
     public int Check()
     {
-        int enemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (enemyCount >= 2 && QT.Instance.GetQt("AOE")) return -2;
-        if (!QT.Instance.GetQt("Dot")) return -3;
+        if (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()) return -100;
+        if (!QT.Instance.GetQt(QTkey.Dot)) return -3;
         if (BattleData.Instance.正在特殊循环中) return -4;
         if (BLMHelper.补dot && Core.Me.HasAura(Buffs.雷云)) return 1;
         return -99;

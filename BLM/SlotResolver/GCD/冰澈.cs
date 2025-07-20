@@ -15,28 +15,21 @@ public class 冰澈 : ISlotResolver
         Spell? spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
+        BattleData.Instance.三冰针进冰 = false;
     }
 
     public int Check()
     {
-        if (QT.Instance.GetQt("使用特供循环") && new 开满转火().StartCheck() > 0 && new 开满转火().StopCheck(2) < 0) return -999;
-        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
-        if (Skill.冰澈.RecentlyUsed(3000) || Skill.玄冰.RecentlyUsed(3000)) return -2;
+        if (QT.Instance.GetQt(QTkey.使用特供循环) && new 开满转火().StartCheck() > 0 && new 开满转火().StopCheck(2) < 0) return -999;
+        if (BLMHelper.双目标aoe() || BLMHelper.三目标aoe()) return -55;
+        if (Skill.玄冰.RecentlyUsed(3000)) return -2;
         if (Core.Me.CurrentMp >= 9800) return -3;
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 != 3) return -2;
             if (!Helper.可读条()) return -3;
-            if (BLMHelper.冰针 == 3)
-            {
-                if (Skill.冰澈.RecentlyUsed(5000) || Skill.玄冰.RecentlyUsed(5000)) return -4;
-                if (Core.Me.CurrentMp < 10000)
-                {
-                    return 2;
-                }
-            }
-            return 1;
+            if (BLMHelper.冰针 < 3) return 1;
+            if (BattleData.Instance.三冰针进冰) return 2;
         }
         return -99;
     }

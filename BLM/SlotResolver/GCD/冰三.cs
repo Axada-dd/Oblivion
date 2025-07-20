@@ -14,12 +14,12 @@ public class 冰三 : ISlotResolver
         Spell? spell = GetSpell();
         if (spell == null) return;
         slot.Add(spell);
+
     }
 
     public int Check()
     {
-        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
+        if (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()) return -100;
         if (Skill.墨泉.RecentlyUsed()) return -2;
         if (BLMHelper.冰状态)
         {

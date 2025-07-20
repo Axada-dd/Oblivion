@@ -30,6 +30,7 @@ public class 星灵移位 : ISlotResolver
                 if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(2)) return -6;
                 if (Helper.可瞬发() ) return 6;
                 if (BLMHelper.能星灵转冰()) return 7;
+                if (BLMHelper.冰针 >1) return 787;
             }
         }
 
@@ -41,7 +42,7 @@ public class 星灵移位 : ISlotResolver
             if (BLMHelper.冰层数 != 3) return -4;
             if (BLMHelper.冰针 != 3) return -6;
             if (Core.Me.CurrentMp < 9800 && !(Skill.冰澈.RecentlyUsed(5000) || Skill.玄冰.RecentlyUsed(5000))) return -7;
-            if (QT.Instance.GetQt("使用特供循环") && (new 开满转火().StartCheck() > 0 || BattleData.Instance.正在特殊循环中)) return -8;
+            if (QT.Instance.GetQt(QTkey.使用特供循环) && (new 开满转火().StartCheck() > 0 || BattleData.Instance.正在特殊循环中)) return -8;
             return 1;
         }
 

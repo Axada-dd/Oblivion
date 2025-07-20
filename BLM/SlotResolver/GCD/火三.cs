@@ -17,8 +17,7 @@ public class 火三 : ISlotResolver
     }
     public int Check()
     {
-        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (nearbyEnemyCount >= 3 && QT.Instance.GetQt("AOE")) return -3;
+        if (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()) return -100;
         if (BLMHelper.火状态)
         {
             if (BLMHelper.火层数 < 3 && Core.Me.HasAura(Buffs.火苗)) return 1;

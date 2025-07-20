@@ -18,9 +18,9 @@ public class 黑魔纹 : ISlotResolver
 
     public int Check()
     {
-        if (!QT.Instance.GetQt("黑魔纹")) return -5;
+        if (!QT.Instance.GetQt(QTkey.黑魔纹)) return -5;
         if (_skillId.GetSpell().Charges < 1) return -1;
-        if (BattleData.Instance.已使用黑魔纹) return -3;
+        if (Helper.有buff(737)) return -3;
         return 1;
     }
 }

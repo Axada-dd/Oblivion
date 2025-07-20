@@ -18,8 +18,7 @@ public class 火4 : ISlotResolver
 
     public int Check()
     {
-        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (nearbyEnemyCount >= 2  && QT.Instance.GetQt("AOE")) return -3;
+        if (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()) return -100;
         if (!BLMHelper.火状态) return -6;
         if (BLMHelper.火层数 >= 3 && BLMHelper.耀星层数 < 6 && Core.Me.CurrentMp > 2400L && !Helper.IsMove) return 1;
         if (BLMHelper.火层数 >= 3 && BLMHelper.耀星层数 < 6 && Core.Me.CurrentMp > 2400L && Helper.可瞬发()) return 2;

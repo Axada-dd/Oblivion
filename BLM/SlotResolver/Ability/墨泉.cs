@@ -18,7 +18,7 @@ public class 墨泉 : ISlotResolver
 
     public int Check()
     {
-        if (!QT.Instance.GetQt("墨泉")) return -5;
+        if (!QT.Instance.GetQt(QTkey.墨泉)) return -5;
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         if (!BLMHelper.火状态) return -2;
         if (Core.Me.CurrentMp > 800) return -3;

@@ -12,12 +12,12 @@ public class 开满转火: ISlotSequence
     public int StartCheck()
     {
         if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -7;
-        if (!QT.Instance.GetQt("使用特供循环")) return -1;
+        if (!QT.Instance.GetQt(QTkey.使用特供循环)) return -1;
         if (Core.Me.CurrentMp < 800) return -7;
         if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -2;
         if (!BLMHelper.冰状态) return -3;
         if (BLMHelper.冰层数 != 3) return -4;
-        if (BLMHelper.悖论指示 && QT.Instance.GetQt("悖论")) return -5;
+        if (BLMHelper.悖论指示 ) return -5;
         if (BLMHelper.冰针 == 3 || Skill.冰澈.RecentlyUsed() || Skill.冰冻.RecentlyUsed()) return -6;
         return 1;
     }

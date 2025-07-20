@@ -22,6 +22,17 @@ public static class BLMHelper
     public static bool 提前补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 6000, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 6000, false);
 
     public static bool 能力技卡g => !GCDHelper.CanUseOffGcd();
+
+    public static float 三连cd()
+    {
+        var 三连cd = 0f;
+        if (Skill.三连.GetSpell().Charges > 1)
+        {
+            三连cd = 60-(Skill.三连.GetSpell().Charges - 1) * 60;
+        }
+        else 三连cd = 60-Skill.三连.GetSpell().Charges * 60;
+        return 三连cd;
+    }
     public static bool IsAoe(this uint skill)
     {
         return AoeSkill.Contains(skill);
@@ -37,11 +48,13 @@ public static class BLMHelper
 
     public static bool 三目标aoe()
     {
+        if (!QT.Instance.GetQt("AOE")) return false;
         var count = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         return count >= 3;
     }
     public static bool 双目标aoe()
     {
+        if (!QT.Instance.GetQt("双目标aoe")) return false;
         var count = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (count < 2) return false;
         if (三目标aoe()) return false;

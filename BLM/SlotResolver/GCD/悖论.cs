@@ -19,16 +19,22 @@ public class 悖论 : ISlotResolver
     public int Check()
     {
         if (!BLMHelper.悖论指示) return -6;
-        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) return -100;
+        
         if (BLMHelper.冰状态)
         {
+            if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe())
+            {
+                if (BLMHelper.冰针 < 3) return -21;
+                if (BattleData.Instance.Aoe循环填充) return -22;
+                return 21;
+            }
             if (BLMHelper.冰层数 == 3 && BLMHelper.冰针 == 3) return 1;
             //if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8) return 3;
         }
 
         if (BLMHelper.火状态)
         {
+            if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -20;
             if (Core.Me.CurrentMp < 2400) return -2;
             if (BLMHelper.火层数 < 3 && !Core.Me.HasAura(Buffs.火苗)) return 4;
             if (BLMHelper.火层数 == 3)

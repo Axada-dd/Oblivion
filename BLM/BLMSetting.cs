@@ -42,6 +42,43 @@ public class BLMSetting
     public JobViewSave JobViewSave = new()
     {
     }; // QT设置存档
+    public Dictionary<string, bool> QtStates { get; set; } = new Dictionary<string, bool>();
+
+    public List<string> QtUnVisibleList = [];
+
+    public void SaveQtStates(JobViewWindow jobViewWindow)
+    {
+        // 获取所有 Qt 控件的名称列表
+        string[] qtArray = jobViewWindow.GetQtArray();
+
+        // 遍历所有控件名称，获取对应的状态，并保存到字典中
+        foreach (var qtName in qtArray)
+        {
+            bool qtState = jobViewWindow.GetQt(qtName);
+            QtStates[qtName] = qtState;
+        }
+
+
+
+        // 保存当前设置到 JSON 文件
+        Save();
+    }
+
+    public void LoadQtStates(JobViewWindow jobViewWindow)
+    {
+        // 加载保存的所有Qt状态
+        foreach (var qtState in QtStates)
+        {
+            jobViewWindow.SetQt(qtState.Key, qtState.Value);
+        }
+
+
+        // 根据 QtUnVisibleList 设置对应的QT为不可见
+        foreach (var hiddenQt in QtUnVisibleList)
+        {
+            QtUnVisibleList.Add(hiddenQt);
+        }
+    }
     public bool 锁定以太步窗口 = false;
     public int 以太步IconSize = 47;
     public bool 以太步窗口显示 = true;

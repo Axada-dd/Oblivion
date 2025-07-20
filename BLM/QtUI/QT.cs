@@ -21,7 +21,7 @@ public class QT
     public static void Build()
     {
         Instance = new JobViewWindow(BLMSetting.Instance.JobViewSave, BLMSetting.Instance.Save, "黑魔の登神长阶");
-
+        
 
         Instance.AddQt("爆发药", false);
         //Instance.AddQt("绝望", true);
@@ -62,13 +62,13 @@ public class QT
         Instance.AddHotkey("魔罩", new HotKeyResolver_NormalSpell(Skill.魔罩, SpellTargetType.Self));
         
         
-        var myJobViewSave = new JobViewSave();
+        /*var myJobViewSave = new JobViewSave();
         myJobViewSave.ShowHotkey = BLMSetting.Instance.以太步窗口显示;
         myJobViewSave.QtHotkeySize = new Vector2(BLMSetting.Instance.以太步IconSize);
-        以太步窗口 = new HotkeyWindow(myJobViewSave, "WardensPaeanPanel");
+        以太步窗口 = new HotkeyWindow(myJobViewSave, "以太步窗口");*/
         
-        QT.Instance.SetUpdateAction(OnUIUpdate);
-        
+        Instance.SetUpdateAction(OnUIUpdate);
+        BLMSetting.Instance.LoadQtStates(Instance);
         ReadmeTab.Build(Instance);
         SettingTab.Build(Instance);
     }
