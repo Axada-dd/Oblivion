@@ -7,6 +7,7 @@ public class 墨泉 : ISlotResolver
     private readonly uint _skillId = Skill.墨泉;
     private Spell? GetSpell()
     {
+        if (GCDHelper.GetGCDCooldown() < 500) return null;
         return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
     }
     public void Build(Slot slot)

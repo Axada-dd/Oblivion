@@ -28,6 +28,7 @@ public class BLMEvetHandle : IRotationEventHandler
     {
         BattleData.Instance = new BattleData();
         BattleData.Instance.IsInnerOpener = false;
+        QT.Reset();
     }
 
     public async Task OnNoTarget()
@@ -84,11 +85,16 @@ public class BLMEvetHandle : IRotationEventHandler
         BLMFunction.Run();
         if (Helper.可瞬发()) BattleData.Instance.需要即刻 = false;
         if (BLMHelper.在发呆()) BattleData.Instance.需要瞬发gcd = true;
-        if (Core.Me.IsCasting) BattleData.Instance.已使用瞬发 = false;
+        if (Core.Me.IsCasting)
+        {
+            BattleData.Instance.需要即刻 = false;
+            BattleData.Instance.已使用瞬发 = false;
+            BattleData.Instance.需要瞬发gcd = false;
+        }
 
         BattleData.Instance.三连转冰 = BLMHelper.三连转冰();
 
-        BattleData.Instance.复唱时间 = GCDHelper.GetGCDCooldown();
+        BattleData.Instance.复唱时间 = GCDHelper.GetGCDDuration();
 
         if (BattleData.Instance.已使用耀星)
         {
@@ -128,5 +134,6 @@ public class BLMEvetHandle : IRotationEventHandler
 
     public void OnTerritoryChanged()
     {
+        QT.Reset();
     }
 }

@@ -22,7 +22,7 @@ public abstract class BLMFunction
             if (GCDHelper.GetGCDCooldown() < 800)
             {
                 
-                if (BLMHelper.可用瞬发数() == 0 && MoveHelper.IsMoving() && !QT.Instance.GetQt("关闭即刻三连的移动判断"))
+                if (BLMHelper.可用瞬发数() == 0 && MoveHelper.IsMoving() && !QT.Instance.GetQt(QTkey.关闭即刻三连的移动判断))
                 {
                     BattleData.Instance.需要即刻 = true;
                 }

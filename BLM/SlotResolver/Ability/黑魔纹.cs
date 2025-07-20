@@ -7,6 +7,7 @@ public class 黑魔纹 : ISlotResolver
     private readonly uint _skillId = Skill.黑魔纹;
     private Spell? GetSpell()
     {
+        if (GCDHelper.GetGCDCooldown() < 500) return null;
         return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
     }
     public void Build(Slot slot)

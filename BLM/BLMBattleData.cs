@@ -31,5 +31,6 @@ public class BattleData
     public HashSet<uint> 火状态gcd = new HashSet<uint>();
     
     public bool HotkeyUseHighPrioritySlot = false; // 热键使用高优先级队列
+    
 
 }

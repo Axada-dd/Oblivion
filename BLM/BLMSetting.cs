@@ -63,7 +63,7 @@ public class BLMSetting
         // 保存当前设置到 JSON 文件
         Save();
     }
-
+    
     public void LoadQtStates(JobViewWindow jobViewWindow)
     {
         // 加载保存的所有Qt状态
@@ -74,7 +74,7 @@ public class BLMSetting
 
 
         // 根据 QtUnVisibleList 设置对应的QT为不可见
-        foreach (var hiddenQt in QtUnVisibleList)
+        foreach (var hiddenQt in Instance.JobViewSave.QtUnVisibleList)
         {
             QtUnVisibleList.Add(hiddenQt);
         }
@@ -89,9 +89,10 @@ public class BLMSetting
     public bool 核爆起手 = false;
     public bool 标准57 = false;
     public bool 开挂循环 = false;
-    
-    
-    
+
+    public bool Autotarget = false;
+    public int AutoTargetMode = 0;
     public bool 提前黑魔纹 = false;
     public int TTK阈值 = 12000;
+
 }

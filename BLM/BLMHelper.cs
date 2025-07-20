@@ -48,13 +48,13 @@ public static class BLMHelper
 
     public static bool 三目标aoe()
     {
-        if (!QT.Instance.GetQt("AOE")) return false;
+        if (!QT.Instance.GetQt(QTkey.Aoe)) return false;
         var count = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         return count >= 3;
     }
     public static bool 双目标aoe()
     {
-        if (!QT.Instance.GetQt("双目标aoe")) return false;
+        if (!QT.Instance.GetQt(QTkey.双目标aoe)) return false;
         var count = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (count < 2) return false;
         if (三目标aoe()) return false;
@@ -62,20 +62,22 @@ public static class BLMHelper
     }
     public static uint 可用瞬发()
     {
-        int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-        if (补dot && Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
+        var aoe = 三目标aoe() || 双目标aoe();
+    
+        if (补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二 : Skill.雷一;
+        if (火状态 && 火层数 < 3 && Helper.有buff(Buffs.火苗) && !三目标aoe()) return Skill.火三;
         if (悖论指示)
         {
             if (火状态 && Core.Me.CurrentMp >= 2400) return Skill.悖论;
             if (冰状态) return Skill.悖论;
         }
         if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800) return Skill.绝望;
-        if (通晓层数 >= 1) return nearbyEnemyCount >= 2 ? Skill.秽浊 : Skill.异言;
-        if (提前补dot && Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
+        if (通晓层数 >= 1) return aoe ? Skill.秽浊 : Skill.异言;
+        if (提前补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二 : Skill.雷一;
         if (Skill.即刻.GetSpell().Cooldown.TotalMilliseconds > 0 && Skill.三连.GetSpell().Charges < 1)
         {
-            if (Helper.有buff(Buffs.火苗)) return Skill.火三;
-            if (Helper.有buff(Buffs.雷云)) return nearbyEnemyCount >= 2 && QT.Instance.GetQt("AOE") ? Skill.雷二 : Skill.雷一;
+            if (Helper.有buff(Buffs.火苗)&&BLMHelper.火状态) return Skill.火三;
+            if (Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二 : Skill.雷一;
         }
         return 0;
     }

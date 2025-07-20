@@ -27,7 +27,12 @@ public class 星灵移位 : ISlotResolver
             {
                 if (BLMHelper.耀星层数 == 6) return -4;
                 if (Skill.墨泉.RecentlyUsed(1500)) return -7;
-                if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(2)) return -6;
+                if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe())
+                {
+                    if (Skill.墨泉.GetSpell().IsReadyWithCanCast()) return -6;
+                    return 22;
+                }
+                if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(2) && BLMHelper.可用瞬发() != 0) return -6;
                 if (Helper.可瞬发() ) return 6;
                 if (BLMHelper.能星灵转冰()) return 7;
                 if (BLMHelper.冰针 >1) return 787;
@@ -36,9 +41,12 @@ public class 星灵移位 : ISlotResolver
 
         if (BLMHelper.冰状态)
         {
-            int nearbyEnemyCount = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
-
-            if (BLMHelper.悖论指示 && !(nearbyEnemyCount > 2 && QT.Instance.GetQt("AOE")) ) return -3;
+            if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe())
+            {
+                if (BLMHelper.冰针 != 3) return -6;
+                if (_skillId.GetSpell().IsReadyWithCanCast()) return 21;
+            }
+            if (BLMHelper.悖论指示) return -3;
             if (BLMHelper.冰层数 != 3) return -4;
             if (BLMHelper.冰针 != 3) return -6;
             if (Core.Me.CurrentMp < 9800 && !(Skill.冰澈.RecentlyUsed(5000) || Skill.玄冰.RecentlyUsed(5000))) return -7;

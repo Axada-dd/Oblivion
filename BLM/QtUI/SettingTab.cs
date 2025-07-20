@@ -18,40 +18,64 @@ public static class SettingTab
         {
             if (ImGui.CollapsingHeader("起手设置", ImGuiTreeNodeFlags.DefaultOpen))
             {
-                
-                bool opner1 = BLMSetting.Instance.标准57;
-                if(ImGui.Checkbox("标准5+7起手", ref opner1))
+                var openerSelectionIndex = 0;
+                var openerSelection = "";
+                if (BLMSetting.Instance.标准57)
+                    openerSelectionIndex = 1;
+                if (BLMSetting.Instance.核爆起手)
+                    openerSelectionIndex = 2;
+                if (BLMSetting.Instance.开挂循环)
+                    openerSelectionIndex = 3;
+
+
+                switch (openerSelectionIndex)
                 {
-                    if (opner1)
+                    case 0:
+                        openerSelection = "请选择";
+                        break;
+                    case 1:
+                        openerSelection = "标准57";
+                        break;
+                    case 2:
+                        openerSelection = "核爆起手";
+                        break;
+                    case 3:
+                        openerSelection = "特供起手";
+                        break;
+                }
+
+                if (ImGui.BeginCombo("起手选择", openerSelection))
+                {
+                    if (ImGui.Selectable("请选择"))
+                    {
+                    }
+
+                    if (ImGui.Selectable("标准57"))
                     {
                         BLMSetting.Instance.标准57 = true;
                         BLMSetting.Instance.核爆起手 = false;
                         BLMSetting.Instance.开挂循环 = false;
                     }
-                    BLMSetting.Instance.Save();
-                }
-                bool opener2 = BLMSetting.Instance.核爆起手;
-                if (ImGui.Checkbox("核爆起手", ref opener2))
-                {
-                    if (opener2)
+
+                    if (ImGui.Selectable("核爆起手"))
                     {
-                        BLMSetting.Instance.核爆起手 = true;
+
                         BLMSetting.Instance.标准57 = false;
+                        BLMSetting.Instance.核爆起手 = true;
                         BLMSetting.Instance.开挂循环 = false;
                     }
-                    BLMSetting.Instance.Save();
-                }
-                bool opener3 = BLMSetting.Instance.开挂循环;
-                if (ImGui.Checkbox("开挂循环", ref opener3))
-                {
-                    if (opener3)
+
+                    if (ImGui.Selectable("特供起手"))
                     {
-                        BLMSetting.Instance.开挂循环 = true;
+
                         BLMSetting.Instance.标准57 = false;
                         BLMSetting.Instance.核爆起手 = false;
+                        BLMSetting.Instance.开挂循环 = true;
                     }
-                    BLMSetting.Instance.Save();
+
+                    ImGui.EndCombo();
                 }
+                
                 bool 倒计时黑魔纹 = BLMSetting.Instance.提前黑魔纹;
                 if (ImGui.Checkbox("提前黑魔纹", ref 倒计时黑魔纹))
                 {
@@ -61,7 +85,7 @@ public static class SettingTab
                 }
 
             }
-
+            
             if (ImGui.CollapsingHeader("以太步窗口设置", ImGuiTreeNodeFlags.DefaultOpen))
             {
                 ImGui.Text("以太步窗口开关：");
@@ -143,6 +167,7 @@ public static class SettingTab
                 ImGui.Text($"下一GCD:{求解器.下一个GCD()}");
                 ImGui.Text($"下一能力技：{求解器.下一个OGCD()}");
                 ImGui.Text($"三冰针进冰：{BattleData.Instance.三冰针进冰}");
+                ImGui.Text($"双目标：{BLMHelper.双目标aoe()}-----三目标: {BLMHelper.三目标aoe()}");
             }
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
             {

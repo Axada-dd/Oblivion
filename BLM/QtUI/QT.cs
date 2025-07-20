@@ -16,38 +16,51 @@ public class QT
     /// </summary>
     public static void Reset()
     {
-        
+        Instance.SetQt(QTkey.黑魔纹, true);
+        Instance.SetQt(QTkey.墨泉, true);
+        Instance.SetQt(QTkey.三连咏唱, true);
+        Instance.SetQt(QTkey.即刻, true);
+        Instance.SetQt(QTkey.Dot, true);
+        Instance.SetQt(QTkey.起手序列, true);
+        Instance.SetQt(QTkey.双目标aoe, true);
+        Instance.SetQt(QTkey.Aoe, true);
+        Instance.SetQt(QTkey.异言, true);
+        Instance.SetQt(QTkey.秽浊, true);
+        Instance.SetQt(QTkey.智能aoe目标, false);
+        Instance.SetQt(QTkey.详述, true);
+        Instance.SetQt(QTkey.倾泻资源, false);
+        Instance.SetQt(QTkey.Boss上天,false);
     }
     public static void Build()
     {
         Instance = new JobViewWindow(BLMSetting.Instance.JobViewSave, BLMSetting.Instance.Save, "黑魔の登神长阶");
         
 
-        Instance.AddQt("爆发药", false);
+        Instance.AddQt(QTkey.爆发药, false);
         //Instance.AddQt("绝望", true);
         //Instance.AddQt("核爆", true);
-        Instance.AddQt("黑魔纹", true);
-        Instance.AddQt("墨泉", true);
+        Instance.AddQt(QTkey.黑魔纹, true);
+        Instance.AddQt(QTkey.墨泉, true);
         //Instance.AddQt("醒梦", true);
-        Instance.AddQt("三连咏唱", true);
-        Instance.AddQt("即刻", true);
-        Instance.AddQt("Dot", true);
+        Instance.AddQt(QTkey.三连咏唱, true);
+        Instance.AddQt(QTkey.即刻, true);
+        Instance.AddQt(QTkey.Dot, true);
 
-        Instance.AddQt("异言", true);
-        Instance.AddQt("秽浊", true);
+        Instance.AddQt(QTkey.异言, true);
+        Instance.AddQt(QTkey.秽浊, true);
         //Instance.AddQt("星灵移位", true);
-        Instance.AddQt("智能AOE目标", false);
-        Instance.AddQt("三连用于走位",false,"三连保留用于走位");
-        Instance.AddQt("关闭即刻三连的移动判断", false, "三连即刻不会在走位的时候自动释放");
-        Instance.AddQt("详述", true);
-        Instance.AddQt("起手序列", true,"关闭会不倒计时起手");
-        Instance.AddQt("双目标aoe", true,"启动双目标AOE");
-        Instance.AddQt("AOE", true,"三目标及以上aoe");
-        Instance.AddQt("秽浊填充aoe", false, "使用秽浊填充aoe冰阶段");
-        Instance.AddQt("倾泻资源", false,"清空通晓");
-        Instance.AddQt("Boss上天", false,"如果boss上天时间>10秒，请开启此选项,随开随关");
+        Instance.AddQt(QTkey.智能aoe目标, false);
+        Instance.AddQt(QTkey.三连用于走位, false, "三连保留用于走位");
+        Instance.AddQt(QTkey.关闭即刻三连的移动判断, false, "三连即刻不会在走位的时候自动释放");
+        Instance.AddQt(QTkey.详述, true);
+        Instance.AddQt(QTkey.起手序列, true,"关闭会不倒计时起手");
+        Instance.AddQt(QTkey.双目标aoe, true,"启动双目标AOE");
+        Instance.AddQt(QTkey.Aoe, true,"三目标及以上aoe");
+        Instance.AddQt(QTkey.秽浊填充aoe, false, "使用秽浊填充aoe冰阶段");
+        Instance.AddQt(QTkey.倾泻资源, false,"清空通晓");
+        Instance.AddQt(QTkey.Boss上天, false,"如果boss上天时间>10秒，请开启此选项,随开随关");
         //Instance.AddQt("双星灵墨泉", false);
-        Instance.AddQt("使用特供循环", false,"仅在开启三插和DR减动画时使用");
+        Instance.AddQt(QTkey.使用特供循环, false,"仅在开启三插和DR减动画时使用");
 
 
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());
@@ -72,6 +85,7 @@ public class QT
         ReadmeTab.Build(Instance);
         SettingTab.Build(Instance);
     }
+
     public static void OnUIUpdate()
     {
         Update以太步窗口();

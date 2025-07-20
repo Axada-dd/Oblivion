@@ -8,7 +8,7 @@ public class 冰冻 : ISlotResolver
     private Spell? GetSpell()
     {
         if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
-        return QT.Instance.GetQt(QTkey.智能AOE目标)? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
+        return QT.Instance.GetQt(QTkey.智能aoe目标)? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {
