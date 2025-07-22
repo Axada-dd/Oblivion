@@ -7,25 +7,26 @@ public class 详述 : ISlotResolver
     private readonly uint _skillId = Skill.详述;
     private Spell? GetSpell()
     {
-        if (GCDHelper.GetGCDCooldown() < 500) return null;
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
+        
+        return _skillId.GetSpell(SpellTargetType.Self);
     }
     public void Build(Slot slot)
     {
         var spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
+        if (spell != null) 
+            slot.Add(spell);
     }
 
     public int Check()
     {
         if (!QT.Instance.GetQt(QTkey.详述)) return -5;
-        if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
+        if (!_skillId.GetSpell().IsReadyWithCanCast()) return -1;
         if (BLMHelper.通晓层数 == 3) return -2;
         if (BLMHelper.通晓层数 == 2)
         {
             if (BLMHelper.通晓剩余时间 < 4000) return -3;
         }
+        if (GCDHelper.GetGCDCooldown() < 500) return -4;
         return 1;
     }
 }

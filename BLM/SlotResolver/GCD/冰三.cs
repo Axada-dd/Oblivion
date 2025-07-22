@@ -7,16 +7,14 @@ public class 冰三 : ISlotResolver
     private readonly uint _skillId = Skill.冰三;
     private Spell? GetSpell()
     {
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+        return _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {
-        Spell? spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
-
+        var spell = GetSpell();
+        if (spell != null) 
+            slot.Add(spell);
     }
-
     public int Check()
     {
         if (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()) return -100;

@@ -8,6 +8,7 @@ public class 即刻三连 : ISlotResolver
         if (BattleData.Instance.需要即刻)
         {
             _skillId = SkillId();
+            if (_skillId == 0) return -1;
             if (Skill.即刻.GetSpell().Cooldown.TotalSeconds == 0) return 1;
             if (Skill.三连.GetSpell().Charges >= 1) return 2;
             return -1;
@@ -25,7 +26,6 @@ public class 即刻三连 : ISlotResolver
     }
     public void Build(Slot slot)
     {
-        if (_skillId == 0) return;
         Spell spell = _skillId.GetSpell(SpellTargetType.Self);
         if (spell == null) return;
         slot.Add(spell);

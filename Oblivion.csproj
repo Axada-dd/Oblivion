@@ -52,4 +52,8 @@
       <Compile Remove="Class1.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="BLM\SlotResolver\GCD\单体\" />
+    </ItemGroup>
+
 </Project>

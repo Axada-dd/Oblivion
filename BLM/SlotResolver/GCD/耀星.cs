@@ -7,15 +7,14 @@ public class 耀星 : ISlotResolver
     private readonly uint _skillId = Skill.耀星;
     private Spell? GetSpell()
     {
-        if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
+        //if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
         return QT.Instance.GetQt(QTkey.智能aoe目标)? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {
-
-        Spell? spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
+        var spell = GetSpell();
+        if (spell != null) 
+            slot.Add(spell);
     }
 
     public int Check()

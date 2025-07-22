@@ -9,13 +9,13 @@ public class 星灵移位 : ISlotResolver
     private readonly uint _skillId = Skill.星灵移位;
     private Spell? GetSpell()
     {
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
+        return  _skillId.GetSpell(SpellTargetType.Self);
     }
     public void Build(Slot slot)
     {
         var spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
+        if (spell != null) 
+            slot.Add(spell);
     }
     public int Check()
     {

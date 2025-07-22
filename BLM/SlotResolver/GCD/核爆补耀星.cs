@@ -9,15 +9,15 @@ public class 核爆补耀星 : ISlotResolver
     {
         _skillId = UseSkill();
         if (_skillId == 0) return null;
-        if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
+        //if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
         if (_skillId.IsAoe()) return QT.Instance.GetQt(QTkey.智能aoe目标)  ? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
         return  _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {
         var spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
+        if (spell != null) 
+            slot.Add(spell);
     }
     public int Check()
     {

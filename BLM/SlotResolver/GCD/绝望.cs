@@ -7,7 +7,7 @@ public class 绝望 : ISlotResolver
     private readonly uint _skillId = Skill.绝望;
     private Spell? GetSpell()
     {
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+        return  _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {
@@ -17,6 +17,7 @@ public class 绝望 : ISlotResolver
     }
     public int Check()
     {
+        if (Core.Me.Level != 100) return -101;
         if (BLMHelper.双目标aoe()||BLMHelper.三目标aoe()) return -100;
         //if (!QT.Instance.GetQt("绝望")) return -4;
         if (!BLMHelper.火状态) return -6;

@@ -8,14 +8,16 @@ public class 冰澈 : ISlotResolver
     private readonly uint _skillId = Skill.冰澈;
     private Spell? GetSpell()
     {
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+        return  _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {
-        Spell? spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
-        BattleData.Instance.三冰针进冰 = false;
+        var spell = GetSpell();
+        if (spell != null)
+        {
+            slot.Add(spell);
+            BattleData.Instance.三冰针进冰 = false;
+        }
     }
 
     public int Check()

@@ -71,7 +71,7 @@ public static class BLMHelper
             if (火状态 && Core.Me.CurrentMp >= 2400) return Skill.悖论;
             if (冰状态) return Skill.悖论;
         }
-        if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800) return Skill.绝望;
+        if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800) return 0;
         if (通晓层数 >= 1) return aoe ? Skill.秽浊 : Skill.异言;
         if (提前补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二 : Skill.雷一;
         if (Skill.即刻.GetSpell().Cooldown.TotalMilliseconds > 0 && Skill.三连.GetSpell().Charges < 1)
@@ -208,8 +208,8 @@ public static class BLMHelper
             if (能使用耀星() && Skill.三连.GetSpell().Charges > 1 && !BattleData.Instance.已使用耀星 &&
                 !QT.Instance.GetQt("三连用于走位"))
             {
-                if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8) return false;
-                if (Skill.即刻.GetSpell().Cooldown.TotalSeconds < 3) return false;
+                if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(3)) return false;
+                if (Skill.即刻.GetSpell().AbilityCoolDownInNextXgcDsWindow(2)) return false;
                 return true;
             }
         }

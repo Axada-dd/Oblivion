@@ -1,13 +1,12 @@
 using Oblivion.BLM.QtUI;
 
-namespace Oblivion.BLM.SlotResolver.GCD;
+namespace Oblivion.BLM.SlotResolver.GCD.AOE;
 
-public class 冰冻 : ISlotResolver
+public class 火群70 : ISlotResolver
 {
-    private readonly uint _skillId = Skill.冰冻;
+    private readonly uint _skillId = 0;
     private Spell? GetSpell()
     {
-        //if (!_skillId.GetSpell().IsReadyWithCanCast()) return null;
         return QT.Instance.GetQt(QTkey.智能aoe目标)? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
     }
     public void Build(Slot slot)
@@ -16,10 +15,15 @@ public class 冰冻 : ISlotResolver
         if (spell != null) 
             slot.Add(spell);
     }
+
+    private uint GetSkillId()
+    {
+        return 0;
+    }
     public int Check()
     {
-        if (!BLMHelper.三目标aoe()) return -1;
-        return -99;
+        if (Core.Me.Level != 100) return -100;
+        if (GetSkillId() == 0) return -1;
+        return (int)_skillId;
     }
-
 }

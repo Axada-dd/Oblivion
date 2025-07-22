@@ -7,14 +7,14 @@ public class 墨泉 : ISlotResolver
     private readonly uint _skillId = Skill.墨泉;
     private Spell? GetSpell()
     {
-        if (GCDHelper.GetGCDCooldown() < 500) return null;
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell(SpellTargetType.Self);
+        
+        return  _skillId.GetSpell(SpellTargetType.Self);
     }
     public void Build(Slot slot)
     {
         var spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
+        if (spell != null) 
+            slot.Add(spell);
     }
 
     public int Check()
@@ -25,6 +25,7 @@ public class 墨泉 : ISlotResolver
         if (Core.Me.CurrentMp > 800) return -3;
         //if (!BattleData.Instance.已使用瞬发 && !QT.Instance.GetQt("能力技卡G放")) return -4;
         if (BLMHelper.耀星层数 == 6 )return -6;
+        if (GCDHelper.GetGCDCooldown() < 500) return -7;
         return 1;
     }
 }

@@ -5,6 +5,8 @@ using Oblivion.BLM.QtUI;
 using Oblivion.BLM.QtUI.Hotkey;
 using Oblivion.BLM.SlotResolver.Ability;
 using Oblivion.BLM.SlotResolver.GCD;
+using Oblivion.BLM.SlotResolver.GCD.AOE;
+using Oblivion.BLM.SlotResolver.GCD.单体;
 using Oblivion.BLM.SlotResolver.Opener;
 using Oblivion.BLM.SlotResolver.Special;
 using Oblivion.BLM.Triggers;

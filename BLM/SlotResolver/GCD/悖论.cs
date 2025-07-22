@@ -8,13 +8,13 @@ public class 悖论 : ISlotResolver
     private readonly uint _skillId = Skill.悖论;
     private Spell? GetSpell()
     {
-        return !_skillId.GetSpell().IsReadyWithCanCast() ? null : _skillId.GetSpell();
+        return  _skillId.GetSpell();
     }
     public void Build(Slot slot)
     {
         var spell = GetSpell();
-        if (spell == null) return;
-        slot.Add(spell);
+        if (spell != null) 
+            slot.Add(spell);
     }
 
     public int Check()
