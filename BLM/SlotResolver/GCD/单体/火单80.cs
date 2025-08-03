@@ -2,7 +2,7 @@ namespace Oblivion.BLM.SlotResolver.GCD.单体;
 
 public class 火单80 : ISlotResolver
 {
-    private readonly uint _skillId = 0;
+    private uint _skillId = 0;
     private Spell? GetSpell()
     {
         return _skillId.GetSpell();
@@ -21,7 +21,8 @@ public class 火单80 : ISlotResolver
     public int Check()
     {
         if (Core.Me.Level != 100) return -100;
-        if (GetSkillId() == 0) return -1;
+        _skillId = GetSkillId();
+        if (_skillId == 0) return -1;
         return (int)_skillId;
     }
 }

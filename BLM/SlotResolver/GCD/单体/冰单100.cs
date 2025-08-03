@@ -1,8 +1,10 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.GCD.单体;
 
 public class 冰单100 :ISlotResolver
 {
-    private readonly uint _skillId = 0;
+    private uint _skillId = 0;
     private Spell? GetSpell()
     {
         return _skillId.GetSpell();
@@ -16,12 +18,23 @@ public class 冰单100 :ISlotResolver
 
     private uint GetSkillId()
     {
+        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 != 6) return Skill.冰三;
+        if (BLMHelper.冰状态)
+        {
+            if (BLMHelper.冰层数 < 3) return Skill.冰三;
+            if (BLMHelper.冰针 < 3 || (Core.Me.CurrentMp < 10000 || Skill.冰澈.RecentlyUsed() || Skill.玄冰.RecentlyUsed()))
+                return Skill.冰澈;
+            if (BLMHelper.悖论指示 && !QT.Instance.GetQt(QTkey.压缩冰悖论)) return Skill.悖论;
+        }
         return 0;
     }
     public int Check()
     {
         if (Core.Me.Level != 100) return -100;
-        if (GetSkillId() == 0) return -1;
+        if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -234;
+        if (Helper.IsMove) return -99;
+        _skillId = GetSkillId();
+        if (_skillId == 0) return -1;
         return (int)_skillId;
     }
 }

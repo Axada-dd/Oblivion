@@ -1,4 +1,5 @@
 using AEAssist.CombatRoutine.Module.Opener;
+using AEAssist.MemoryApi;
 using Oblivion.BLM.QtUI;
 
 namespace Oblivion.BLM.SlotResolver.Opener;
@@ -37,6 +38,7 @@ public class Opener核爆 : IOpener
             countDownHandler.AddAction(startTime - 500, () => BattleData.Instance.IsInnerOpener = true);
             countDownHandler.AddAction(startTime - 3000, Skill.雷一.GetActionChange(), SpellTargetType.Target);
         }
+        countDownHandler.AddAction(1000, () => Core.Resolve<MemApiChatMessage>().Toast2("开始循环",1,1000));
     }
     public List<Action<Slot>> Sequence { get; } =
     [

@@ -4,9 +4,9 @@ namespace Oblivion.BLM.Tools;
 
 public class BLMP6SAutoTarget
 {
-    public static IBattleChara AutoTarget()
+    public static IBattleChara? AutoTarget()
     {
-        IBattleChara currentTarget = ((IBattleChara)(object)Core.Me).GetCurrTarget();
+        IBattleChara? currentTarget = ((IBattleChara)(object)Core.Me).GetCurrTarget();
 		if (!BLMSetting.Instance.Autotarget)
 		{
 			return currentTarget;
@@ -23,13 +23,13 @@ public class BLMP6SAutoTarget
 		{
 			return currentTarget;
 		}
-		IBattleChara 无目标鱼 = ((IEnumerable<IBattleChara>)enemies).FirstOrDefault((Func<IBattleChara, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18346 && ((IGameObject)c).TargetObject == null));
-		IBattleChara 有目标鱼 = ((IEnumerable<IBattleChara>)enemies).FirstOrDefault((Func<IBattleChara, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18346));
+		IBattleChara? 无目标鱼 = ((IEnumerable<IBattleChara?>)enemies).FirstOrDefault((Func<IBattleChara?, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18346 && ((IGameObject)c).TargetObject == null));
+		IBattleChara? 有目标鱼 = ((IEnumerable<IBattleChara?>)enemies).FirstOrDefault((Func<IBattleChara?, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18346));
 		bool 自己有鱼 = enemies.Any((IBattleChara c) => ((IGameObject)c).DataId == 18346 && ((IGameObject)c).TargetObject != null && ((IGameObject)c).TargetObject.IsMe());
-		IBattleChara 哈基米 = ((IEnumerable<IBattleChara>)enemies).FirstOrDefault((Func<IBattleChara, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18347));
-		IBattleChara 羊 = ((IEnumerable<IBattleChara>)enemies).FirstOrDefault((Func<IBattleChara, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18344));
-		IBattleChara 马 = ((IEnumerable<IBattleChara>)enemies).FirstOrDefault((Func<IBattleChara, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18345));
-		IBattleChara boss = ((IEnumerable<IBattleChara>)enemies).FirstOrDefault((Func<IBattleChara, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18335));
+		IBattleChara? 哈基米 = ((IEnumerable<IBattleChara?>)enemies).FirstOrDefault((Func<IBattleChara?, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18347));
+		IBattleChara? 羊 = ((IEnumerable<IBattleChara?>)enemies).FirstOrDefault((Func<IBattleChara?, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18344));
+		IBattleChara? 马 = ((IEnumerable<IBattleChara?>)enemies).FirstOrDefault((Func<IBattleChara?, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18345));
+		IBattleChara? boss = ((IEnumerable<IBattleChara?>)enemies).FirstOrDefault((Func<IBattleChara?, bool>)((IBattleChara c) => ((IGameObject)c).DataId == 18335));
 		if (!自己有鱼 && 无目标鱼 != null && AI.Instance?.BattleData != null)
 		{
 			long battleTime = AI.Instance.BattleData.CurrBattleTimeInMs;

@@ -13,7 +13,7 @@ public static class Helper
     {
         return Core.Resolve<MemApiCondition>().IsBoundByDuty();
     }
-
+    public static long 蓝量 => Core.Me.CurrentMp;
     public static bool 可读条()
     {
         return !IsMove || 可瞬发();

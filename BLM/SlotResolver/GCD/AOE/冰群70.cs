@@ -4,7 +4,7 @@ namespace Oblivion.BLM.SlotResolver.GCD.AOE;
 
 public class 冰群70 : ISlotResolver
 {
-    private readonly uint _skillId = 0;
+    private uint _skillId = 0;
     private Spell? GetSpell()
     {
         return QT.Instance.GetQt(QTkey.智能aoe目标)? _skillId.GetSpellBySmartTarget() : _skillId.GetSpell();
@@ -23,7 +23,8 @@ public class 冰群70 : ISlotResolver
     public int Check()
     {
         if (Core.Me.Level != 100) return -100;
-        if (GetSkillId() == 0) return -1;
+        _skillId = GetSkillId();
+        if (_skillId == 0) return -1;
         return (int)_skillId;
     }
 }
