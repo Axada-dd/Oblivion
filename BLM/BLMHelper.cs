@@ -72,7 +72,7 @@ public static class BLMHelper
             if (冰状态) return Skill.悖论;
         }
         if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800) return 0;
-        if (通晓层数 >= 1) return aoe ? Skill.秽浊 : Skill.异言;
+        if (通晓层数 >= 1 && Core.Me.Level>=80) return aoe ? Skill.秽浊 : Skill.异言;
         if (提前补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二 : Skill.雷一;
         if (Skill.即刻.GetSpell().Cooldown.TotalMilliseconds > 0 && Skill.三连.GetSpell().Charges < 1)
         {

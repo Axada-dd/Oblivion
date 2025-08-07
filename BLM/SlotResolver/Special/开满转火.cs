@@ -61,15 +61,10 @@ public class 开满转火: ISlotSequence
     }
     public 开满转火()
     {
-        int num = 3;
-        List<Action<Slot>> list = new List<Action<Slot>>(num);
-        CollectionsMarshal.SetCount(list, num);
-        Span<Action<Slot>> span = CollectionsMarshal.AsSpan(list);
-        int num2 = 0;
-        span[num2] = Step0;
-        num2++;
-        span[num2] = Step1;
-        span[num2 + 1] = Step2;
+        List<Action<Slot>> list = new List<Action<Slot>>();
+        list.Add(Step0);
+        list.Add(Step1);
+        list.Add(Step2);
         Sequence = list;
     }
 }

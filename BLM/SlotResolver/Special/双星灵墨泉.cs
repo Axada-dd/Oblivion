@@ -56,15 +56,10 @@ public class 双星灵墨泉 : ISlotSequence
     
     public 双星灵墨泉()
     {
-        int num = 3;
-        List<Action<Slot>> list = new List<Action<Slot>>(num);
-        CollectionsMarshal.SetCount(list, num);
-        Span<Action<Slot>> span = CollectionsMarshal.AsSpan(list);
-        int num2 = 0;
-        span[num2] = step0;
-        num2++;
-        span[num2] = step1;
-        span[num2 + 1] = step2;
+        List<Action<Slot>> list = new List<Action<Slot>>();
+        list.Add(step0);
+        list.Add(step1);
+        list.Add(step2);
         Sequence = list;
     }
 }

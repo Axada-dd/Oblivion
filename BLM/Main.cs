@@ -74,6 +74,11 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         rot.SetRotationEventHandler(new BLMEvetHandle());
         rot.AddTriggerAction(new TriggerActionQt(), new TriggerActionHotkey(), new TriggerActionNewQt());
         rot.AddTriggerCondition(new TriggerCondQt());
+        rot.AddCanPauseACRCheck(() =>
+        {
+            //这里加入判断是否要暂停acr，return >0 则暂停
+            return -1;
+        });
         return rot;
     }
 

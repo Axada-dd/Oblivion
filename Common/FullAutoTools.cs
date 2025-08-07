@@ -1,4 +1,5 @@
 using System.Numerics;
+using AEAssist.CombatRoutine.Module.Target;
 
 namespace Oblivion.Common;
 
@@ -11,7 +12,27 @@ public static class FullAutoTools
             await Coroutine.Instance.WaitAsync(delay);
         }
         Share.TrustDebugPoint.Add(pos);
-        RemoteControlHelper.SlideTp(role, pos, slidTime);
+        if (RemoteControlHelper.GetRoleByPlayerName(Core.Me.Name.TextValue) != "")
+        {
+            if(slidTime > 0)
+                RemoteControlHelper.SlideTp(role, pos, slidTime);
+            else
+                RemoteControlHelper.SetPos(role, pos);
+        }
+        
+    }
+
+    public static async Task ReMoveToAndDebug(string role, Vector3 pos, int delay)
+    {
+        if (delay > 0)
+        {
+            await Coroutine.Instance.WaitAsync(delay);
+        }
+        Share.TrustDebugPoint.Add(pos);
+        if (RemoteControlHelper.GetRoleByPlayerName(Core.Me.Name.TextValue) != "")
+        {
+            RemoteControlHelper.SetPos(role, pos);
+        }
     }
     public static Vector3 RotatePoint(Vector3 point, Vector3 centre, float radian)
     {

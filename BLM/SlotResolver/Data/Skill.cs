@@ -4,19 +4,19 @@ public class Skill
 {
     public const uint
         火一 = 141,//Level>2
-        火二 = 147,//Level>18
+        
         火三 = 152,//Level>60
         火四 = 3577,//Level>60
         绝望 = 16505,//level>72
         灵极魂 = 16506,//Level>35
         星灵移位 = 149,//Level>4
         冰一 = 142,//Level>1
-        冰冻 = 25795,//Level>12
+        
         冰三 = 154,//Level>35
         玄冰 = 159,//Level>40
         冰澈 = 3576,//level>58
-        雷一 = 144,//Level>6
-        雷二 = 7447,//Level>26
+        //Level>6
+        //Level>26
         核爆 = 162,//level>50
         异言 = 16507,//level>80
         秽浊 = 7422,//level>70
@@ -36,4 +36,9 @@ public class Skill
         魔罩 = 157,//level>30
         崩溃 = 156,//level>15
         沉稳 = 7559;//level>44
+
+    public static uint 雷二 = 7447u.GetActionChange();
+    public static uint 雷一 = 144u.GetActionChange();
+    public static uint 冰冻 = 25795u.GetActionChange();//Level>12
+    public static uint 火二 = 147u.GetActionChange();//Level>18
 }
