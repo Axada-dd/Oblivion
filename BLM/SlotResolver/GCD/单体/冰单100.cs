@@ -22,9 +22,7 @@ public class 冰单100 :ISlotResolver
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 < 3) return Skill.冰三;
-            if (BLMHelper.冰针 < 3 || (Core.Me.CurrentMp < 10000 &&
-                                     (BattleData.Instance.前一gcd != Skill.冰澈 || BattleData.Instance.前一gcd != Skill.玄冰)))
-                return Skill.冰澈;
+            if (BLMHelper.冰针 < 3) return Skill.冰澈;
             if (BLMHelper.悖论指示 && !QT.Instance.GetQt(QTkey.压缩冰悖论)) return Skill.悖论;
         }
         return 0;

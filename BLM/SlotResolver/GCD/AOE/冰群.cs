@@ -2,7 +2,7 @@ using Oblivion.BLM.QtUI;
 
 namespace Oblivion.BLM.SlotResolver.GCD.AOE;
 
-public class 冰群70 : ISlotResolver
+public class 冰群 : ISlotResolver
 {
     private uint _skillId = 0;
     private Spell? GetSpell()

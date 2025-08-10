@@ -64,16 +64,16 @@ public static class BLMHelper
     {
         var aoe = 三目标aoe() || 双目标aoe();
     
-        if (补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二 : Skill.雷一;
+        if (补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二.GetActionChange() : Skill.雷一.GetActionChange();
         if (火状态 && 火层数 < 3 && Helper.有buff(Buffs.火苗) && !三目标aoe()) return Skill.火三;
         if (悖论指示)
         {
             if (火状态 && Core.Me.CurrentMp >= 2400) return Skill.悖论;
             if (冰状态) return Skill.悖论;
         }
-        if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800) return 0;
+        if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800 && Core.Me.Level >= 100) return Skill.绝望;
         if (通晓层数 >= 1 && Core.Me.Level>=80) return aoe ? Skill.秽浊 : Skill.异言;
-        if (提前补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二 : Skill.雷一;
+        if (提前补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二.GetActionChange() : Skill.雷一.GetActionChange();
         if (Skill.即刻.GetSpell().Cooldown.TotalMilliseconds > 0 && Skill.三连.GetSpell().Charges < 1)
         {
             if (Helper.有buff(Buffs.火苗)&&BLMHelper.火状态) return Skill.火三;
@@ -92,6 +92,7 @@ public static class BLMHelper
     }
     public static bool 能使用耀星()
     {
+        if (Core.Me.Level < 100) return false;
         if (BLMHelper.火状态)
         {
             var 能使用的火四个数 = 0;

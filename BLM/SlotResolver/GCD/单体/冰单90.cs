@@ -16,11 +16,24 @@ public class 冰单90 :ISlotResolver
 
     private uint GetSkillId()
     {
+        if (BLMHelper.冰状态)
+        {
+            if (BLMHelper.冰层数 < 3) return Skill.冰三;
+            if (BLMHelper.冰针 < 3 || (BattleData.Instance.前一gcd != Skill.冰澈 && BattleData.Instance.前一gcd != Skill.玄冰))
+                return Skill.冰澈;
+            if (BLMHelper.悖论指示) return Skill.悖论;
+        }
+
+        if (BLMHelper.火状态)
+        {
+            if (Core.Me.CurrentMp < 800) return Skill.冰三;
+        }
         return 0;
     }
     public int Check()
     {
-        if (Core.Me.Level != 100) return -100;
+        if (Core.Me.Level < 90 || Core.Me.Level >= 100) return -90;
+        if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -234;
         _skillId = GetSkillId();
         if (_skillId == 0) return -1;
         return (int)_skillId;

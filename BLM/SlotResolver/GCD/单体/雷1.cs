@@ -4,7 +4,7 @@ namespace Oblivion.BLM.SlotResolver.GCD.单体;
 
 public class 雷1 : ISlotResolver
 {
-    private readonly uint _skillId = Skill.雷一;
+    private readonly uint _skillId = Skill.雷一.GetActionChange();
     private Spell? GetSpell()
     {
         return  _skillId.GetSpell();

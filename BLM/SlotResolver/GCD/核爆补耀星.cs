@@ -21,7 +21,7 @@ public class 核爆补耀星 : ISlotResolver
     }
     public int Check()
     {
-        if(Core.Me.Level <100) return -100;
+        if (Core.Me.Level < 100) return -100;
         if (!BLMHelper.火状态) return -1;
         if (Core.Me.CurrentMp < 800) return -2;
         if (BattleData.Instance.已使用耀星) return -3;
