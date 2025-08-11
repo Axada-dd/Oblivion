@@ -47,7 +47,7 @@ public class 秽浊 : ISlotResolver
             if (BLMHelper.通晓层数 == 2 && Core.Me.Level >= 86 && Skill.详述.GetSpell().AbilityCoolDownInNextXgcDsWindow(1)) return 3;
         }
         if (Core.Me.Level<80 && Core.Me.Level >= 70)
-            if (BLMHelper.通晓层数 == 1 && BLMHelper.通晓剩余时间 < 8000) return 2;
+            if (BLMHelper.通晓层数 >= 1 ) return 2;
 
         return -99;
     }

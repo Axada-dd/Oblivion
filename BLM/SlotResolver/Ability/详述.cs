@@ -20,13 +20,30 @@ public class 详述 : ISlotResolver
     public int Check()
     {
         if (!QT.Instance.GetQt(QTkey.详述)) return -5;
+        if (Core.Me.Level < 86) return -6;
         if (!_skillId.GetSpell().IsReadyWithCanCast()) return -1;
-        if (BLMHelper.通晓层数 == 3) return -2;
-        if (BLMHelper.通晓层数 == 2)
+        if (Core.Me.Level >= 98)
         {
-            if (BLMHelper.通晓剩余时间 < 4000) return -3;
+            if (BLMHelper.通晓层数 == 3) return -2;
+            if (BLMHelper.通晓层数 == 2)
+            {
+                if (BLMHelper.通晓剩余时间 < 4000) return -3;
+            }
+            if (GCDHelper.GetGCDCooldown() < 500) return -4;
+            return 1;
         }
-        if (GCDHelper.GetGCDCooldown() < 500) return -4;
-        return 1;
+
+        if (Core.Me.Level < 98)
+        {
+            if (BLMHelper.通晓层数 == 2) return -2;
+            if (BLMHelper.通晓层数 == 1)
+            {
+                if (BLMHelper.通晓剩余时间 < 4000) return -3;
+            }
+            if (GCDHelper.GetGCDCooldown() < 500) return -4;
+            return 1;
+        }
+
+        return -99;
     }
 }

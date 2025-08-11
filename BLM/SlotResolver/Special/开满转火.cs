@@ -11,6 +11,7 @@ public class 开满转火: ISlotSequence
     public List<Action<Slot>> Sequence { get; }
     public int StartCheck()
     {
+        if (Core.Me.Level<100) return -100;
         if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -7;
         if (!QT.Instance.GetQt(QTkey.使用特供循环)) return -1;
         if (Core.Me.CurrentMp < 800) return -7;
@@ -35,7 +36,7 @@ public class 开满转火: ISlotSequence
         BattleData.Instance.正在特殊循环中 = true;
         if (BLMHelper.通晓层数 == 3 && BLMHelper.通晓剩余时间 < 13)
             slot.Add(new Spell(aoe ? Skill.秽浊 : Skill.异言, SpellTargetType.Target).DontUseGcd());
-        if (BLMHelper.提前补dot && QT.Instance.GetQt(QTkey.Dot) && Helper.有buff(Buffs.雷云))
+        if (BLMHelper.提前补dot() && QT.Instance.GetQt(QTkey.Dot) && Helper.有buff(Buffs.雷云))
         {
             slot.Add(new Spell(aoe ? Skill.雷二 : Skill.雷一, SpellTargetType.Target).DontUseGcd());
         }

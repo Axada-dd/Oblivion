@@ -20,37 +20,29 @@ public class 三连咏唱 : ISlotResolver
     public int Check()
     {
         if (!QT.Instance.GetQt(QTkey.三连咏唱)) return -2;
-        if (!QT.Instance.GetQt(QTkey.三连用于走位)) return -5;
+        if (QT.Instance.GetQt(QTkey.三连用于走位)) return -5;
         if (_skillId.GetSpell().Charges < 1) return -1;
         if (Helper.可瞬发()) return -4;
         if (BLMHelper.火状态)
         {
             if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe())
             {
-                if (_skillId.GetSpell().Charges > 1.8 && GCDHelper.GetGCDCooldown() > 500 && !Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(3)) return 22;
+                if (Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 == 6) return -22;
+                return 23;
             }
 
-            if (QT.Instance.GetQt(QTkey.使用特供循环))
-            {
-                if (Skill.即刻.GetSpell().Cooldown.TotalSeconds < 3) return -6;
-                if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8) return -7;
-                if (BattleData.Instance.能使用的火四个数 == 1  && BattleData.Instance.能使用耀星)
-                {
-                    return 66;
-                }
-            }
-            if (BattleData.Instance.三连转冰 && !BLMHelper.悖论指示 && Core.Me.CurrentMp < 800)return 4;
-            return -5;
+            if (Core.Me.CurrentMp <= 4400 && BLMHelper.耀星层数 >= 5 && Core.Me.Level == 100) return 1;
+            if (Core.Me.CurrentMp <= 4400 && Core.Me.Level == 90 && Core.Me.CurrentMp >= 800) return 1;
+            if (Core.Me.CurrentMp <= 2800 && Core.Me.Level == 80) return 1;
+            //70级三连只用于走位，需要额外使用自行排轴
         }
         
         if (BLMHelper.冰状态 && BLMHelper.冰层数 < 3)
         {
-            if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe())
-            {
-                return -20;
-            }
-            if (Skill.即刻.GetSpell().AbilityCoolDownInNextXgcDsWindow(1)) return -5;
-            return 6;
+            if (Core.Me.Level < 80) return -80;
+            if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -234;
+            if (BLMHelper.悖论指示 ) return -3;
+            return 2;
         }
         return -99;
     }

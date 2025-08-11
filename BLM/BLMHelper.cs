@@ -4,7 +4,7 @@ using Oblivion.BLM.QtUI;
 namespace Oblivion.BLM;
 public static class BLMHelper
 {
-    private static readonly List<uint> AoeSkill = [Skill.核爆, Skill.雷二, Skill.玄冰, Skill.冰冻, Skill.秽浊,Skill.耀星];
+    private static readonly List<uint> AoeSkill = [Skill.核爆, Skill.雷二.GetActionChange(), Skill.玄冰, Skill.冰冻, Skill.秽浊,Skill.耀星];
     public static bool 火状态 => Core.Resolve<JobApi_BlackMage>().InAstralFire;
     public static int 火层数 => Core.Resolve<JobApi_BlackMage>().AstralFireStacks;
     public static int 耀星层数 => Core.Resolve<JobApi_BlackMage>().AstralSoulStacks;
@@ -18,9 +18,18 @@ public static class BLMHelper
     public static int 通晓层数 => Core.Resolve<JobApi_BlackMage>().PolyglotStacks;
     public static long 通晓剩余时间 => Core.Resolve<JobApi_BlackMage>().EnochianTimer;
 
-    public static bool 补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 3500, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 3500, false);
-    public static bool 提前补dot => Helper.目标Buff时间小于(Buffs.雷一dot, 6000, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 6000, false);
-
+    public static bool 补dot()
+    {
+        if (Core.Me.Level >= 92) return Helper.目标Buff时间小于(Buffs.雷一dot, 3500, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 3500, false);
+        if (Core.Me.Level >= 45) return Helper.目标Buff时间小于(Buffs.暴雷, 3500, false) && Helper.目标Buff时间小于(Buffs.霹雳, 3500, false);
+        return false;
+    } 
+    public static bool 提前补dot ()
+    { 
+        if (Core.Me.Level >= 92) return Helper.目标Buff时间小于(Buffs.雷一dot, 6000, false) && Helper.目标Buff时间小于(Buffs.雷二dot, 6000, false);
+        if (Core.Me.Level >= 45) return Helper.目标Buff时间小于(Buffs.暴雷, 6000, false) && Helper.目标Buff时间小于(Buffs.霹雳, 6000, false);
+        return false;
+    } 
     public static bool 能力技卡g => !GCDHelper.CanUseOffGcd();
 
     public static float 三连cd()
@@ -64,7 +73,7 @@ public static class BLMHelper
     {
         var aoe = 三目标aoe() || 双目标aoe();
     
-        if (补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二.GetActionChange() : Skill.雷一.GetActionChange();
+        if (补dot() && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二.GetActionChange() : Skill.雷一.GetActionChange();
         if (火状态 && 火层数 < 3 && Helper.有buff(Buffs.火苗) && !三目标aoe()) return Skill.火三;
         if (悖论指示)
         {
@@ -73,7 +82,7 @@ public static class BLMHelper
         }
         if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800 && Core.Me.Level >= 100) return Skill.绝望;
         if (通晓层数 >= 1 && Core.Me.Level>=80) return aoe ? Skill.秽浊 : Skill.异言;
-        if (提前补dot && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二.GetActionChange() : Skill.雷一.GetActionChange();
+        if (提前补dot() && Helper.有buff(Buffs.雷云)) return aoe ? Skill.雷二.GetActionChange() : Skill.雷一.GetActionChange();
         if (Skill.即刻.GetSpell().Cooldown.TotalMilliseconds > 0 && Skill.三连.GetSpell().Charges < 1)
         {
             if (Helper.有buff(Buffs.火苗)&&BLMHelper.火状态) return Skill.火三;
@@ -87,7 +96,7 @@ public static class BLMHelper
         int i = 0;
         if (悖论指示) i++;
         if (通晓层数 >= 1) i += 通晓层数;
-        if (提前补dot && Helper.有buff(Buffs.雷云)) i++;
+        if (提前补dot() && Helper.有buff(Buffs.雷云)) i++;
         return i;
     }
     public static bool 能使用耀星()

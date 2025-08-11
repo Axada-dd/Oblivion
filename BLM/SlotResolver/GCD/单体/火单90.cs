@@ -28,7 +28,7 @@ public class 火单90 :ISlotResolver
             }
 
             if (Core.Me.CurrentMp >= 800 && Core.Me.CurrentMp < 2400) return Skill.绝望;
-            if (Core.Me.CurrentMp >= 2400 && Core.Me.CurrentMp < 4000 && !BLMHelper.悖论指示) return Skill.悖论;
+            if (Core.Me.CurrentMp >= 2400 && Core.Me.CurrentMp < 4000 && BLMHelper.悖论指示) return Skill.悖论;
             return Skill.火四;
         }
 

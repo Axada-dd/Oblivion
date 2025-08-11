@@ -36,7 +36,7 @@ public class 双星灵墨泉 : ISlotSequence
     }
     private static void step1(Slot slot)
     {
-        if (BLMHelper.补dot)
+        if (BLMHelper.补dot())
         {
             slot.Add(Skill.雷一.GetSpell(SpellTargetType.Target));
         }
@@ -46,7 +46,7 @@ public class 双星灵墨泉 : ISlotSequence
 
     private static void step2(Slot slot)
     {
-        if (BLMHelper.补dot)
+        if (BLMHelper.补dot())
         {
             slot.Add(Skill.雷一.GetSpell(SpellTargetType.Target));
         }

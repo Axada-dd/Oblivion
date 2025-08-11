@@ -34,6 +34,8 @@ public class 即刻 : ISlotResolver
             {
                 return -20;
             }
+
+            if (Skill.冰三.RecentlyUsed() || Skill.冰冻.RecentlyUsed()) return -4;
             return 2;
         }
         

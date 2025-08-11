@@ -9,9 +9,7 @@ public class 即刻三连 : ISlotResolver
         {
             _skillId = SkillId();
             if (_skillId == 0) return -1;
-            if (Skill.即刻.GetSpell().Cooldown.TotalSeconds == 0) return 1;
-            if (Skill.三连.GetSpell().Charges >= 1) return 2;
-            return -1;
+            return 1;
         }
 
         return -99;

@@ -30,6 +30,8 @@ public class QT
         Instance.SetQt(QTkey.详述, true);
         Instance.SetQt(QTkey.倾泻资源, false);
         Instance.SetQt(QTkey.Boss上天,false);
+        Instance.SetQt(QTkey.压缩火悖论, false);
+        Instance.SetQt(QTkey.压缩冰悖论, false);
     }
     public static void Build()
     {
@@ -61,6 +63,8 @@ public class QT
         Instance.AddQt(QTkey.Boss上天, false,"如果boss上天时间>10秒，请开启此选项,随开随关");
         //Instance.AddQt("双星灵墨泉", false);
         Instance.AddQt(QTkey.使用特供循环, false,"仅在开启三插和DR减动画时使用");
+        Instance.AddQt(QTkey.压缩冰悖论,false);
+        Instance.AddQt(QTkey.压缩火悖论,false);
 
 
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());

@@ -19,9 +19,9 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
     public string AuthorName { get; set; } = Helper.AuthorName;
     private readonly Jobs _job = Jobs.BlackMage;
     private readonly AcrType _acrType = AcrType.HighEnd;
-    private readonly int _minLevel = 100;
+    private readonly int _minLevel = 70;
     private readonly int _maxLevel = 100;
-    private readonly string _description = "7.2黑魔，暂时只支持100级高难";
+    private readonly string _description = "7.2黑魔，支持70-100级";
     private readonly List<SlotResolverData> _slotResolverData =
     [
         //GCD
@@ -29,6 +29,9 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         new(new 秽浊(), SlotMode.Gcd),
         new(new 雷1(), SlotMode.Gcd),
         new(new 雷2(), SlotMode.Gcd),
+        new(new 瞬发gcd触发器(), SlotMode.Gcd),
+        new (new 火群(), SlotMode.Gcd),
+        new (new 冰群(), SlotMode.Gcd),
         new (new 冰单100(), SlotMode.Gcd),
         new (new 火单100(), SlotMode.Gcd),
         new (new 冰单90(), SlotMode.Gcd),
@@ -37,18 +40,17 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         new (new 火单80(), SlotMode.Gcd),
         new (new 冰单70(), SlotMode.Gcd),
         new (new 火单70(), SlotMode.Gcd),
+        new(new 核爆补耀星(), SlotMode.Gcd),
         
         
         //new(new 悖论(), SlotMode.Gcd),
         //new(new 绝望(), SlotMode.Gcd),
-        new(new 瞬发gcd触发器(), SlotMode.Gcd),
         //new(new 耀星(), SlotMode.Gcd),
         //new(new 火三(), SlotMode.Gcd),
         //new(new 冰三(), SlotMode.Gcd),
         //new(new 火4(), SlotMode.Gcd),
         //new(new 冰澈(), SlotMode.Gcd),
         //new(new 核爆(), SlotMode.Gcd),
-        new(new 核爆补耀星(), SlotMode.Gcd),
         //new(new 玄冰(), SlotMode.Gcd),
         //new(new 冰冻(), SlotMode.Gcd),
         // new(new 火一(), SlotMode.Gcd),
@@ -102,6 +104,9 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
             if (BLMSetting.Instance.开挂循环) return new Opener57开挂循环();
         }
 
+        if (level >= 90 && level < 100) return new Opener_lv90();
+        if (level >= 80 && level < 90) return new Opener_lv80();
+        if (level >= 70 && level < 80) return new Opener_lv70();
         return null;
     }
 
