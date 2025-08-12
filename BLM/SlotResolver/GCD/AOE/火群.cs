@@ -27,8 +27,8 @@ public class 火群 : ISlotResolver
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰针 < 3) return 0;
-            if (BLMHelper.三目标aoe()) return Skill.火二.GetActionChange();
-            if (BLMHelper.双目标aoe()) return Skill.火三;
+            if (BLMHelper.三目标aoe()&&QT.Instance.GetQt(QTkey.火二)) return Skill.火二.GetActionChange();
+            //if (BLMHelper.双目标aoe()) return Skill.火三;
         }
         return 0;
     }

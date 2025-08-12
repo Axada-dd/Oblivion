@@ -42,6 +42,7 @@ public class 火单100 :ISlotResolver
     {
         if (Core.Me.Level < 100) return -100;
         if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -234;
+        if (Helper.IsMove&&!Helper.可瞬发()) return -99;
         _skillId = GetSkillId();
         if (_skillId == 0) return -1;
         return (int)_skillId;

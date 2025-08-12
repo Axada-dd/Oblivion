@@ -32,6 +32,7 @@ public class 冰单70 : ISlotResolver
     {
         if (Core.Me.Level < 70 || Core.Me.Level >= 80) return -80;
         if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -234;
+        if (Helper.IsMove&&!Helper.可瞬发()) return -99;
         _skillId = GetSkillId();
         if (_skillId == 0) return -1;
         return (int)_skillId;

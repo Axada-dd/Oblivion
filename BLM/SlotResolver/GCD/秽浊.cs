@@ -30,7 +30,7 @@ public class 秽浊 : ISlotResolver
             {
                 if (Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 != 6)
                 {
-                    if (Skill.墨泉.GetSpell().Cooldown.TotalMilliseconds < 300) return -3;
+                    if (Skill.墨泉.技能CD() < 300 && Skill.墨泉.GetSpell().IsReadyWithCanCast()) return -3;
                     if (Skill.墨泉.GetSpell().AbilityCoolDownInNextXgcDsWindow(2)) return 4;
                 }
             }

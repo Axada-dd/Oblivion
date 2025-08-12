@@ -58,6 +58,7 @@ public class QT
         Instance.AddQt(QTkey.起手序列, true,"关闭会不倒计时起手");
         Instance.AddQt(QTkey.双目标aoe, true,"启动双目标AOE");
         Instance.AddQt(QTkey.Aoe, true,"三目标及以上aoe");
+        Instance.AddQt(QTkey.火二, false, "开启aoe打火2进火");
         Instance.AddQt(QTkey.秽浊填充aoe, false, "使用秽浊填充aoe冰阶段");
         Instance.AddQt(QTkey.倾泻资源, false,"清空通晓");
         Instance.AddQt(QTkey.Boss上天, false,"如果boss上天时间>10秒，请开启此选项,随开随关");
