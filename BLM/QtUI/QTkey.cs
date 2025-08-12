@@ -24,7 +24,7 @@ public static class QTkey
     public const string 压缩火悖论 = "压缩火悖论";
     public const string 压缩冰悖论 = "压缩冰悖论";
     public const string 火二 = "火二";
-
+    public const string TTK = "TTK";
 }
     
 

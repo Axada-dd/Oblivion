@@ -23,6 +23,7 @@ public class 墨泉 : ISlotResolver
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         if (!BLMHelper.火状态) return -2;
         if (Core.Me.CurrentMp > 800) return -3;
+        if (QT.Instance.GetQt(QTkey.TTK)) return 999;
         //if (!BattleData.Instance.已使用瞬发 && !QT.Instance.GetQt("能力技卡G放")) return -4;
         if (BLMHelper.耀星层数 == 6 )return -6;
         if (GCDHelper.GetGCDCooldown() < 500) return -7;

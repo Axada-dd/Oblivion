@@ -25,6 +25,7 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
     private readonly List<SlotResolverData> _slotResolverData =
     [
         //GCD
+        new (new TTK(),SlotMode.Gcd),
         new(new 异言(), SlotMode.Gcd),
         new(new 秽浊(), SlotMode.Gcd),
         new(new 雷1(), SlotMode.Gcd),
@@ -42,20 +43,6 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         new (new 火单70(), SlotMode.Gcd),
         new(new 核爆补耀星(), SlotMode.Gcd),
         
-        
-        //new(new 悖论(), SlotMode.Gcd),
-        //new(new 绝望(), SlotMode.Gcd),
-        //new(new 耀星(), SlotMode.Gcd),
-        //new(new 火三(), SlotMode.Gcd),
-        //new(new 冰三(), SlotMode.Gcd),
-        //new(new 火4(), SlotMode.Gcd),
-        //new(new 冰澈(), SlotMode.Gcd),
-        //new(new 核爆(), SlotMode.Gcd),
-        //new(new 玄冰(), SlotMode.Gcd),
-        //new(new 冰冻(), SlotMode.Gcd),
-        // new(new 火一(), SlotMode.Gcd),
-        // new(new 火二(), SlotMode.Gcd),
-
 
         //Ability
         new(new 星灵移位(),SlotMode.OffGcd),

@@ -30,7 +30,10 @@ public class 冰单100 :ISlotResolver
             }
             if (BLMHelper.冰针 < 3) return Skill.冰澈;
             if (BLMHelper.悖论指示 && !QT.Instance.GetQt(QTkey.压缩冰悖论)) return Skill.悖论;
+            return 0;
         }
+
+        if (!BLMHelper.冰状态 && !BLMHelper.火状态) return Skill.冰三;
         return 0;
     }
     public int Check()

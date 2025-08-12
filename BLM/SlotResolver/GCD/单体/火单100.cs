@@ -19,6 +19,7 @@ public class 火单100 :ISlotResolver
     private uint GetSkillId()
     {
         if (BLMHelper.冰状态) return 0;
+        if (!BLMHelper.火状态) return 0;
         if (!BLMHelper.火状态 && Helper.蓝量 > 8000) return Skill.火三;
         if (BLMHelper.火层数 < 3)
         {

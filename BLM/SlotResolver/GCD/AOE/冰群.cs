@@ -33,6 +33,7 @@ public class 冰群 : ISlotResolver
         {
             if (Core.Me.CurrentMp < 800) return BLMHelper.三目标aoe() ? Skill.冰冻.GetActionChange() : Skill.冰三;
         }
+        if (!BLMHelper.冰状态 && !BLMHelper.火状态) return Skill.冰冻;
         return 0;
     }
     public int Check()
