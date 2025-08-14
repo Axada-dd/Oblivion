@@ -18,7 +18,11 @@ public class 冰单100 :ISlotResolver
 
     private uint GetSkillId()
     {
-        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 != 6) return Skill.冰三;
+        if (BLMHelper.火状态 && Core.Me.CurrentMp < 800 && BLMHelper.耀星层数 != 6)
+        {
+            if (BattleData.Instance.前一gcd is Skill.冰澈 or Skill.玄冰 && BattleData.Instance.前一能力技 == Skill.星灵移位) return 0;
+            return Skill.冰三;
+        }
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 < 3)

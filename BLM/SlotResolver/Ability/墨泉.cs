@@ -27,6 +27,7 @@ public class 墨泉 : ISlotResolver
         //if (!BattleData.Instance.已使用瞬发 && !QT.Instance.GetQt("能力技卡G放")) return -4;
         if (BLMHelper.耀星层数 == 6 )return -6;
         if (GCDHelper.GetGCDCooldown() < 500) return -7;
+        if (BattleData.Instance.前一gcd is Skill.冰澈 or Skill.玄冰 && BattleData.Instance.前一能力技 == Skill.星灵移位) return -8;
         return 1;
     }
 }

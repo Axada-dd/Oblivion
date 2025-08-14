@@ -31,6 +31,7 @@ public class 冰群 : ISlotResolver
 
         if (BLMHelper.火状态)
         {
+            if (BattleData.Instance.前一gcd is Skill.冰澈 or Skill.玄冰 && BattleData.Instance.前一能力技 == Skill.星灵移位) return 0;
             if (Core.Me.CurrentMp < 800) return BLMHelper.三目标aoe() ? Skill.冰冻.GetActionChange() : Skill.冰三;
         }
         if (!BLMHelper.冰状态 && !BLMHelper.火状态) return Skill.冰冻;

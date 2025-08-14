@@ -18,7 +18,7 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
 {
     public string AuthorName { get; set; } = Helper.AuthorName;
     private readonly Jobs _job = Jobs.BlackMage;
-    private readonly AcrType _acrType = AcrType.HighEnd;
+    private readonly AcrType _acrType = AcrType.Both;
     private readonly int _minLevel = 70;
     private readonly int _maxLevel = 100;
     private readonly string _description = "7.2黑魔，支持70-100级";

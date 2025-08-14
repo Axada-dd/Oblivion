@@ -1,4 +1,6 @@
+using AEAssist.CombatRoutine.Module.AILoop;
 using AEAssist.Function;
+using AEAssist.JobApi;
 using AEAssist.MemoryApi;
 using Oblivion.BLM.QtUI;
 
@@ -38,6 +40,12 @@ public class BLMEvetHandle : IRotationEventHandler
     /// <returns>异步任务</returns>
     public async Task OnPreCombat()
     {
+        // 火状态下使用星灵移位
+        if (BLMHelper.火状态) await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
+            
+        // 冰状态且条件满足时使用灵极魂
+        if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000))
+            await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
         await Task.CompletedTask;
     }
 
@@ -82,6 +90,7 @@ public class BLMEvetHandle : IRotationEventHandler
             if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000))
                 await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
         }
+        await Task.CompletedTask;
     }
 
     /// <summary>

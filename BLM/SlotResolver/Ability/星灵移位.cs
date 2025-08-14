@@ -32,6 +32,8 @@ public class 星灵移位 : ISlotResolver
             if (Skill.墨泉.AbilityCoolDownInNextXgcDsWindow(2)||Skill.墨泉.IsReady() || Skill.墨泉.RecentlyUsed()) return -66;
             if (Core.Me.CurrentMp >= 800) return -3;
             if (BLMHelper.耀星层数 == 6 && Core.Me.Level == 100) return -4;
+            if (Helper.可瞬发()) return 1;
+            if (Core.Me.Level < 90) return -90;
             if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return 234;
             if ((QT.Instance.GetQt(QTkey.三连用于走位) && !QT.Instance.GetQt(QTkey.即刻))||(!QT.Instance.GetQt(QTkey.即刻)&&!QT.Instance.GetQt(QTkey.三连咏唱))) return -5;
             if (Core.Me.Level < 80 ) return -80;

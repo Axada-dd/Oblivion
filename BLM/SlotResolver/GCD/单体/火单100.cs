@@ -34,9 +34,9 @@ public class 火单100 :ISlotResolver
             if (Helper.蓝量 >= 2400 && Helper.蓝量 <= 3000 && !QT.Instance.GetQt(QTkey.压缩火悖论)) return Skill.悖论;
         }
 
+        if (BLMHelper.耀星层数 == 6) return Skill.耀星;
         if (QT.Instance.GetQt(QTkey.压缩火悖论) && Core.Me.CurrentMp <= 2800 && BLMHelper.耀星层数 < 5) return Skill.绝望;
         if (Helper.蓝量 < 2400 && BLMHelper.耀星层数 < 5 ) return Skill.绝望;
-        if (BLMHelper.耀星层数 == 6) return Skill.耀星;
         return Skill.火四;
     }
     public int Check()
