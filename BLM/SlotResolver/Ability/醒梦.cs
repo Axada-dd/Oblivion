@@ -14,6 +14,7 @@ public class 醒梦 : ISlotResolver
         //if (!QT.Instance.GetQt("醒梦")) return -2;
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         //if (BLMHelper.冰状态 && Core.Me.CurrentMp < 800 && Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 8 && BLMHelper.冰层数 < 3) return 1;
+        if (QT.Instance.GetQt(QTkey.TTK)) return 1;
         return -99;
     }
 

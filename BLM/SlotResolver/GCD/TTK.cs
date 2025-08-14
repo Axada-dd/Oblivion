@@ -19,7 +19,6 @@ public class TTK : ISlotResolver
     private uint GetSkillId()
     {
         if (!QT.Instance.GetQt(QTkey.TTK)) return 0;
-        if (QT.Instance.GetQt(QTkey.Dot)) QT.Instance.SetQt(QTkey.Dot, false);
         if (BLMHelper.通晓层数 > 0) return BLMHelper.三目标aoe() || BLMHelper.双目标aoe() ? Skill.秽浊 : Skill.异言;
         if (BLMHelper.悖论指示) return Skill.悖论;
         if (BLMHelper.耀星层数 == 6) return Skill.耀星;

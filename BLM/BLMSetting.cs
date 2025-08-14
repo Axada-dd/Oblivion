@@ -82,7 +82,6 @@ public class BLMSetting
     public bool 锁定以太步窗口 = false;
     public int 以太步IconSize = 47;
     public bool 以太步窗口显示 = true;
-    public bool AutoUpdataTimeLines = true;
     public bool TimeLinesDebug = false;
 
     public double 起手预读时间 = 3.5;
