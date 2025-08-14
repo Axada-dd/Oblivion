@@ -32,6 +32,7 @@ public class QT
         Instance.SetQt(QTkey.Boss上天,false);
         Instance.SetQt(QTkey.压缩火悖论, false);
         Instance.SetQt(QTkey.压缩冰悖论, false);
+        Instance.SetQt(QTkey.TTK,false);
     }
     public static void Build()
     {
@@ -66,6 +67,7 @@ public class QT
         Instance.AddQt(QTkey.使用特供循环, false,"仅在开启三插和DR减动画时使用");
         Instance.AddQt(QTkey.压缩冰悖论,false);
         Instance.AddQt(QTkey.压缩火悖论,false);
+        Instance.AddQt(QTkey.TTK,false);
 
 
         Instance.AddHotkey("爆发药", new HotKeyResolver_Potion());

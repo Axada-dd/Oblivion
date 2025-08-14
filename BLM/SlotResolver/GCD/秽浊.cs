@@ -35,10 +35,6 @@ public class 秽浊 : ISlotResolver
                 }
             }
 
-            if (BLMHelper.冰状态)
-            {
-                if (QT.Instance.GetQt(QTkey.秽浊填充aoe) && !BattleData.Instance.Aoe循环填充) return 5;
-            }
         }
 
         if (Core.Me.Level >= 80 && Core.Me.Level < 98)

@@ -20,7 +20,7 @@ public class 冰群 : ISlotResolver
     {
         if (BLMHelper.冰状态)
         {
-            if (BLMHelper.冰针 < 3) return BLMHelper.三目标aoe() ? Skill.玄冰 : Skill.冰澈;
+            if (BLMHelper.冰针 < 3|| BattleData.Instance.三冰针进冰) return BLMHelper.三目标aoe() ? Skill.玄冰 : Skill.冰澈;
             if (!Skill.星灵移位.GetSpell().IsReadyWithCanCast())
             {
                 if (BLMHelper.悖论指示 && !BLMHelper.三目标aoe()) return Skill.悖论;

@@ -34,7 +34,7 @@ public class 三连咏唱 : ISlotResolver
 
             if (Skill.墨泉.技能CD() < 500 || Skill.墨泉.AbilityCoolDownInNextXgcDsWindow(5)) return -8;
             if (Core.Me.CurrentMp <= 4400 && BLMHelper.耀星层数 >= 5 && Core.Me.Level == 100&&Skill.即刻.技能CD()>0&&!Skill.即刻.AbilityCoolDownInNextXgcDsWindow(3)) return 1;
-            if (Core.Me.CurrentMp <= 4400 && Core.Me.Level == 90 && Core.Me.CurrentMp >= 800&&Skill.即刻.技能CD()>0&&!Skill.即刻.AbilityCoolDownInNextXgcDsWindow(3)) return 1;
+            if (Core.Me.CurrentMp <= 2800 && Core.Me.Level == 90 && Core.Me.CurrentMp >= 800&&Skill.即刻.技能CD()>0&&!Skill.即刻.AbilityCoolDownInNextXgcDsWindow(3)) return 1;
             if (Core.Me.CurrentMp <= 2800 && Core.Me.Level == 80&&Skill.即刻.技能CD()>0&&!Skill.即刻.AbilityCoolDownInNextXgcDsWindow(3)) return 1;
             //70级三连只用于走位，需要额外使用自行排轴
         }

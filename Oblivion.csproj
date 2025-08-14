@@ -12,7 +12,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <OutputPath>E:\FF14act\AEAssist 国服 1024\ACR\Oblivion</OutputPath>
+      <OutputPath>F:\FF14act\AEAssist 国服 1024\ACR\Oblivion</OutputPath>
       <Optimize>true</Optimize>
 
     </PropertyGroup>
@@ -20,7 +20,7 @@
         <!-- 定义源目录和目标目录 -->
         <PropertyGroup>
             <SourceDir>$(OutputPath)</SourceDir>
-            <AdditionalOutputDir>E:\FF14act\AEAssist 国际服\ACR\Oblivion</AdditionalOutputDir>
+            <AdditionalOutputDir>F:\FF14act\AEAssist 国际服\ACR\Oblivion</AdditionalOutputDir>
         </PropertyGroup>
 
         <!-- 创建目标目录（如果不存在） -->
@@ -35,26 +35,23 @@
     </Target>
 
     <ItemGroup>
-      <Reference Include="AEAssist">
-        <HintPath>..\..\FF14act\AEAssist 国服 1024\AEAssistCNVersion\AEAssist\AEAssist.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="Dalamud">
-        <HintPath>C:\Users\denglang\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\Dalamud.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-      <Reference Include="ImGui.NET">
-        <HintPath>C:\Users\denglang\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\ImGui.NET.dll</HintPath>
-        <Private>False</Private>
-      </Reference>
-    </ItemGroup>
-
-    <ItemGroup>
       <Compile Remove="Class1.cs" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="BLM\SlotResolver\GCD\单体\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="AEAssist">
+        <HintPath>..\..\FF14act\AEAssist 国服 1024\AEAssistCNVersion\AEAssist\AEAssist.dll</HintPath>
+      </Reference>
+      <Reference Include="Dalamud">
+        <HintPath>C:\Users\melat\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\Dalamud.dll</HintPath>
+      </Reference>
+      <Reference Include="ImGui.NET">
+        <HintPath>C:\Users\melat\AppData\Roaming\XIVLauncherCN\addon\Hooks\dev\ImGui.NET.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

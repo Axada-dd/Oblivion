@@ -19,7 +19,7 @@ public class 冰单80  :ISlotResolver
         if (BLMHelper.冰状态)
         {
             if (BLMHelper.冰层数 < 3) return Skill.冰三;
-            if (BLMHelper.冰针 < 3) return Skill.冰澈;
+            if (BLMHelper.冰针 < 3|| BattleData.Instance.三冰针进冰) return Skill.冰澈;
             return 0;
         }
 

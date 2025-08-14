@@ -101,10 +101,22 @@ public class BLMEvetHandle : IRotationEventHandler
             AI.Instance.BattleData.CurrGcdAbilityCount = 1;
         }
         
-        // 特殊处理耀星技能
-        if (spell.Id == Skill.耀星)
+
+
+        if (spell.Id == Skill.星灵移位)
         {
-            BattleData.Instance.已使用耀星 = true;
+            if (BLMHelper.冰状态 && BLMHelper.冰针 == 3)
+            {
+                BattleData.Instance.三冰针进冰 = true;
+            }
+        }
+
+        if (BattleData.Instance.三冰针进冰)
+        {
+            if (spell.Id == Skill.冰澈 || spell.Id == Skill.玄冰)
+            {
+                BattleData.Instance.三冰针进冰 = false;
+            }
         }
     }
 
@@ -127,16 +139,14 @@ public class BLMEvetHandle : IRotationEventHandler
             // 有咏速buff时阈值为1500ms，否则为1700ms
             BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 1700);
         }
-
-        // 处理冰状态下的AOE循环
-        if (BLMHelper.冰状态 && (BLMHelper.双目标aoe() || BLMHelper.三目标aoe()))
+        if (BattleData.Instance.三冰针进冰)
         {
-            // 如果使用了雷系技能或秽浊，标记AOE循环填充
-            if (spell.Id == Skill.雷二 || spell.Id == Skill.雷一 || spell.Id == Skill.秽浊)
+            if (spell.Id == Skill.冰澈 || spell.Id == Skill.玄冰)
             {
-                BattleData.Instance.Aoe循环填充 = true;
+                BattleData.Instance.三冰针进冰 = false;
             }
         }
+
         
         // 处理能力技(oGCD)施放后的状态
         if (_ogcdSpellIds.Contains(spell.Id))
@@ -152,11 +162,7 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.需要瞬发gcd = false;
             // 更新GCD技能计数
             AI.Instance.BattleData.CurrGcdAbilityCount = 2;
-            // 特殊处理耀星技能
-            if (spell.Id == Skill.耀星)
-            {
-                BattleData.Instance.已使用耀星 = false;
-            }
+
         }
     }
 
@@ -167,8 +173,6 @@ public class BLMEvetHandle : IRotationEventHandler
     /// <param name="currTimeInMs">当前战斗时间(毫秒)</param>
     public void OnBattleUpdate(int currTimeInMs)
     {
-        // 运行黑魔法师功能逻辑
-        BLMFunction.Run();
         
         // 可瞬发状态下不需要即刻
         if (Helper.可瞬发()) BattleData.Instance.需要即刻 = false;
@@ -189,29 +193,19 @@ public class BLMEvetHandle : IRotationEventHandler
             BattleData.Instance.需要瞬发gcd = false;
         }
 
-        // 更新三连咏唱转冰状态
-        BattleData.Instance.三连转冰 = BLMHelper.三连转冰();
 
-        // 更新GCD复唱时间
-        BattleData.Instance.复唱时间 = GCDHelper.GetGCDDuration();
 
-        // 处理耀星使用状态
-        if (BattleData.Instance.已使用耀星)
-        {
-            // 冰状态或最近使用了墨泉时重置耀星使用状态
-            if (BLMHelper.冰状态 || Skill.墨泉.RecentlyUsed(300)) BattleData.Instance.已使用耀星 = false;
-        }
 
         // 处理特殊循环状态
         if (!QT.Instance.GetQt(QTkey.使用特供循环)) BattleData.Instance.正在特殊循环中 = false;
 
         // 更新各种战斗状态数据
-        BattleData.Instance.已存在黑魔纹 = Helper.有buff(737);
+        /*BattleData.Instance.已存在黑魔纹 = Helper.有buff(737);
         BattleData.Instance.能使用耀星 = BLMHelper.能使用耀星();
         BattleData.Instance.能使用的火四个数 = BLMHelper.能使用的火四个数();
         BattleData.Instance.火循环剩余gcd = BLMHelper.火循环gcd();
         BattleData.Instance.冰循环剩余gcd = BLMHelper.冰循环gcd();
-        BattleData.Instance.能星灵转冰 = BLMHelper.能星灵转冰();
+        BattleData.Instance.能星灵转冰 = BLMHelper.能星灵转冰();*/
     }
 
     /// <summary>

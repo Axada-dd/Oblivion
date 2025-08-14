@@ -21,15 +21,7 @@ public class 核爆补耀星 : ISlotResolver
     }
     public int Check()
     {
-        if (Core.Me.Level < 100) return -100;
-        if (!BLMHelper.火状态) return -1;
-        if (Core.Me.CurrentMp < 800) return -2;
-        if (BattleData.Instance.已使用耀星) return -3;
-        if (BLMHelper.耀星层数 + BattleData.Instance.能使用的火四个数 < 6)
-        {
-            return 1;
-        }
-        //可以再精修，先计算火4个数，火4数>3且还有800+蓝可以先火4再核爆
+
         return -99;
     }
 
