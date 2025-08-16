@@ -35,10 +35,13 @@ public class Skill
         即刻 = 7561,//level>18
         魔罩 = 157,//level>30
         崩溃 = 156,//level>15
-        沉稳 = 7559;//level>44
+        沉稳 = 7559,
+        
+        
+        雷二 = 7447u,
+        雷一 = 144u,
+        冰冻 = 25795u,
+        火二 = 147u;//level>44
 
-    public static uint 雷二 = 7447u.GetActionChange();
-    public static uint 雷一 = 144u.GetActionChange();
-    public static uint 冰冻 = 25795u.GetActionChange();//Level>12
-    public static uint 火二 = 147u.GetActionChange();//Level>18
+
 }

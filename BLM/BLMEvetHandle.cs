@@ -1,5 +1,6 @@
 using AEAssist.CombatRoutine.Module.AILoop;
 using AEAssist.Function;
+using AEAssist.IO;
 using AEAssist.JobApi;
 using AEAssist.MemoryApi;
 using Oblivion.BLM.QtUI;
@@ -12,6 +13,7 @@ namespace Oblivion.BLM;
 /// </summary>
 public class BLMEvetHandle : IRotationEventHandler
 {
+    private int 释放技能时状态 = 0;
     /// <summary>
     /// 黑魔法师GCD技能ID集合，用于识别和处理GCD技能的使用
     /// 包含所有冰系、火系、雷系以及其他GCD技能
@@ -32,27 +34,34 @@ public class BLMEvetHandle : IRotationEventHandler
         Skill.黑魔纹,Skill.三连,Skill.墨泉,Skill.即刻,Skill.星灵移位,Skill.醒梦,Skill.详述
     };
 
+    private readonly uint[] _fireSpellIds = new[]
+    {
+        Skill.核爆, Skill.火三, Skill.火四, Skill.绝望, Skill.火二.GetActionChange(), Skill.耀星, Skill.悖论
+    };
 
-    /// <summary>
-    /// 战斗前准备事件处理方法
-    /// 当进入战斗前调用，可以用于设置战斗前的准备工作
-    /// </summary>
-    /// <returns>异步任务</returns>
+    private readonly uint[] _bSpellIds = new[]
+    {
+        Skill.悖论, Skill.冰三, Skill.冰澈, Skill.冰冻.GetActionChange(), Skill.玄冰, Skill.灵极魂
+    };
+
     public async Task OnPreCombat()
     {
+        
         // 火状态下使用星灵移位
-        if (BLMHelper.火状态) await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
-            
+        if (BLMHelper.火状态)
+        {
+            Slot slot = new Slot(Skill.星灵移位.GetSpell(SpellTargetType.Self),2500);
+        }
+
         // 冰状态且条件满足时使用灵极魂
         if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000))
-            await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
+        {
+            Slot slot = new Slot(Skill.灵极魂.GetSpell(SpellTargetType.Self),2500);
+        }
         await Task.CompletedTask;
     }
 
-    /// <summary>
-    /// 重置战斗状态事件处理方法
-    /// 当战斗结束或需要重置战斗状态时调用，重置所有战斗相关数据
-    /// </summary>
+
     public void OnResetBattle()
     {
         // 创建新的战斗数据实例并重置所有状态标志
@@ -65,11 +74,7 @@ public class BLMEvetHandle : IRotationEventHandler
         QT.Reset();
     }
 
-    /// <summary>
-    /// 无目标事件处理方法
-    /// 当没有战斗目标时调用，处理无目标状态下的技能使用和状态维护
-    /// </summary>
-    /// <returns>异步任务</returns>
+
     public async Task OnNoTarget()
     {
         // 战斗时间小于10秒时不处理
@@ -83,60 +88,83 @@ public class BLMEvetHandle : IRotationEventHandler
         // 处理Boss上天特殊情况
         if (QT.Instance.GetQt("Boss上天"))
         {
-            // 火状态下使用星灵移位
-            if (BLMHelper.火状态) await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
-            
+            if (BLMHelper.火状态)
+            {
+                Slot slot = new Slot(Skill.星灵移位.GetSpell(SpellTargetType.Self),2500);
+            }
+
             // 冰状态且条件满足时使用灵极魂
             if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000))
-                await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
+            {
+                Slot slot = new Slot(Skill.灵极魂.GetSpell(SpellTargetType.Self),2500);
+            }
         }
         await Task.CompletedTask;
     }
 
-    /// <summary>
-    /// 技能施放成功事件处理方法
-    /// 当成功施放技能后调用，更新相关状态数据
-    /// </summary>
-    /// <param name="slot">技能槽位</param>
-    /// <param name="spell">施放的技能</param>
+
     public void OnSpellCastSuccess(Slot slot, Spell spell)
     {
-        // 处理GCD技能施放成功
         if (_gcdSpellIds.Contains(spell.Id))
+            BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 1700);
+    }
+
+
+    public void AfterSpell(Slot slot, Spell spell)
+    {
+        if (释放技能时状态 == 1)
         {
-            // 记录前一个GCD技能ID
-            BattleData.Instance.前一gcd = spell.Id;
-            // 重置GCD技能计数
-            AI.Instance.BattleData.CurrGcdAbilityCount = 1;
+            if (spell.Id == Skill.火二.GetActionChange() || spell.Id == Skill.火三 || spell.Id == Skill.星灵移位)
+            {
+
+                BattleData.Instance.上一轮循环 = new List<uint>(BattleData.Instance.冰状态gcd);
+                BattleData.Instance.冰状态gcd.Clear();
+                if (spell.Id == Skill.火二.GetActionChange() || spell.Id == Skill.火三)
+                {
+                    BattleData.Instance.火状态gcd.Add(spell.Id);
+                }
+            }
+            else
+            {
+                BattleData.Instance.冰状态gcd.Add(spell.Id);
+            }
+        }else if (释放技能时状态 == 2)
+        {
+            if (spell.Id == Skill.冰冻.GetActionChange() || spell.Id == Skill.冰三 || spell.Id == Skill.星灵移位)
+            {
+                BattleData.Instance.上一轮循环 = new List<uint>(BattleData.Instance.火状态gcd);
+                BattleData.Instance.火状态gcd.Clear();
+                if (spell.Id == Skill.冰冻.GetActionChange() || spell.Id == Skill.冰三)
+                {
+                    BattleData.Instance.冰状态gcd.Add(spell.Id);
+                }
+            }
+            else
+            {
+                BattleData.Instance.火状态gcd.Add(spell.Id);
+            }
+        }else if (释放技能时状态 == 0)
+        {
+            BattleData.Instance.冰状态gcd.Clear();
+            BattleData.Instance.火状态gcd.Clear();
+            if (_fireSpellIds.Contains(spell.Id))
+            {
+                BattleData.Instance.火状态gcd.Add(spell.Id);
+            }else if (_bSpellIds.Contains(spell.Id))
+            {
+                BattleData.Instance.冰状态gcd.Add(spell.Id);
+            }
         }
-        
-
-
         if (spell.Id == Skill.星灵移位)
         {
+            if (BLMHelper.冰状态) 释放技能时状态 = 1;
+            else if (BLMHelper.火状态) 释放技能时状态 = 2;
+            else 释放技能时状态 = 0;
             if (BLMHelper.冰状态 && BLMHelper.冰针 == 3)
             {
                 BattleData.Instance.三冰针进冰 = true;
             }
         }
-
-        if (BattleData.Instance.三冰针进冰)
-        {
-            if (spell.Id == Skill.冰澈 || spell.Id == Skill.玄冰)
-            {
-                BattleData.Instance.三冰针进冰 = false;
-            }
-        }
-    }
-
-    /// <summary>
-    /// 技能施放后事件处理方法
-    /// 在技能施放完成后调用，处理技能施放后的状态更新和逻辑
-    /// </summary>
-    /// <param name="slot">技能槽位</param>
-    /// <param name="spell">施放的技能</param>
-    public void AfterSpell(Slot slot, Spell spell)
-    {
         // 处理GCD技能施放后的状态
         if (_gcdSpellIds.Contains(spell.Id))
         {
@@ -147,6 +175,10 @@ public class BLMEvetHandle : IRotationEventHandler
             // 根据GCD冷却时间判断是否使用了瞬发技能
             // 有咏速buff时阈值为1500ms，否则为1700ms
             BattleData.Instance.已使用瞬发 = GCDHelper.GetGCDCooldown() >= (Core.Me.HasAura(Buffs.咏速Buff) ? 1500 : 1700);
+            if (BLMHelper.冰状态) 释放技能时状态 = 1;
+            else if (BLMHelper.火状态) 释放技能时状态 = 2;
+            else 释放技能时状态 = 0;
+            
         }
         if (BattleData.Instance.三冰针进冰)
         {
@@ -175,11 +207,7 @@ public class BLMEvetHandle : IRotationEventHandler
         }
     }
 
-    /// <summary>
-    /// 战斗更新事件处理方法
-    /// 在战斗中定期调用，更新战斗状态和数据
-    /// </summary>
-    /// <param name="currTimeInMs">当前战斗时间(毫秒)</param>
+
     public void OnBattleUpdate(int currTimeInMs)
     {
         
@@ -192,6 +220,10 @@ public class BLMEvetHandle : IRotationEventHandler
             // 有可用瞬发技能时设置需要瞬发GCD标志
             if (BLMHelper.可用瞬发() != 0)
                 BattleData.Instance.需要瞬发gcd = true;
+            else
+            {
+                BattleData.Instance.需要即刻 = true;
+            }
         }
         
         // 正在施法时重置相关状态
@@ -216,10 +248,7 @@ public class BLMEvetHandle : IRotationEventHandler
         BattleData.Instance.能星灵转冰 = BLMHelper.能星灵转冰();*/
     }
 
-    /// <summary>
-    /// 进入循环事件处理方法
-    /// 当进入战斗循环时调用，进行初始化和设置检查
-    /// </summary>
+
     public void OnEnterRotation()
     {
         // 输出欢迎信息
@@ -233,16 +262,10 @@ public class BLMEvetHandle : IRotationEventHandler
         
         // 重置开场标志
         BattleData.Instance.IsInnerOpener = false;
-        
-        // 更新时间轴(当前已注释)
-        /*if (BLMSetting.Instance.AutoUpdataTimeLines)
-            TimeLineUpdater.UpdateFiles(Helper.DncTimeLineUrl);*/
+
     }
 
-    /// <summary>
-    /// 退出循环事件处理方法
-    /// 当退出战斗循环时调用，保存设置和状态
-    /// </summary>
+
     public void OnExitRotation()
     {
         // 保存黑魔法师设置
@@ -251,10 +274,6 @@ public class BLMEvetHandle : IRotationEventHandler
         BLMSetting.Instance.SaveQtStates(QT.Instance);
     }
 
-    /// <summary>
-    /// 区域变更事件处理方法
-    /// 当玩家切换区域时调用，重置相关状态
-    /// </summary>
     public void OnTerritoryChanged()
     {
         // 重置QT状态

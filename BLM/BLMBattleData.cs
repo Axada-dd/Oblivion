@@ -16,9 +16,9 @@ public class BattleData
     public bool 需要瞬发gcd { get; set; } = false;
     public bool 三冰针进冰 { get; set; } = false;
 
-    public HashSet<uint> 冰状态gcd = new HashSet<uint>();
-    public HashSet<uint> 火状态gcd = new HashSet<uint>();
-    
+    public List<uint> 冰状态gcd = [];
+    public List<uint> 火状态gcd = [];
+    public List<uint> 上一轮循环 = [];
     public bool HotkeyUseHighPrioritySlot = false; // 热键使用高优先级队列
     
 

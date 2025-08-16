@@ -125,33 +125,32 @@ public static class SettingTab
             ImGuiHelper.Separator();
 
         });
-        instance.AddTab("其他设置", window =>
+        
+        
+        instance.AddTab("debug", window =>
         {
-            if (ImGui.CollapsingHeader("Debug", ImGuiTreeNodeFlags.DefaultOpen))
-            {
-                
-                ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
-                ImGui.Text($"复唱时间:{GCDHelper.GetGCDDuration()}");
-                ImGui.Text($"剩余GCD时间：{GCDHelper.GetGCDCooldown()}");
-                ImGui.Text($"能力技卡G：{BLMHelper.能力技卡g}");
-                ImGui.Text($"发呆中：{BLMHelper.在发呆()}");
-                ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
-                ImGui.Text($"可瞬发：{Helper.可瞬发()}");
-                //ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
-                ImGui.Text($"已存在黑魔纹：{Helper.有buff(737)}");
-                ImGui.Text($"三连咏唱CD：{BLMHelper.三连cd()}");
-                //ImGui.Text($"火循环剩余gcd：{BattleData.Instance.火循环剩余gcd}");
-                //ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
-                //ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
-                //ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
-                //ImGui.Text($"三连转冰：{BattleData.Instance.三连转冰}");
-                ImGui.Text($"需要瞬发：{BattleData.Instance.需要瞬发gcd}");
-                ImGui.Text($"需要即刻: {BattleData.Instance.需要即刻}");
-                //ImGui.Text($"特供循环判断:{new 开满转火().StartCheck()}");
-                //ImGui.Text($"双星灵墨泉：{new 双星灵墨泉().StartCheck()}");
-                ImGui.Text($"三冰针进冰：{BattleData.Instance.三冰针进冰}");
-                ImGui.Text($"双目标：{BLMHelper.双目标aoe()}-----三目标: {BLMHelper.三目标aoe()}");
-            }
+
+            ImGui.Text($"上一G：{BattleData.Instance.前一gcd}");
+            ImGui.Text($"复唱时间:{GCDHelper.GetGCDDuration()}");
+            ImGui.Text($"剩余GCD时间：{GCDHelper.GetGCDCooldown()}");
+            ImGui.Text($"能力技卡G：{BLMHelper.能力技卡g}");
+            ImGui.Text($"发呆中：{BLMHelper.在发呆()}");
+            ImGui.Text($"使用瞬发：{BattleData.Instance.已使用瞬发}");
+            ImGui.Text($"可瞬发：{Helper.可瞬发()}");
+            //ImGui.Text($"已使用耀星：{BattleData.Instance.已使用耀星}");
+            ImGui.Text($"已存在黑魔纹：{Helper.有buff(737)}");
+            ImGui.Text($"三连咏唱CD：{BLMHelper.三连cd()}");
+            //ImGui.Text($"火循环剩余gcd：{BattleData.Instance.火循环剩余gcd}");
+            //ImGui.Text($"冰循环剩余gcd：{BattleData.Instance.冰循环剩余gcd}");
+            //ImGui.Text($"能使用火四个数：{BattleData.Instance.能使用的火四个数}");
+            //ImGui.Text($"能使用耀星：{BattleData.Instance.能使用耀星}");
+            //ImGui.Text($"三连转冰：{BattleData.Instance.三连转冰}");
+            ImGui.Text($"需要瞬发：{BattleData.Instance.需要瞬发gcd}");
+            ImGui.Text($"需要即刻: {BattleData.Instance.需要即刻}");
+            //ImGui.Text($"特供循环判断:{new 开满转火().StartCheck()}");
+            //ImGui.Text($"双星灵墨泉：{new 双星灵墨泉().StartCheck()}");
+            ImGui.Text($"三冰针进冰：{BattleData.Instance.三冰针进冰}");
+            ImGui.Text($"双目标：{BLMHelper.双目标aoe()}-----三目标: {BLMHelper.三目标aoe()}");
             if (ImGui.CollapsingHeader("技能队列", ImGuiTreeNodeFlags.DefaultOpen))
             {
                 if (ImGui.Button("清除队列"))
@@ -180,6 +179,27 @@ public static class SettingTab
                 ImGui.TreePop();
             }
         });
+        instance.AddTab("已释放技能", window =>
+        {
+            if (BattleData.Instance.冰状态gcd.Count > 0)
+            {
+                ImGui.Text("当前冰循环：");
+                ImGui.Text($"{string.Join(",", BattleData.Instance.冰状态gcd.Select(s=>s.GetSpell().Name))}");
+            }
+
+            if (BattleData.Instance.火状态gcd.Count > 0)
+            {
+                ImGui.Text("当前火循环：");
+                ImGui.Text($"{string.Join(",", BattleData.Instance.火状态gcd.Select(s=>s.GetSpell().Name))}");
+            }
+
+            if (BattleData.Instance.上一轮循环.Count > 0)
+            {
+                ImGui.Text("上一轮循环：");
+                ImGui.Text($"{string.Join(",", BattleData.Instance.上一轮循环.Select(s=>s.GetSpell().Name))}");
+            }
+        });
+        
         
     }
 }
