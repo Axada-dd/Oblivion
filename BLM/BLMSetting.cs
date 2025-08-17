@@ -92,6 +92,5 @@ public class BLMSetting
     public bool Autotarget = false;
     public int AutoTargetMode = 0;
     public bool 提前黑魔纹 = false;
-    public int TTK阈值 = 12000;
-
+    public int TTK阈值 = 12000; 
 }

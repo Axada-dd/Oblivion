@@ -13,7 +13,7 @@ public class 开满转火: ISlotSequence
     {
         if (Core.Me.Level<100) return -100;
         if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -7;
-        if (!QT.Instance.GetQt(QTkey.使用特供循环)) return -1;
+        if (!BattleData.Instance.特供循环) return -1;
         if (Core.Me.CurrentMp < 800) return -7;
         if (Skill.墨泉.GetSpell().Cooldown.TotalSeconds > 0 && Skill.墨泉.GetSpell().Cooldown.TotalSeconds < 6) return -2;
         if (!BLMHelper.冰状态) return -3;

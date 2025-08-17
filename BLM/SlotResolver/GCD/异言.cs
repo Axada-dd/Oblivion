@@ -19,7 +19,7 @@ public class 异言 : ISlotResolver
     public int Check()
     {
         if (Core.Me.Level < 80) return -80;
-        if (!QT.Instance.GetQt(QTkey.异言)) return -2;
+        if (!QT.Instance.GetQt(QTkey.通晓)) return -2;
         if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return -3;
         if (QT.Instance.GetQt(QTkey.倾泻资源) && BLMHelper.通晓层数 > 0) return 666;
         if (Core.Me.Level >= 98)

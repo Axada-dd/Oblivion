@@ -42,13 +42,13 @@ public class BLMRotationEntry : IRotationEntry, IDisposable
         new (new 冰单70(), SlotMode.Gcd),
         new (new 火单70(), SlotMode.Gcd),
         new(new 核爆补耀星(), SlotMode.Gcd),
+        new(new 即刻三连(), SlotMode.Always),
         
 
         //Ability
         new(new 星灵移位(),SlotMode.OffGcd),
         new(new 即刻(),SlotMode.OffGcd),
         new(new 三连咏唱(),SlotMode.OffGcd),
-        new(new 即刻三连(), SlotMode.Always),
         new(new 醒梦(),SlotMode.OffGcd),
         new(new 墨泉(),SlotMode.OffGcd),
         new(new 详述(),SlotMode.OffGcd),

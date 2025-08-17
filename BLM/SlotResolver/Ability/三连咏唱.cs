@@ -19,11 +19,10 @@ public class 三连咏唱 : ISlotResolver
 
     public int Check()
     {
-        if (!QT.Instance.GetQt(QTkey.三连咏唱)) return -2;
-        if (QT.Instance.GetQt(QTkey.三连用于走位)) return -5;
+        if (BattleData.Instance.三连走位) return -5;
         if (_skillId.GetSpell().Charges < 1) return -1;
-        if (QT.Instance.GetQt(QTkey.TTK)) return 999;
         if (Helper.可瞬发()) return -4;
+        if (QT.Instance.GetQt(QTkey.TTK)) return 999;
         if (BLMHelper.火状态)
         {
             if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe())

@@ -19,7 +19,6 @@ public class 详述 : ISlotResolver
 
     public int Check()
     {
-        if (!QT.Instance.GetQt(QTkey.详述)) return -5;
         if (Core.Me.Level < 86) return -6;
         if (!_skillId.GetSpell().IsReadyWithCanCast()) return -1;
         if (Core.Me.Level >= 98)

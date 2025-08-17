@@ -1,3 +1,5 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.Ability;
 
 public class 即刻三连 : ISlotResolver
@@ -7,6 +9,7 @@ public class 即刻三连 : ISlotResolver
     {
         if (BattleData.Instance.需要即刻)
         {
+            if (!BattleData.Instance.三连走位) return -5;
             _skillId = SkillId();
             if (_skillId == 0) return -1;
             return 1;

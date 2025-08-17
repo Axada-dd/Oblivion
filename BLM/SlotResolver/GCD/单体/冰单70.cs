@@ -1,3 +1,5 @@
+using Oblivion.BLM.QtUI;
+
 namespace Oblivion.BLM.SlotResolver.GCD.单体;
 
 public class 冰单70 : ISlotResolver
@@ -26,6 +28,7 @@ public class 冰单70 : ISlotResolver
         if (BLMHelper.火状态)
         {
             if (BattleData.Instance.前一gcd is Skill.冰澈 or Skill.玄冰 && BattleData.Instance.前一能力技 == Skill.星灵移位) return 0;
+            if (BattleData.Instance.核爆收尾 && Core.Me.CurrentMp < 1600) return Skill.核爆;
             if (Core.Me.CurrentMp < 1600) return Skill.冰三;
         }
         if (!BLMHelper.冰状态 && !BLMHelper.火状态) return Skill.冰三;

@@ -50,13 +50,13 @@ public class BLMEvetHandle : IRotationEventHandler
         // 火状态下使用星灵移位
         if (BLMHelper.火状态)
         {
-            Slot slot = new Slot(Skill.星灵移位.GetSpell(SpellTargetType.Self),2500);
+            await Skill.星灵移位.GetSpell(SpellTargetType.Self).Cast();
         }
 
         // 冰状态且条件满足时使用灵极魂
         if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000))
         {
-            Slot slot = new Slot(Skill.灵极魂.GetSpell(SpellTargetType.Self),2500);
+            await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
         }
         await Task.CompletedTask;
     }
@@ -90,13 +90,13 @@ public class BLMEvetHandle : IRotationEventHandler
         {
             if (BLMHelper.火状态)
             {
-                Slot slot = new Slot(Skill.星灵移位.GetSpell(SpellTargetType.Self),2500);
+                await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
             }
 
             // 冰状态且条件满足时使用灵极魂
             if (BLMHelper.冰状态 && (BLMHelper.冰层数 < 3 || BLMHelper.冰针 < 3 || Core.Me.CurrentMp < 10000))
             {
-                Slot slot = new Slot(Skill.灵极魂.GetSpell(SpellTargetType.Self),2500);
+                await Skill.灵极魂.GetSpell(SpellTargetType.Self).Cast();
             }
         }
         await Task.CompletedTask;
@@ -237,7 +237,7 @@ public class BLMEvetHandle : IRotationEventHandler
 
 
         // 处理特殊循环状态
-        if (!QT.Instance.GetQt(QTkey.使用特供循环)) BattleData.Instance.正在特殊循环中 = false;
+        if (!BattleData.Instance.特供循环) BattleData.Instance.正在特殊循环中 = false;
 
         // 更新各种战斗状态数据
         /*BattleData.Instance.已存在黑魔纹 = Helper.有buff(737);

@@ -35,8 +35,8 @@ public class 星灵移位 : ISlotResolver
             if (Helper.可瞬发()) return 1;
             if (Core.Me.Level < 90) return -90;
             if (BLMHelper.三目标aoe() || BLMHelper.双目标aoe()) return 234;
-            if ((QT.Instance.GetQt(QTkey.三连用于走位) && !QT.Instance.GetQt(QTkey.即刻))||(!QT.Instance.GetQt(QTkey.即刻)&&!QT.Instance.GetQt(QTkey.三连咏唱))) return -5;
-            if (Core.Me.Level < 80 ) return -80;
+            if (Core.Me.Level < 100 ) return -100;
+            if (BattleData.Instance.三连走位 &&!Skill.即刻.AbilityCoolDownInNextXgcDsWindow(1) ) return -5;
             if (!Helper.可瞬发() && !Skill.即刻.AbilityCoolDownInNextXgcDsWindow(1) &&
                  Skill.三连.GetSpell().Charges < 1) return -5;
             return 1;
@@ -50,7 +50,7 @@ public class 星灵移位 : ISlotResolver
                 if (BLMHelper.冰针 != 3) return -6;
                 if (_skillId.GetSpell().IsReadyWithCanCast()) return 21;
             }
-            if (BLMHelper.悖论指示 && !QT.Instance.GetQt(QTkey.压缩冰悖论)) return -3;
+            if (BLMHelper.悖论指示 && !BattleData.Instance.压缩冰悖论) return -3;
             if (BLMHelper.冰层数 != 3) return -4;
             if (BLMHelper.冰针 != 3) return -6;
             if (Core.Me.Level < 90)
@@ -58,7 +58,7 @@ public class 星灵移位 : ISlotResolver
                 if (Helper.有buff(Buffs.火苗))return 72;
                 return -90;
             }
-            if (Core.Me.Level<100&&QT.Instance.GetQt(QTkey.使用特供循环) && (new 开满转火().StartCheck() > 0 || BattleData.Instance.正在特殊循环中)) return -8;
+            if (Core.Me.Level<100&&BattleData.Instance.特供循环 && (new 开满转火().StartCheck() > 0 || BattleData.Instance.正在特殊循环中)) return -8;
             return 1;
         }
 

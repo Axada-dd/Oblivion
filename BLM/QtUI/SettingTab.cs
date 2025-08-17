@@ -85,8 +85,18 @@ public static class SettingTab
                 }
 
             }
-            
-            if (ImGui.CollapsingHeader("以太步窗口设置", ImGuiTreeNodeFlags.DefaultOpen))
+            if (ImGui.CollapsingHeader("循环设置"))
+            {
+                ImGui.Text("以下所有设置都能在时间轴中控制，非轴作者可以不用在意这些设置，不改也已经是优秀循环了");
+                ImGui.Checkbox("关闭起手", ref BattleData.Instance.起手);
+                ImGui.Checkbox("留下所有三连用于走位，只针对100级循环", ref BattleData.Instance.三连走位);
+                ImGui.Checkbox("低等级aoe循环中会使用火二进火",ref BattleData.Instance.aoe火二);
+                ImGui.Checkbox("使用特供循环，注意可能会被绿玩出警", ref BattleData.Instance.特供循环);
+                ImGui.Checkbox("压缩冰悖论，即在冰循环中不会主动打悖论，移动时正常悖论",ref BattleData.Instance.压缩冰悖论);
+                ImGui.Checkbox("压缩火悖论，同上",ref BattleData.Instance.压缩火悖论);
+                ImGui.Checkbox("70级循环中使用核爆收尾", ref BattleData.Instance.核爆收尾);
+            }
+            if (ImGui.CollapsingHeader("以太步窗口设置"))
             {
                 ImGui.Text("以太步窗口开关：");
                 bool 以太步窗口开关 = BLMSetting.Instance.以太步窗口显示;
@@ -103,7 +113,7 @@ public static class SettingTab
                     BLMSetting.Instance.Save();
                 }
             }
-            if (ImGui.CollapsingHeader("TTK设置", ImGuiTreeNodeFlags.DefaultOpen))
+            if (ImGui.CollapsingHeader("TTK设置"))
             {
                 ImGui.Text("设置TTK阈值（毫秒）：");
                 if (ImGui.IsItemHovered())

@@ -33,7 +33,7 @@ public class 冰单100 :ISlotResolver
                 return Skill.冰三;
             }
             if (BLMHelper.冰针 < 3 || BattleData.Instance.三冰针进冰) return Skill.冰澈;
-            if (BLMHelper.悖论指示 && !QT.Instance.GetQt(QTkey.压缩冰悖论)) return Skill.悖论;
+            if (BLMHelper.悖论指示 && !BattleData.Instance.压缩冰悖论) return Skill.悖论;
             return 0;
         }
 

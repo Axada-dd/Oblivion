@@ -67,7 +67,7 @@ public static class BLMHelper
     }
     public static bool 双目标aoe()
     {
-        if (!QT.Instance.GetQt(QTkey.双目标aoe)) return false;
+        if (!QT.Instance.GetQt(QTkey.Aoe)) return false;
         var count = TargetHelper.GetNearbyEnemyCount(Core.Me.GetCurrTarget(), 25, 5);
         if (count < 2) return false;
         if (三目标aoe()) return false;
@@ -81,7 +81,14 @@ public static class BLMHelper
         if (火状态 && 火层数 < 3 && Helper.有buff(Buffs.火苗) && !三目标aoe()) return Skill.火三;
         if (悖论指示)
         {
-            if (火状态 && Core.Me.CurrentMp >= 2400) return Skill.悖论;
+            if (火状态 && Core.Me.CurrentMp >= 2400)
+            {
+                if (三目标aoe() || 双目标aoe())
+                {
+                    if (Core.Me.CurrentMp >= 4100) return Skill.悖论;
+                }else
+                    return Skill.悖论;
+            }
             if (冰状态) return Skill.悖论;
         }
         if (火状态 && Core.Me.CurrentMp < 2400 && Core.Me.CurrentMp >= 800 && Core.Me.Level >= 100) return Skill.绝望;

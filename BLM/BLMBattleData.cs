@@ -21,5 +21,16 @@ public class BattleData
     public List<uint> 上一轮循环 = [];
     public bool HotkeyUseHighPrioritySlot = false; // 热键使用高优先级队列
     
+    
+    //循环控制
+    public bool 三连走位 = false;
+    public bool 即刻三连无移动判断 = false;
+    public bool 起手 = false;
+    public bool aoe火二 = false;
+    public bool 特供循环 = false;
+    public bool 压缩冰悖论 = false;
+    public bool 压缩火悖论 = false;
+    public bool 核爆收尾 = false;
+
 
 }

@@ -10,7 +10,7 @@ public class Opener57 : IOpener
         if (BattleData.Instance.IsInnerOpener) return 1;
         if (Helper.是否在战斗中()) return -2;
         
-        if (QT.Instance.GetQt(QTkey.起手序列)&&Core.Me.CurrentMp == 10000&&!(BLMHelper.火状态 || BLMHelper.冰状态)) return 2;
+        if (!BattleData.Instance.起手&&Core.Me.CurrentMp == 10000&&!(BLMHelper.火状态 || BLMHelper.冰状态)) return 2;
         return -1;
     }
 
@@ -98,8 +98,11 @@ public class Opener57 : IOpener
     private static void Step7(Slot slot)
     {
         slot.Add(new Spell(Skill.绝望, SpellTargetType.Target));
-        slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
-        slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
+        if (QT.Instance.GetQt(QTkey.起手不三连))
+        {
+            slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
+            slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
+        }
         if(BattleData.Instance.IsInnerOpener)
             BattleData.Instance.IsInnerOpener = false;
     }

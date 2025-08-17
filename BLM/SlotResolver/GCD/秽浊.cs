@@ -19,7 +19,7 @@ public class 秽浊 : ISlotResolver
 
     public int Check()
     {
-        if (!QT.Instance.GetQt(QTkey.秽浊)) return -5;
+        if (!QT.Instance.GetQt(QTkey.通晓)) return -5;
         if (!BLMHelper.双目标aoe() && !BLMHelper.三目标aoe() && Core.Me.Level >= 80) return -100;
         if (QT.Instance.GetQt(QTkey.倾泻资源) && BLMHelper.通晓层数 > 0) return 666;
         if (Core.Me.Level >= 98)

@@ -18,7 +18,6 @@ public class 即刻 : ISlotResolver
 
     public int Check()
     {
-        if (!QT.Instance.GetQt(QTkey.即刻)) return -2;
         if (_skillId.GetSpell().Cooldown.TotalMilliseconds > 0) return -1;
         if (QT.Instance.GetQt(QTkey.TTK)) return 999;
         if (Helper.可瞬发()) return -3;
