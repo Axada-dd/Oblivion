@@ -89,13 +89,15 @@ public class Opener_lv90: IOpener
     private static void Step6(Slot slot)
     {
         slot.Add(new Spell(Skill.悖论, SpellTargetType.Target));
-        slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
+        if(!QT.Instance.GetQt(QTkey.起手不三连))
+            slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
     }
 
     private static void Step7(Slot slot)
     {
         slot.Add(new Spell(Skill.绝望, SpellTargetType.Target));
-        slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
+        if(!QT.Instance.GetQt(QTkey.起手不三连))
+            slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
         if(BattleData.Instance.IsInnerOpener)
             BattleData.Instance.IsInnerOpener = false;
     }

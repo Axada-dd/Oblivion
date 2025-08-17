@@ -86,14 +86,16 @@ public class Opener_lv80 : IOpener
 
     private static void Step6(Slot slot)
     {
-        slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
+        if(!QT.Instance.GetQt(QTkey.起手不三连))
+            slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
         slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
     }
 
     private static void Step7(Slot slot)
     {
         slot.Add(new Spell(Skill.绝望, SpellTargetType.Target));
-        slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
+        if(!QT.Instance.GetQt(QTkey.起手不三连))
+            slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
         if(BattleData.Instance.IsInnerOpener)
             BattleData.Instance.IsInnerOpener = false;
     }

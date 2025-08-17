@@ -62,7 +62,8 @@ public class Opener_lv70 : IOpener
     private static void Step3(Slot slot)
     {
         slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
-        slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
+        if(!QT.Instance.GetQt(QTkey.起手不三连))
+            slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
         slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
         slot.Add(new Spell(Skill.火四, SpellTargetType.Target));
     }

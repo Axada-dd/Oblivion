@@ -98,10 +98,14 @@ public class Opener57 : IOpener
     private static void Step7(Slot slot)
     {
         slot.Add(new Spell(Skill.绝望, SpellTargetType.Target));
-        if (QT.Instance.GetQt(QTkey.起手不三连))
+        if (!QT.Instance.GetQt(QTkey.起手不三连))
         {
             slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
             slot.Add(new Spell(Skill.三连, SpellTargetType.Self));
+        }
+        else
+        {
+            slot.Add(new Spell(Skill.冰三, SpellTargetType.Target));
         }
         if(BattleData.Instance.IsInnerOpener)
             BattleData.Instance.IsInnerOpener = false;

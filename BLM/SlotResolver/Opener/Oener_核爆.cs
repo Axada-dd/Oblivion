@@ -99,7 +99,12 @@ public class Opener核爆 : IOpener
     {
         slot.Add(new Spell(Skill.核爆, SpellTargetType.Target));
         slot.Add(new Spell(Skill.耀星, SpellTargetType.Target));
-        slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
+        if(!QT.Instance.GetQt(QTkey.起手不三连))
+            slot.Add(new Spell(Skill.星灵移位, SpellTargetType.Self));
+        else
+        {
+            slot.Add(new Spell(Skill.冰三, SpellTargetType.Target));
+        }
         if(BattleData.Instance.IsInnerOpener)
             BattleData.Instance.IsInnerOpener = false;
     }
